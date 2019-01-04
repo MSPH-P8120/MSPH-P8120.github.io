@@ -1,0 +1,6 @@
+---
+title: "Analysis of Categorical Data"
+---
+
+### I have a webpage!
+
