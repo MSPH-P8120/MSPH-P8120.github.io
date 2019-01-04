@@ -2,5 +2,4 @@
 title: "Analysis of Categorical Data"
 ---
 
-### I have a webpage!
-
+Statistical computing is essential to succesful implementation of modern biostatistical methods. This course requires the use of SAS and beginning Spring of 2019 will start teaching R as well. 

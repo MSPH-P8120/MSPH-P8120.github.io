@@ -1,0 +1,86 @@
+---
+title: "R"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(epitools)
+library(DescTools)
+library(descr)
+library(survival)
+library(catfun)
+
+data(esoph)
+
+azt <- read_csv("../data/AZT.csv")
+
+azt <- azt %>% 
+  mutate(aids = as.factor(aids), 
+         aids = fct_relevel(aids, "1", "0"), 
+         azt = as.factor(azt), 
+         azt = fct_relevel(azt, "1", "0"))
+```
+
+```{r, echo = FALSE, out.width = "10%"}
+htmltools::img(src = knitr::image_uri("../logos/p8120_logo.png"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:300px; padding:10px; width:125px; height:125px;')
+```
+
+<br>
+
+The R functions within this document come from a variety of libraries. To use these functions please intsall the following packages by running: 
+
+`install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools"))` 
+
+In addition, you will need to run, `devtools::install_github("nt-williams/catfun")`
+
+### Cross-tabulation
+
+To create sparse cross-tabulations use the function `xtabs()`
+
+```{r xtabs example}
+# data(esoph)
+# 
+# xtabs(ncontrols ~ alcgp + agegp, data = esoph)
+# 
+# xtabs(~ aids + azt, data = azt) %>% 
+#   oddsratio(method = "wald") 
+# 
+# xtabs(~ aids + azt, data = azt) %>% 
+#   riskratio(method = "wald")
+```
+
+
+### Hypothesis tests
+
+Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type `?<insert function>`
+
+|Hypothesis test                     | R function                     | Package          |
+|------------------------------------|--------------------------------|------------------|
+|One/two sample test proportions, normal approximation  |`prop.test()`| stats            |
+|One/two sample test proportions, exact   | `binom.test()`            | stats            |
+|Confidence intervals, proportions   | `BinomCI()`                    | DescTools        |
+|Chi-squared                         | `crosstab(..., chisq = TRUE)` | descr             |
+|Fisher's exact                      | `crosstab(..., fisher = TRUE)`| descr             |
+|McNemar's test                      | `crosstab(..., mcnemar = TRUE)`   | descr         |
+|Logistic regression                 | `glm(..., family = binomial)`  | stats            |
+|GOF & Hosmer Lemeshow               | TBD                            | TBD              |
+|Conditional logistic regression     | `clogit()`                     | survival         |
+|Cochran Armitage Trend test         | `CocrhanArmitageTest()`        | DescTools        |
+|Brewlow Day test                    | `BreslowDayTest`               | DescTools        |
+
+### Measures of association
+
+| Measure               | R function         | Package
+|-----------------------|--------------------|----------
+|Odds ratio (2xk table) | `oddsratio()`      | epitools
+|Risk ratio (2xk table) | `riskratio()`      | epitools
+|Risk difference        | `riskdiff()`       | catfun
+
+### Power
+
+Fun
+
