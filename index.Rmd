@@ -2,4 +2,6 @@
 title: "Analysis of Categorical Data"
 ---
 
-Statistical computing is essential to succesful implementation of modern biostatistical methods. This course requires the use of SAS and beginning Spring of 2019 will start teaching R as well. 
+Statistical computing is essential to succesful implementation of modern biostatistical methods. This course (Analysis of Categorical Data, P8120) requires the use of SAS and beginning Spring of 2019 will start teaching R as well. 
+
+Both R and SAS have their benefits and flaws. 

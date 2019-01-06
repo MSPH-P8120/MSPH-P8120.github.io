@@ -6,14 +6,6 @@ title: "SAS"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, echo=FALSE, out.width = "10%"}
-htmltools::img(src = knitr::image_uri("../logos/p8120_logo.png"), 
-               alt = 'logo', 
-               style = 'position:absolute; top:0; right:300px; padding:10px; width:125px; height:125px;')
-```
-
-<br>
-
 ### Getting started
 
 This document is intended to be used as a guide to SAS for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA's, Dr. Mauro, or the online SAS user [guide](https://support.sas.com/documentation/cdl/en/statug/63962/HTML/default/viewer.htm#titlepage.htm) for more help if needed. SAS is available on all computers at CUMC or can be purchased through the IT department with a student discount (Windows computers only).
