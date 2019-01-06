@@ -4,4 +4,10 @@ title: "Analysis of Categorical Data"
 
 Statistical computing is essential to succesful implementation of modern biostatistical methods. This course (Analysis of Categorical Data, P8120) requires the use of SAS and beginning Spring of 2019 will start teaching R as well. 
 
-Both R and SAS have their benefits and flaws. 
+Both R and SAS have their benefits and flaws. Being able to leverage the benefits of the two languages is a powerful tool; this is why we are integrating R into the course. 
+
+This is not a course on statistical programming. But, there are different courses at Mailman that do teach each language. 
+
+### Policy on help
+
+When emailing your TA for help with R or SAS please ensure to cc Nick (ntw2117@cumc.columbia.edu) in addition to Dr. Mauro and Anjile. In addition, you must attach screenshots of both your code and the accompanying error message; these are necessary to trouble shooting any problems and we are unable to provide help without them.

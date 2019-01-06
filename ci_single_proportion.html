@@ -11,7 +11,7 @@
 
 
 
-<title>Analysis of Categorical Data</title>
+<title>Confidence Intervals for Single Proportions</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -213,17 +213,49 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Analysis of Categorical Data</h1>
+<h1 class="title toc-ignore">Confidence Intervals for Single Proportions</h1>
 
 </div>
 
 
-<p>Statistical computing is essential to succesful implementation of modern biostatistical methods. This course (Analysis of Categorical Data, P8120) requires the use of SAS and beginning Spring of 2019 will start teaching R as well.</p>
-<p>Both R and SAS have their benefits and flaws. Being able to leverage the benefits of the two languages is a powerful tool; this is why we are integrating R into the course.</p>
-<p>This is not a course on statistical programming. But, there are different courses at Mailman that do teach each language.</p>
-<div id="policy-on-help" class="section level3">
-<h3>Policy on help</h3>
-<p>When emailing your TA for help with R or SAS please ensure to cc Nick (<a href="mailto:ntw2117@cumc.columbia.edu">ntw2117@cumc.columbia.edu</a>) in addition to Dr. Mauro and Anjile. In addition, you must attach screenshots of both your code and the accompanying error message; these are necessary to trouble shooting any problems and we are unable to provide help without them.</p>
+<div id="section" class="section level1 tabset tabset-fade">
+<h1></h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<pre class="r"><code>library(catfun)
+
+prop_test(2, 6, method = &quot;wald&quot;, conf.level = .95)</code></pre>
+<pre><code>## 
+## 2 out of 6, null probability = 0.5
+## ---------------------------------------- 
+## Observed proportion: 0.3333333 
+## Confidence interval method: wald 
+## Confidence interval: 0 0.7105286 
+## 
+## Exact limits: 0.04327187 0.7772219 
+## 
+## Test that 0.3333333 = 0.5 
+## ---------------------------------------- 
+## Chi-squared: 0.6666667 
+## Degrees freedom: 1 
+## p-value: 0.4142162</code></pre>
+</div>
+<div id="sas" class="section level2">
+<h2>SAS</h2>
+<pre><code>data followup1; 
+  input loss; 
+  cards; 
+  2
+  4
+  ;
+run; 
+
+title &#39;Loss to Follow-up Exact CI Example; 
+proc freq data = followup1 order = data; 
+  table loss / binomial(p = 0.5) alpha = 0.05; 
+  weight loss; 
+run; </code></pre>
+</div>
 </div>
 
 

@@ -1,0 +1,68 @@
+---
+title: "Hypothesis Tests for a Single Proportion"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# {.tabset .tabset-fade}
+
+## R
+
+#### Score test
+
+```{r warning = FALSE}
+library(catfun)
+
+prop_test(7, 50, method = "wald", p = 0.2)
+```
+
+#### Exact test
+
+```{r warning = FALSE}
+library(catfun)
+
+prop_test(2, 6, method = "wald", p = 0.2, exact = TRUE)
+```
+
+## SAS
+
+#### Score test
+
+```{}
+data followup; 
+  input loss; 
+  cards; 
+  7
+  43
+  ;
+run; 
+
+title 'Loss to Follow-up Example'; 
+proc freq data = followup order = data; 
+  table loss / binomial(p = 0.2) alpha = 0.05; 
+  weight loss; 
+run; 
+```
+
+#### Exact test
+
+```{}
+data followupEX;
+  input loss; 
+  cards; 
+  2
+  4
+  ;
+run;
+
+title 'Loss to Follow-Up Exact Example';
+proc freq data = followupEX order = data; 
+  table loss / binomial(p = 0.2) alpha = 0.05;
+  weight loss; 
+run; 
+```
+
+

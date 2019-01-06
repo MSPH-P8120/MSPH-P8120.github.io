@@ -1,0 +1,38 @@
+---
+title: "Confidence Intervals for Single Proportions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# {.tabset .tabset-fade}
+
+## R
+
+```{r warning=FALSE}
+library(catfun)
+
+prop_test(2, 6, method = "wald", conf.level = .95)
+```
+
+
+## SAS
+
+```{}
+data followup1; 
+  input loss; 
+  cards; 
+  2
+  4
+  ;
+run; 
+
+title 'Loss to Follow-up Exact CI Example; 
+proc freq data = followup1 order = data; 
+  table loss / binomial(p = 0.5) alpha = 0.05; 
+  weight loss; 
+run; 
+```
+

@@ -11,7 +11,7 @@
 
 
 
-<title>R</title>
+<title>Hypothesis Tests for a Single Proportion</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -213,163 +213,93 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">R</h1>
+<h1 class="title toc-ignore">Hypothesis Tests for a Single Proportion</h1>
 
 </div>
 
 
-<div id="getting-started" class="section level3">
-<h3>Getting started</h3>
-<p>This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded <a href="https://www.r-project.org/">here</a>.</p>
-<p>R is an open-source functional programming language built for statistical computing. R’s popularity has continued to grow and is becoming one of the main-stays in the Data Science community. Unlike SAS, R is supported by it’s users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R.</p>
-<p>Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please intsall the following packages by running:</p>
-<p><code>install.packages(c(&quot;tidyverse&quot;, &quot;descr&quot;, &quot;descTools&quot;, &quot;surival&quot;, &quot;epitools&quot;))</code></p>
-<p>In addition, you will need to run, <code>devtools::install_github(&quot;nt-williams/catfun&quot;)</code></p>
+<div id="section" class="section level1 tabset tabset-fade">
+<h1></h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<div id="score-test" class="section level4">
+<h4>Score test</h4>
+<pre class="r"><code>library(catfun)
+
+prop_test(7, 50, method = &quot;wald&quot;, p = 0.2)</code></pre>
+<pre><code>## 
+## 7 out of 50, null probability = 0.2
+## ---------------------------------------- 
+## Observed proportion: 0.14 
+## Confidence interval method: wald 
+## Confidence interval: 0.04382187 0.2361781 
+## 
+## Exact limits: 0.0581917 0.267396 
+## 
+## Test that 0.14 = 0.2 
+## ---------------------------------------- 
+## Chi-squared: 1.125 
+## Degrees freedom: 1 
+## p-value: 0.2888444</code></pre>
 </div>
-<div id="a-tidy-mindset" class="section level3">
-<h3>A tidy mindset</h3>
+<div id="exact-test" class="section level4">
+<h4>Exact test</h4>
+<pre class="r"><code>library(catfun)
+
+prop_test(2, 6, method = &quot;wald&quot;, p = 0.2, exact = TRUE)</code></pre>
+<pre><code>## 
+## 2 out of 6, null probability = 0.2
+## ---------------------------------------- 
+## Observed proportion: 0.3333333 
+## Confidence interval method: wald 
+## Confidence interval: 0 0.7105286 
+## 
+## Exact limits: 0.04327187 0.7772219 
+## 
+## Test that 0.3333333 = 0.2 
+## ---------------------------------------- 
+## Chi-squared: 0.6666667 
+## Degrees freedom: 1 
+## p-value: 0.4142162 
+## 
+## Exact p-value: 0.6875</code></pre>
 </div>
-<div id="importing-data" class="section level3">
-<h3>Importing data</h3>
 </div>
-<div id="cross-tabulation" class="section level3">
-<h3>Cross-tabulation</h3>
-<p>Making cross-tabulalations in R can be done a variety of ways. One of the preferred methods is to use the function <code>xtabs()</code></p>
-<pre class="r"><code>xtabs(ncontrols ~ alcgp + agegp, data = esoph)</code></pre>
-<pre><code>##            agegp
-## alcgp       25-34 35-44 45-54 55-64 65-74 75+
-##   0-39g/day    61    89    78    89    71  27
-##   40-79        45    80    81    84    53  12
-##   80-119        5    20    39    43    29   2
-##   120+          5    10    15    26     8   3</code></pre>
-<pre class="r"><code># data(esoph)
-# 
-# xtabs(ncontrols ~ alcgp + agegp, data = esoph)
-# 
-# xtabs(~ aids + azt, data = azt) %&gt;% 
-#   oddsratio(method = &quot;wald&quot;) 
-# 
-# xtabs(~ aids + azt, data = azt) %&gt;% 
-#   riskratio(method = &quot;wald&quot;)</code></pre>
+<div id="sas" class="section level2">
+<h2>SAS</h2>
+<div id="score-test-1" class="section level4">
+<h4>Score test</h4>
+<pre><code>data followup; 
+  input loss; 
+  cards; 
+  7
+  43
+  ;
+run; 
+
+title &#39;Loss to Follow-up Example&#39;; 
+proc freq data = followup order = data; 
+  table loss / binomial(p = 0.2) alpha = 0.05; 
+  weight loss; 
+run; </code></pre>
 </div>
-<div id="hypothesis-tests" class="section level3">
-<h3>Hypothesis tests</h3>
-<p>Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type <code>?&lt;insert function&gt;</code></p>
-<table>
-<thead>
-<tr class="header">
-<th>Hypothesis test</th>
-<th>R function</th>
-<th>Package</th>
-<th align="center">Lecture</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>One sample test proportions, normal approximation</td>
-<td><code>prop.test()</code></td>
-<td>stats</td>
-<td align="center"><a href="hypothesis_single_prop.html">4</a></td>
-</tr>
-<tr class="even">
-<td>One two sample test proportions, exact</td>
-<td><code>binom.test()</code></td>
-<td>stats</td>
-<td align="center"><a href="hypothesis_single_prop.html">4</a></td>
-</tr>
-<tr class="odd">
-<td>Confidence intervals, proportions</td>
-<td><code>BinomCI()</code></td>
-<td>DescTools</td>
-<td align="center"><a href="ci_single_proportion.html">3</a></td>
-</tr>
-<tr class="even">
-<td>Chi-squared</td>
-<td><code>crosstab(..., chisq = TRUE)</code></td>
-<td>descr</td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td>Fisher’s exact</td>
-<td><code>crosstab(..., fisher = TRUE)</code></td>
-<td>descr</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td>McNemar’s test</td>
-<td><code>crosstab(..., mcnemar = TRUE)</code></td>
-<td>descr</td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td>Logistic regression</td>
-<td><code>glm(..., family = binomial)</code></td>
-<td>stats</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td>GOF &amp; Hosmer Lemeshow</td>
-<td>TBD</td>
-<td>TBD</td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td>Conditional logistic regression</td>
-<td><code>clogit()</code></td>
-<td>survival</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td>Cochran Armitage Trend test</td>
-<td><code>CocrhanArmitageTest()</code></td>
-<td>DescTools</td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td>Brewlow Day test</td>
-<td><code>BreslowDayTest</code></td>
-<td>DescTools</td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
+<div id="exact-test-1" class="section level4">
+<h4>Exact test</h4>
+<pre><code>data followupEX;
+  input loss; 
+  cards; 
+  2
+  4
+  ;
+run;
+
+title &#39;Loss to Follow-Up Exact Example&#39;;
+proc freq data = followupEX order = data; 
+  table loss / binomial(p = 0.2) alpha = 0.05;
+  weight loss; 
+run; </code></pre>
 </div>
-<div id="measures-of-association" class="section level3">
-<h3>Measures of association</h3>
-<table>
-<thead>
-<tr class="header">
-<th>Measure</th>
-<th>R function</th>
-<th>Package</th>
-<th>Lecture</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Odds ratio (2xk table)</td>
-<td><code>oddsratio()</code></td>
-<td>epitools</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Risk ratio (2xk table)</td>
-<td><code>riskratio()</code></td>
-<td>epitools</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Risk difference</td>
-<td><code>riskdiff()</code></td>
-<td>catfun</td>
-<td></td>
-</tr>
-</tbody>
-</table>
 </div>
-<div id="power" class="section level3">
-<h3>Power</h3>
-<p>Fun</p>
 </div>
 
 

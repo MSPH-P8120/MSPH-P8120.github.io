@@ -23,12 +23,21 @@ azt <- azt %>%
          azt = fct_relevel(azt, "1", "0"))
 ```
 
-R is an open-source programming language built for statistical computing. R's popularity has continued to grow and  
-The R functions within this document come from a variety of libraries. To use these functions please intsall the following packages by running: 
+### Getting started
+
+This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded [here](https://www.r-project.org/).
+
+R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming one of the main-stays in the Data Science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R. 
+
+Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please intsall the following packages by running: 
 
 `install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools"))` 
 
 In addition, you will need to run, `devtools::install_github("nt-williams/catfun")`
+
+### A tidy mindset
+
+### Importing data
 
 ### Cross-tabulation
 
@@ -57,10 +66,10 @@ xtabs(ncontrols ~ alcgp + agegp, data = esoph)
 Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type `?<insert function>`
 
 |Hypothesis test                     | R function                     | Package          |Lecture    |
-|------------------------------------|--------------------------------|------------------|-----------|
-|One/two sample test proportions, normal approximation  |`prop.test()`| stats            |           |
-|One/two sample test proportions, exact   | `binom.test()`            | stats            |           |
-|Confidence intervals, proportions   | `BinomCI()`                    | DescTools        |           |
+|------------------------------------|--------------------------------|------------------|:-----------:|
+|One sample test proportions, normal approximation  |`prop.test()`| stats            |[4](hypothesis_single_prop.html)       |
+|One two sample test proportions, exact   | `binom.test()`            | stats            |[4](hypothesis_single_prop.html)          |
+|Confidence intervals, proportions   | `BinomCI()`                    | DescTools        |[3](ci_single_proportion.html)        |
 |Chi-squared                         | `crosstab(..., chisq = TRUE)` | descr             |           |
 |Fisher's exact                      | `crosstab(..., fisher = TRUE)`| descr             |           |
 |McNemar's test                      | `crosstab(..., mcnemar = TRUE)`   | descr         |           |
