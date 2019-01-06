@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R
 
-#### Score test
+### Score test
 
 ```{r warning = FALSE}
 library(catfun)
@@ -19,7 +19,7 @@ library(catfun)
 prop_test(7, 50, method = "wald", p = 0.2)
 ```
 
-#### Exact test
+### Exact test
 
 ```{r warning = FALSE}
 library(catfun)
@@ -29,9 +29,9 @@ prop_test(2, 6, method = "wald", p = 0.2, exact = TRUE)
 
 ## SAS
 
-#### Score test
+### Score test
 
-```{}
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 data followup; 
   input loss; 
   cards; 
@@ -47,9 +47,9 @@ proc freq data = followup order = data;
 run; 
 ```
 
-#### Exact test
+### Exact test
 
-```{}
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 data followupEX;
   input loss; 
   cards; 
@@ -61,6 +61,7 @@ run;
 title 'Loss to Follow-Up Exact Example';
 proc freq data = followupEX order = data; 
   table loss / binomial(p = 0.2) alpha = 0.05;
+  exact binomial;
   weight loss; 
 run; 
 ```

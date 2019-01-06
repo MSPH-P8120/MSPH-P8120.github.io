@@ -222,8 +222,8 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<div id="score-test" class="section level4">
-<h4>Score test</h4>
+<div id="score-test" class="section level3">
+<h3>Score test</h3>
 <pre class="r"><code>library(catfun)
 
 prop_test(7, 50, method = &quot;wald&quot;, p = 0.2)</code></pre>
@@ -242,8 +242,8 @@ prop_test(7, 50, method = &quot;wald&quot;, p = 0.2)</code></pre>
 ## Degrees freedom: 1 
 ## p-value: 0.2888444</code></pre>
 </div>
-<div id="exact-test" class="section level4">
-<h4>Exact test</h4>
+<div id="exact-test" class="section level3">
+<h3>Exact test</h3>
 <pre class="r"><code>library(catfun)
 
 prop_test(2, 6, method = &quot;wald&quot;, p = 0.2, exact = TRUE)</code></pre>
@@ -267,9 +267,9 @@ prop_test(2, 6, method = &quot;wald&quot;, p = 0.2, exact = TRUE)</code></pre>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<div id="score-test-1" class="section level4">
-<h4>Score test</h4>
-<pre><code>data followup; 
+<div id="score-test-1" class="section level3">
+<h3>Score test</h3>
+<pre class="sas"><code>data followup; 
   input loss; 
   cards; 
   7
@@ -282,10 +282,41 @@ proc freq data = followup order = data;
   table loss / binomial(p = 0.2) alpha = 0.05; 
   weight loss; 
 run; </code></pre>
+<pre><code>##                                        Loss to Follow-up Example
+## 
+##                                            The FREQ Procedure
+## 
+##                                                         Cumulative    Cumulative
+##                        loss    Frequency     Percent     Frequency      Percent
+##                        ---------------------------------------------------------
+##                           7           7       14.00             7        14.00  
+##                          43          43       86.00            50       100.00  
+## 
+## 
+##                                           Binomial Proportion
+##                                                 loss = 7
+## 
+##                                     Proportion                0.1400
+##                                     ASE                       0.0491
+##                                     95% Lower Conf Limit      0.0438
+##                                     95% Upper Conf Limit      0.2362
+##                                                                     
+##                                     Exact Conf Limits               
+##                                     95% Lower Conf Limit      0.0582
+##                                     95% Upper Conf Limit      0.2674
+## 
+##                                       Test of H0: Proportion = 0.2
+## 
+##                                     ASE under H0              0.0566
+##                                     Z                        -1.0607
+##                                     One-sided Pr &lt;  Z         0.1444
+##                                     Two-sided Pr &gt; |Z|        0.2888
+## 
+##                                             Sample Size = 50</code></pre>
 </div>
-<div id="exact-test-1" class="section level4">
-<h4>Exact test</h4>
-<pre><code>data followupEX;
+<div id="exact-test-1" class="section level3">
+<h3>Exact test</h3>
+<pre class="sas"><code>data followupEX;
   input loss; 
   cards; 
   2
@@ -296,8 +327,44 @@ run;
 title &#39;Loss to Follow-Up Exact Example&#39;;
 proc freq data = followupEX order = data; 
   table loss / binomial(p = 0.2) alpha = 0.05;
+  exact binomial;
   weight loss; 
 run; </code></pre>
+<pre><code>##                                     Loss to Follow-Up Exact Example
+## 
+##                                            The FREQ Procedure
+## 
+##                                                         Cumulative    Cumulative
+##                        loss    Frequency     Percent     Frequency      Percent
+##                        ---------------------------------------------------------
+##                           2           2       33.33             2        33.33  
+##                           4           4       66.67             6       100.00  
+## 
+## 
+##                                           Binomial Proportion
+##                                                loss = 2
+## 
+##                                   Proportion (P)               0.3333
+##                                   ASE                          0.1925
+##                                   95% Lower Conf Limit         0.0000
+##                                   95% Upper Conf Limit         0.7105
+##                                                                      
+##                                   Exact Conf Limits                  
+##                                   95% Lower Conf Limit         0.0433
+##                                   95% Upper Conf Limit         0.7772
+## 
+##                                      Test of H0: Proportion = 0.2
+## 
+##                                   ASE under H0                 0.1633
+##                                   Z                            0.8165
+##                                   One-sided Pr &gt;  Z            0.2071
+##                                   Two-sided Pr &gt; |Z|           0.4142
+##                                                                      
+##                                   Exact Test                         
+##                                   One-sided Pr &gt;=  P           0.3446
+##                                   Two-sided = 2 * One-sided    0.6893
+## 
+##                                             Sample Size = 6</code></pre>
 </div>
 </div>
 </div>

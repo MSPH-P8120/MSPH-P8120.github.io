@@ -242,7 +242,7 @@ prop_test(2, 6, method = &quot;wald&quot;, conf.level = .95)</code></pre>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<pre><code>data followup1; 
+<pre class="sas"><code>data followup1; 
   input loss; 
   cards; 
   2
@@ -250,11 +250,42 @@ prop_test(2, 6, method = &quot;wald&quot;, conf.level = .95)</code></pre>
   ;
 run; 
 
-title &#39;Loss to Follow-up Exact CI Example; 
+title &#39;Loss to Follow-up Exact CI Example&#39;; 
 proc freq data = followup1 order = data; 
   table loss / binomial(p = 0.5) alpha = 0.05; 
   weight loss; 
 run; </code></pre>
+<pre><code>##                                    Loss to Follow-up Exact CI Example
+## 
+##                                            The FREQ Procedure
+## 
+##                                                         Cumulative    Cumulative
+##                        loss    Frequency     Percent     Frequency      Percent
+##                        ---------------------------------------------------------
+##                           2           2       33.33             2        33.33  
+##                           4           4       66.67             6       100.00  
+## 
+## 
+##                                           Binomial Proportion
+##                                                 loss = 2
+## 
+##                                     Proportion                0.3333
+##                                     ASE                       0.1925
+##                                     95% Lower Conf Limit      0.0000
+##                                     95% Upper Conf Limit      0.7105
+##                                                                     
+##                                     Exact Conf Limits               
+##                                     95% Lower Conf Limit      0.0433
+##                                     95% Upper Conf Limit      0.7772
+## 
+##                                       Test of H0: Proportion = 0.5
+## 
+##                                     ASE under H0              0.2041
+##                                     Z                        -0.8165
+##                                     One-sided Pr &lt;  Z         0.2071
+##                                     Two-sided Pr &gt; |Z|        0.4142
+## 
+##                                             Sample Size = 6</code></pre>
 </div>
 </div>
 
