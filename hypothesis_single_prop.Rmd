@@ -7,9 +7,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+The notes for the topics on this page can be found in the lecture 4 folder on Canvas. 
+
 # {.tabset .tabset-fade}
 
 ## R
+
+One method to conduct a hypothesis test for a single proportion in R is to use the `prop_test` function in the *catfun* package. For more information run `?prop_test` in the R console. 
 
 ### Score test
 
@@ -21,6 +25,8 @@ prop_test(7, 50, method = "wald", p = 0.2)
 
 ### Exact test
 
+The only thing that changes when conducting an exact test is that you must specify `exact = TRUE`
+
 ```{r warning = FALSE}
 library(catfun)
 
@@ -28,6 +34,8 @@ prop_test(2, 6, method = "wald", p = 0.2, exact = TRUE)
 ```
 
 ## SAS
+
+To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. 
 
 ### Score test
 
@@ -48,6 +56,8 @@ run;
 ```
 
 ### Exact test
+
+The only thing that changes when conducting an exact test is you must add `exact binomial` after the table statement.
 
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 data followupEX;

@@ -218,10 +218,12 @@ $(document).ready(function () {
 </div>
 
 
+<p>The notes for the topics on this page can be found in the lecture 4 folder on Canvas.</p>
 <div id="section" class="section level1 tabset tabset-fade">
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
+<p>One method to conduct a hypothesis test for a single proportion in R is to use the <code>prop_test</code> function in the <em>catfun</em> package. For more information run <code>?prop_test</code> in the R console.</p>
 <div id="score-test" class="section level3">
 <h3>Score test</h3>
 <pre class="r"><code>library(catfun)
@@ -244,6 +246,7 @@ prop_test(7, 50, method = &quot;wald&quot;, p = 0.2)</code></pre>
 </div>
 <div id="exact-test" class="section level3">
 <h3>Exact test</h3>
+<p>The only thing that changes when conducting an exact test is that you must specify <code>exact = TRUE</code></p>
 <pre class="r"><code>library(catfun)
 
 prop_test(2, 6, method = &quot;wald&quot;, p = 0.2, exact = TRUE)</code></pre>
@@ -267,6 +270,7 @@ prop_test(2, 6, method = &quot;wald&quot;, p = 0.2, exact = TRUE)</code></pre>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
+<p>To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure.</p>
 <div id="score-test-1" class="section level3">
 <h3>Score test</h3>
 <pre class="sas"><code>data followup; 
@@ -316,6 +320,7 @@ run; </code></pre>
 </div>
 <div id="exact-test-1" class="section level3">
 <h3>Exact test</h3>
+<p>The only thing that changes when conducting an exact test is you must add <code>exact binomial</code> after the table statement.</p>
 <pre class="sas"><code>data followupEX;
   input loss; 
   cards; 
