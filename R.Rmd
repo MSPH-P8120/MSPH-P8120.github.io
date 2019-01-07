@@ -101,10 +101,10 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 ### Measures of association
 
 | Measure               | R function         | Package  |Lecture  |
-|-----------------------|--------------------|----------|---------|
-|Odds ratio (2xk table) | `oddsratio()`      | epitools |         |
-|Risk ratio (2xk table) | `riskratio()`      | epitools |         |
-|Risk difference        | `riskdiff()`       | catfun   |         |
+|-----------------------|--------------------|----------|:---------:|
+|Odds ratio (2xk table) | `oddsratio()`      | epitools |[5](measures_association.html)    |
+|Risk ratio (2xk table) | `riskratio()`      | epitools |[5](measures_association.html)    |
+|Risk difference        | `riskdiff()`       | catfun   |[5](measures_association.html)    |
          
 ### Power
 

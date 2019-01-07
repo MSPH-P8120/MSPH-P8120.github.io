@@ -1,0 +1,77 @@
+---
+title: "Measures of Association"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+The notes for the topics on this page can be found in the lecture 5 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+Odds ratios and risk ratios can be calculated from contigency tables using the functions `oddsratio()` and `riskratio()` from the *epitools* package. Risk difference can be calculated from contingency tables using the `riskdiff()` function from the *catfun* package.
+
+```{r warning=FALSE}
+library(epitools)
+library(catfun)
+
+trial <- tibble(
+  disease = c(rep("yes", 2), rep("no", 2)), 
+  treatment = c(rep(c("estrogen", "placebo"), 2)), 
+  count = c(751, 623, 7755, 7479)
+)
+
+trial <- trial %>% 
+  mutate(disease = as.factor(disease), 
+         treatment = as.factor(treatment),
+         disease = fct_relevel(disease, "yes", "no"), 
+         treatment = fct_relevel(treatment, "estrogen", "placebo"))
+```
+
+### Odds ratio
+
+```{r}
+xtabs(count ~ treatment + disease, data = trial) %>% 
+  oddsratio(method = "wald")
+```
+
+### Risk ratio
+
+```{r}
+xtabs(count ~ treatment + disease, data = trial) %>% 
+  riskratio()
+```
+
+### Risk difference
+
+```{r}
+trial %>% 
+  riskdiff("treatment", "disease", weight = "count")
+```
+
+## SAS
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data trial; 
+  input disease $ treatment $ count; 
+  cards; 
+  yes estrogen 751
+  yes placebo 623
+  no estrogen 7755
+  no placebo 7479
+  ; 
+run; 
+  
+proc freq data = trial order = data; 
+  table treatment*disease / riskdiff relrisk; 
+  weight count; 
+run; 
+```
+
+
