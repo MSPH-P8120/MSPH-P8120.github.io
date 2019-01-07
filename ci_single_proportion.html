@@ -218,15 +218,16 @@ $(document).ready(function () {
 </div>
 
 
+<p>The notes for the topics on this page can be found in the lecture 3 folder on Canvas.</p>
 <div id="section" class="section level1 tabset tabset-fade">
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
+<p>The <code>prop_test</code> function in the <em>catfun</em> package provides both approximated confidence intervals and exact confidence intervals for single proportions. For more information run <code>?prop_test</code> in the R console. Another possible function is <code>BinomCI()</code> in the <em>DescTools</em> package.</p>
 <pre class="r"><code>library(catfun)
 
 prop_test(2, 6, method = &quot;wald&quot;, conf.level = .95)</code></pre>
-<pre><code>## 
-## 2 out of 6, null probability = 0.5
+<pre><code>## 2  out of  6,  null probability =  0.5
 ## ---------------------------------------- 
 ## Observed proportion: 0.3333333 
 ## Confidence interval method: wald 
@@ -242,6 +243,7 @@ prop_test(2, 6, method = &quot;wald&quot;, conf.level = .95)</code></pre>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
+<p>To create confidence intervals for a single proportion in SAS use the frequency procedure.</p>
 <pre class="sas"><code>data followup1; 
   input loss; 
   cards; 

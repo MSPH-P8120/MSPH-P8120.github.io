@@ -8,9 +8,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```
 
+The notes for the topics on this page can be found in the lecture 3 folder on Canvas. 
+
 # {.tabset .tabset-fade}
 
 ## R
+
+The `prop_test` function in the *catfun* package provides both approximated confidence intervals and exact confidence intervals for single proportions. For more information run `?prop_test` in the R console. Another possible function is `BinomCI()` in the *DescTools* package.
 
 ```{r warning=FALSE}
 library(catfun)
@@ -19,6 +23,8 @@ prop_test(2, 6, method = "wald", conf.level = .95)
 ```
 
 ## SAS
+
+To create confidence intervals for a single proportion in SAS use the frequency procedure. 
 
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 data followup1; 

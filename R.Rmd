@@ -1,5 +1,9 @@
 ---
 title: "R"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +29,7 @@ azt <- azt %>%
 
 ### Getting started
 
-This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded [here](https://www.r-project.org/).
+This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE reccomended when using R) can be dowloaded [here](https://www.rstudio.com/products/rstudio/download/).
 
 R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming one of the main-stays in the Data Science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R. 
 
@@ -33,11 +37,26 @@ Bundles of R functions are found in packages that can be installed and then used
 
 `install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools"))` 
 
-In addition, you will need to run, `devtools::install_github("nt-williams/catfun")`
+In addition, you will need to run, `devtools::install_github("nt-williams/catfun")`. *catfun* (think Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R's functionality for categorical data analysis.
 
 ### A tidy mindset
 
 ### Importing data
+
+We will only be working with csv datafiles in this course. To import a csv file, we recommend using the `read_csv()` function from the *readr* package. The only required argument to `read_csv()` is the file path in quotation marks. `read_csv()` will automatically add column names and choose variable types (i.e. character, numeric, date, etc.). 
+
+```{r}
+library(readr)
+
+example_df <- read_csv("../data/AZT.csv")
+```
+
+Use the `head()` function to look at the first five observations in your newly imported dataset. If you want to look at the entire dataset, use the function `View()`
+
+```{r}
+head(example_df)
+```
+
 
 ### Cross-tabulation
 
@@ -67,9 +86,9 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 
 |Hypothesis test                     | R function                     | Package          |Lecture    |
 |------------------------------------|--------------------------------|------------------|:-----------:|
-|One sample test proportions, normal approximation  |`prop.test()`| stats            |[4](hypothesis_single_prop.html)       |
-|One two sample test proportions, exact   | `binom.test()`            | stats            |[4](hypothesis_single_prop.html)          |
-|Confidence intervals, proportions   | `BinomCI()`                    | DescTools        |[3](ci_single_proportion.html)        |
+|Confidence intervals, proportions   | `prop_test()`                    | catfun        |[3](ci_single_proportion.html) |
+|One sample test proportions, normal approximation  |`prop_test()`| catfun            |[4](hypothesis_single_prop.html)|
+|One sample test proportions, exact   | `prop_test()`            | catfun           |[4](hypothesis_single_prop.html)|
 |Chi-squared                         | `crosstab(..., chisq = TRUE)` | descr             |           |
 |Fisher's exact                      | `crosstab(..., fisher = TRUE)`| descr             |           |
 |McNemar's test                      | `crosstab(..., mcnemar = TRUE)`   | descr         |           |
@@ -77,7 +96,7 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |GOF & Hosmer Lemeshow               | TBD                            | TBD              |           |
 |Conditional logistic regression     | `clogit()`                     | survival         |           |
 |Cochran Armitage Trend test         | `CocrhanArmitageTest()`        | DescTools        |           |
-|Brewlow Day test                    | `BreslowDayTest`               | DescTools        |           |
+|Breslow Day test                    | `BreslowDayTest`               | DescTools        |           |
 
 ### Measures of association
 
