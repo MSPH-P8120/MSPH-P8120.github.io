@@ -49,10 +49,10 @@ run;
 Use the following table to locate procedures for hypothesis tests. If you are unsure of the usage of a procedure, refer to the online SAS guide.
 
 |Hypothesis test                     | SAS procedure                  | Arguments needed | Lecture number |
-|------------------------------------|--------------------------------|------------------|-----------------|
-|One sample test proportions, normal approximation  | `proc freq` | `binomial(p = <insert null>)` |
-|One sample test proportions, exact   |     `proc freq`       | Same as normal approx., also requires `exact binomial` |
-|Confidence intervals, proportions   | `proc freq` | Same as normal and exact tests |
+|------------------------------------|--------------------------------|------------------|:-----------------:|
+|Confidence intervals, proportions   | `proc freq` | Same as normal and exact tests |[3](ci_single_proportion.html)|
+|One sample test proportions, normal approximation  | `proc freq` | `binomial(p = <insert null>)` |[4](hypothesis_single_prop.html)|
+|One sample test proportions, exact   |  `proc freq` | Same as normal approx., also requires `exact binomial` |[4](hypothesis_single_prop.html)|
 |Chi-squared                         | `proc freq` | `chisq expected` |
 |Fisher's exact                      | `proc freq` | Same as chi-squared test |
 |Likelihood ratio test               | `proc freq` | Same as chi-squared test |

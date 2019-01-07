@@ -10,7 +10,9 @@ navbar:
     - icon: fa-envelope fa-lg
       href: mailto:<you@youremail.com>
     - icon: fa-github fa-lg
-      href: http://github.com/<YOUR_GH_NAME>/
+      href: http://github.com/MSPH-P8120/MSPH-P8120.github.io
 output:
   html_document:
     theme: cosmo
+    include:
+      after_body: footer.html
