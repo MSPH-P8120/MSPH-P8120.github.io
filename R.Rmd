@@ -64,28 +64,29 @@ Use the `head()` function to look at the first five observations in your newly i
 head(example_df)
 ```
 
-
 ### Cross-tabulation
 
 Making cross-tabulalations in R can be done a variety of ways. One of the preferred methods is to use the function `xtabs()`
+
+The minimum syntax for `xtabs()` is: 
+
+```{r eval = FALSE}
+xtabs(<weighting variable> ~ <row variable> + <column variable>, data = <insert dataset>)
+```
+
+This example uses a dataset builds a cross-tabulation from summary data. The variable 'ncontrols' contains the counts per group which is why it is before the tilda.
 
 ```{r}
 xtabs(ncontrols ~ alcgp + agegp, data = esoph)
 ```
 
+In this example, the dataset `example_df` is individual level data, thus there is no weighting variable.  
 
-```{r xtabs example}
-# data(esoph)
-# 
-# xtabs(ncontrols ~ alcgp + agegp, data = esoph)
-# 
-# xtabs(~ aids + azt, data = azt) %>% 
-#   oddsratio(method = "wald") 
-# 
-# xtabs(~ aids + azt, data = azt) %>% 
-#   riskratio(method = "wald")
+```{r}
+xtabs(~ aids + azt, data = example_df)
 ```
 
+`xtabs()` produces very sparse tables. If you are looking for more informative tables try the `crosstab()` function from the *descr* package (see table below).
 
 ### Hypothesis tests
 

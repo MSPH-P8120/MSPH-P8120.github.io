@@ -360,6 +360,9 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 <div id="cross-tabulation" class="section level3">
 <h3>Cross-tabulation</h3>
 <p>Making cross-tabulalations in R can be done a variety of ways. One of the preferred methods is to use the function <code>xtabs()</code></p>
+<p>The minimum syntax for <code>xtabs()</code> is:</p>
+<pre class="r"><code>xtabs(&lt;weighting variable&gt; ~ &lt;row variable&gt; + &lt;column variable&gt;, data = &lt;insert dataset&gt;)</code></pre>
+<p>This example uses a dataset builds a cross-tabulation from summary data. The variable ‘ncontrols’ contains the counts per group which is why it is before the tilda.</p>
 <pre class="r"><code>xtabs(ncontrols ~ alcgp + agegp, data = esoph)</code></pre>
 <pre><code>##            agegp
 ## alcgp       25-34 35-44 45-54 55-64 65-74 75+
@@ -367,15 +370,13 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 ##   40-79        45    80    81    84    53  12
 ##   80-119        5    20    39    43    29   2
 ##   120+          5    10    15    26     8   3</code></pre>
-<pre class="r"><code># data(esoph)
-# 
-# xtabs(ncontrols ~ alcgp + agegp, data = esoph)
-# 
-# xtabs(~ aids + azt, data = azt) %&gt;% 
-#   oddsratio(method = &quot;wald&quot;) 
-# 
-# xtabs(~ aids + azt, data = azt) %&gt;% 
-#   riskratio(method = &quot;wald&quot;)</code></pre>
+<p>In this example, the dataset <code>example_df</code> is individual level data, thus there is no weighting variable.</p>
+<pre class="r"><code>xtabs(~ aids + azt, data = example_df)</code></pre>
+<pre><code>##     azt
+## aids   0   1
+##    0 124 145
+##    1  44  25</code></pre>
+<p><code>xtabs()</code> produces very sparse tables. If you are looking for more informative tables try the <code>crosstab()</code> function from the <em>descr</em> package (see table below).</p>
 </div>
 <div id="hypothesis-tests" class="section level3">
 <h3>Hypothesis tests</h3>
