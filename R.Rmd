@@ -29,11 +29,11 @@ azt <- azt %>%
 
 ### Getting started
 
-This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE reccomended when using R) can be dowloaded [here](https://www.rstudio.com/products/rstudio/download/).
+This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/).
 
 R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming one of the main-stays in the Data Science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R. 
 
-Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please intsall the following packages by running: 
+Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running: 
 
 `install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools"))` 
 
@@ -50,7 +50,7 @@ Different "philosophies" exist on how to program in R. Many stick to programming
 
 ### Importing data
 
-We will only be working with csv datafiles in this course. To import a csv file, we recommend using the `read_csv()` function from the *readr* package. The only required argument to `read_csv()` is the file path in quotation marks. `read_csv()` will automatically add column names and choose variable types (i.e. character, numeric, date, etc.). 
+We will only be working with csv data files in this course. To import a csv file, we recommend using the `read_csv()` function from the *readr* package. The only required argument to `read_csv()` is the file path in quotation marks. `read_csv()` will automatically add column names and choose variable types (i.e. character, numeric, date, etc.). 
 
 ```{r}
 library(readr)
@@ -66,7 +66,7 @@ head(example_df)
 
 ### Cross-tabulation
 
-Making cross-tabulalations in R can be done a variety of ways. One of the preferred methods is to use the function `xtabs()`
+Making cross-tabulations in R can be done a variety of ways. One of the preferred methods is to use the function `xtabs()`
 
 The minimum syntax for `xtabs()` is: 
 
@@ -74,7 +74,7 @@ The minimum syntax for `xtabs()` is:
 xtabs(<weighting variable> ~ <row variable> + <column variable>, data = <insert dataset>)
 ```
 
-This example uses a dataset builds a cross-tabulation from summary data. The variable 'ncontrols' contains the counts per group which is why it is before the tilda.
+This example uses a dataset builds a cross-tabulation from summary data. The variable 'ncontrols' contains the counts per group which is why it is before the tilde.
 
 ```{r}
 xtabs(ncontrols ~ alcgp + agegp, data = esoph)
@@ -93,8 +93,8 @@ xtabs(~ aids + azt, data = example_df)
 Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type `?<insert function>`
 
 |Hypothesis test                     | R function                     | Package          |Lecture    |
-|------------------------------------|--------------------------------|------------------|:-----------:|
-|Confidence intervals, proportions   | `prop_test()`                    | catfun        |[3](ci_single_proportion.html) |
+|------------------------------------|--------------------------------|------------------|:---------:|
+|Confidence intervals, proportions   | `prop_test()`                  | catfun        |[3](ci_single_proportion.html) |
 |One sample test proportions, normal approximation  |`prop_test()`| catfun            |[4](hypothesis_single_prop.html)|
 |One sample test proportions, exact   | `prop_test()`            | catfun           |[4](hypothesis_single_prop.html)|
 |Chi-squared                         | `crosstab(..., chisq = TRUE)` | descr             |           |
@@ -108,11 +108,11 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 
 ### Measures of association
 
-| Measure               | R function         | Package  |Lecture  |
-|-----------------------|--------------------|----------|:---------:|
-|Odds ratio (2xk table) | `oddsratio()`      | epitools |[5](measures_association.html)    |
-|Risk ratio (2xk table) | `riskratio()`      | epitools |[5](measures_association.html)    |
-|Risk difference        | `riskdiff()`       | catfun   |[5](measures_association.html)    |
+| Measure               | R function         | Package  |Lecture                               |
+|-----------------------|--------------------|----------|:------------------------------------:|
+|Odds ratio (2 x k table) | `oddsratio()`      | epitools |[5 & 7](measures_association.html)    |
+|Risk ratio (2 x k table) | `riskratio()`      | epitools |[5 & 7](measures_association.html)    |
+|Risk difference        | `riskdiff()`       | catfun   |[5 & 7](measures_association.html)    |
          
 ### Power
 

@@ -218,12 +218,12 @@ $(document).ready(function () {
 </div>
 
 
-<p>The notes for the topics on this page can be found in the lecture 5 folder on Canvas.</p>
+<p>The notes for the topics on this page can be found in the lectures 5 and 7 folders on Canvas.</p>
 <div id="section" class="section level1 tabset tabset-fade">
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<p>Odds ratios and risk ratios can be calculated from contigency tables using the functions <code>oddsratio()</code> and <code>riskratio()</code> from the <em>epitools</em> package. Risk difference can be calculated from contingency tables using the <code>riskdiff()</code> function from the <em>catfun</em> package.</p>
+<p>Odds ratios and risk ratios can be calculated from contingency tables using the functions <code>oddsratio()</code> and <code>riskratio()</code> from the <em>epitools</em> package. Risk difference can be calculated from contingency tables using the <code>riskdiff()</code> function from the <em>catfun</em> package.</p>
 <pre class="r"><code>library(epitools)
 library(catfun)
 
@@ -238,6 +238,7 @@ trial &lt;- trial %&gt;%
          treatment = as.factor(treatment),
          disease = fct_relevel(disease, &quot;yes&quot;, &quot;no&quot;), 
          treatment = fct_relevel(treatment, &quot;estrogen&quot;, &quot;placebo&quot;))</code></pre>
+<p>For these examples, the <code>oddsratio()</code> and <code>riskratio()</code> are used in combination with <code>xtabs()</code> while <code>riskdiff()</code> only calls upon the dataset.</p>
 <div id="odds-ratio" class="section level3">
 <h3>Odds ratio</h3>
 <pre class="r"><code>xtabs(count ~ treatment + disease, data = trial) %&gt;% 
@@ -318,6 +319,11 @@ trial &lt;- trial %&gt;%
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
+<p>To caculate measures of association from a contingency table in SAS you use the frequency procedure with the <code>relrisk</code> argument in table statement to generate the relative risk/odds ratio and the <code>riskdiff</code> argument to generate the risk difference. This will always produce confidence intervals for generated measures. The syntax is:</p>
+<pre><code>proc freq data = &lt;dataset&gt;; 
+  table &lt;row variable&gt;*&lt;column variable&gt; / &lt;relrisk&gt; &lt;riskdiff&gt;; 
+  weight &lt;weighting variable if summary data&gt;; 
+run; </code></pre>
 <pre class="sas"><code>data trial; 
   input disease $ treatment $ count; 
   cards; 

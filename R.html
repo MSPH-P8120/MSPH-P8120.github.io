@@ -318,9 +318,9 @@ div.tocify {
 
 <div id="getting-started" class="section level3">
 <h3>Getting started</h3>
-<p>This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded <a href="https://www.r-project.org/">here</a> and R Studio (an IDE reccomended when using R) can be dowloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>.</p>
+<p>This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded <a href="https://www.r-project.org/">here</a> and R Studio (an IDE recommended when using R) can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>.</p>
 <p>R is an open-source functional programming language built for statistical computing. R’s popularity has continued to grow and is becoming one of the main-stays in the Data Science community. Unlike SAS, R is supported by it’s users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R.</p>
-<p>Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please intsall the following packages by running:</p>
+<p>Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running:</p>
 <p><code>install.packages(c(&quot;tidyverse&quot;, &quot;descr&quot;, &quot;descTools&quot;, &quot;surival&quot;, &quot;epitools&quot;))</code></p>
 <p>In addition, you will need to run, <code>devtools::install_github(&quot;nt-williams/catfun&quot;)</code>. <em>catfun</em> (think Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R’s functionality for categorical data analysis.</p>
 <p>Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R these are good resources:</p>
@@ -335,7 +335,7 @@ div.tocify {
 </div>
 <div id="importing-data" class="section level3">
 <h3>Importing data</h3>
-<p>We will only be working with csv datafiles in this course. To import a csv file, we recommend using the <code>read_csv()</code> function from the <em>readr</em> package. The only required argument to <code>read_csv()</code> is the file path in quotation marks. <code>read_csv()</code> will automatically add column names and choose variable types (i.e. character, numeric, date, etc.).</p>
+<p>We will only be working with csv data files in this course. To import a csv file, we recommend using the <code>read_csv()</code> function from the <em>readr</em> package. The only required argument to <code>read_csv()</code> is the file path in quotation marks. <code>read_csv()</code> will automatically add column names and choose variable types (i.e. character, numeric, date, etc.).</p>
 <pre class="r"><code>library(readr)
 
 example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
@@ -359,10 +359,10 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 </div>
 <div id="cross-tabulation" class="section level3">
 <h3>Cross-tabulation</h3>
-<p>Making cross-tabulalations in R can be done a variety of ways. One of the preferred methods is to use the function <code>xtabs()</code></p>
+<p>Making cross-tabulations in R can be done a variety of ways. One of the preferred methods is to use the function <code>xtabs()</code></p>
 <p>The minimum syntax for <code>xtabs()</code> is:</p>
 <pre class="r"><code>xtabs(&lt;weighting variable&gt; ~ &lt;row variable&gt; + &lt;column variable&gt;, data = &lt;insert dataset&gt;)</code></pre>
-<p>This example uses a dataset builds a cross-tabulation from summary data. The variable ‘ncontrols’ contains the counts per group which is why it is before the tilda.</p>
+<p>This example uses a dataset builds a cross-tabulation from summary data. The variable ‘ncontrols’ contains the counts per group which is why it is before the tilde.</p>
 <pre class="r"><code>xtabs(ncontrols ~ alcgp + agegp, data = esoph)</code></pre>
 <pre><code>##            agegp
 ## alcgp       25-34 35-44 45-54 55-64 65-74 75+
@@ -473,22 +473,22 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Odds ratio (2xk table)</td>
+<td>Odds ratio (2 x k table)</td>
 <td><code>oddsratio()</code></td>
 <td>epitools</td>
-<td align="center"><a href="measures_association.html">5</a></td>
+<td align="center"><a href="measures_association.html">5 &amp; 7</a></td>
 </tr>
 <tr class="even">
-<td>Risk ratio (2xk table)</td>
+<td>Risk ratio (2 x k table)</td>
 <td><code>riskratio()</code></td>
 <td>epitools</td>
-<td align="center"><a href="measures_association.html">5</a></td>
+<td align="center"><a href="measures_association.html">5 &amp; 7</a></td>
 </tr>
 <tr class="odd">
 <td>Risk difference</td>
 <td><code>riskdiff()</code></td>
 <td>catfun</td>
-<td align="center"><a href="measures_association.html">5</a></td>
+<td align="center"><a href="measures_association.html">5 &amp; 7</a></td>
 </tr>
 </tbody>
 </table>

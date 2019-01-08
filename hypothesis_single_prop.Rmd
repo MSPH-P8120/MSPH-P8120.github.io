@@ -37,6 +37,15 @@ prop_test(2, 6, method = "wald", p = 0.2, exact = TRUE)
 
 To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. 
 
+The syntax is: 
+
+```{}
+proc freq data = <dataset>; 
+  table <variable name> / binomial(p = <null value>) alpha = <alpha level>; 
+  weight <weighting variable if summary data>; 
+run; 
+```
+
 ### Score test
 
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}

@@ -9,13 +9,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-The notes for the topics on this page can be found in the lecture 5 folder on Canvas. 
+The notes for the topics on this page can be found in the lectures 5 and 7 folders on Canvas. 
 
 # {.tabset .tabset-fade}
 
 ## R
 
-Odds ratios and risk ratios can be calculated from contigency tables using the functions `oddsratio()` and `riskratio()` from the *epitools* package. Risk difference can be calculated from contingency tables using the `riskdiff()` function from the *catfun* package.
+Odds ratios and risk ratios can be calculated from contingency tables using the functions `oddsratio()` and `riskratio()` from the *epitools* package. Risk difference can be calculated from contingency tables using the `riskdiff()` function from the *catfun* package.
 
 ```{r warning=FALSE}
 library(epitools)
@@ -33,6 +33,8 @@ trial <- trial %>%
          disease = fct_relevel(disease, "yes", "no"), 
          treatment = fct_relevel(treatment, "estrogen", "placebo"))
 ```
+
+For these examples, the `oddsratio()` and `riskratio()` are used in combination with `xtabs()` while `riskdiff()` only calls upon the dataset. 
 
 ### Odds ratio
 
@@ -56,6 +58,15 @@ trial %>%
 ```
 
 ## SAS
+
+To caculate measures of association from a contingency table in SAS you use the frequency procedure with the `relrisk` argument in table statement to generate the relative risk/odds ratio and the `riskdiff` argument to generate the risk difference. This will always produce confidence intervals for generated measures. The syntax is: 
+
+```{}
+proc freq data = <dataset>; 
+  table <row variable>*<column variable> / <relrisk> <riskdiff>; 
+  weight <weighting variable if summary data>; 
+run; 
+```
 
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 data trial; 

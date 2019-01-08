@@ -244,6 +244,12 @@ prop_test(2, 6, method = &quot;wald&quot;, conf.level = .95)</code></pre>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
 <p>To create confidence intervals for a single proportion in SAS use the frequency procedure.</p>
+<p>The syntax is:</p>
+<pre><code>proc freq data = &lt;dataset&gt;; 
+  table &lt;variable name&gt; / binomial(p = &lt;null value&gt;) alpha = &lt;alpha level&gt;; 
+  weight &lt;weighting variable if summary data&gt;; 
+run; </code></pre>
+<p>The following example tests if the proportion 0.33 (2/6) is equal to 0.5 in the population. Because this is summary level data, we include a weight statement and indicate that the variable loss contains the counts.</p>
 <pre class="sas"><code>data followup1; 
   input loss; 
   cards; 

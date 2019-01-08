@@ -29,7 +29,7 @@ proc import out = <SAS dataset name>
 run; 
 ```
 
-The data step in SAS is where all data manipulation occurs, this includes being able to import data. While using a data step to import data is more complicated, it offers the user more control over the import process. The first argument to any data step is the name of the dataset you are creating. When importing a datafile, the next argument is `infile` followed by the full path to the data on your computer, the `delimiter` argument which specifies the delimiter used to separate values (',' for a csv), the `missover` argument, the `firstobs` argument (if a file already has variable names in it set this to 2, otherwise set to 1), and `DSD`. Following the infile argument is the `input` argument where you can specify variable names and whether or not they should be treated as numeric or categorical variables; if a variable should be treated as categorical, it's name is followed by a $. The synatix is as follows: 
+The data step in SAS is where all data manipulation occurs, this includes being able to import data. While using a data step to import data is more complicated, it offers the user more control over the import process. The first argument to any data step is the name of the dataset you are creating. When importing a datafile, the next argument is `infile` followed by the full path to the data on your computer, the `delimiter` argument which specifies the delimiter used to separate values (',' for a csv), the `missover` argument, the `firstobs` argument (if a file already has variable names in it set this to 2, otherwise set to 1), and `DSD`. Following the infile argument is the `input` argument where you can specify variable names and whether or not they should be treated as numeric or categorical variables; if a variable should be treated as categorical, it's name is followed by a $. The syntax is as follows: 
 
 ```{}
 data <insert SAS dataset name>
@@ -67,10 +67,10 @@ Use the following table to locate procedures for hypothesis tests. If you are un
 ### Measures of association
 
 | Measure               | SAS procedure      | Arguments needed | Lecture number  |
-|-----------------------|--------------------|------------------|-----------------|
-|Odds ratio (2xk table) | `proc freq`        | `relrisk`        |[5](measures_association.html) 
-|Risk ratio (2xk table) | `proc freq`        | `relrisk`        |[5](measures_association.html) 
-|Risk difference        | `proc freq`        | `riskdiff`       |[5](measures_association.html) 
+|-----------------------|--------------------|------------------|:---------------:|
+|Odds ratio (2 x k table) | `proc freq`        | `relrisk`        |[5 & 7](measures_association.html) 
+|Risk ratio (2 x k table) | `proc freq`        | `relrisk`        |[5 & 7](measures_association.html) 
+|Risk difference        | `proc freq`        | `riskdiff`       |[5 & 7](measures_association.html) 
 ### Power
 
 
