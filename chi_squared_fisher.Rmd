@@ -1,0 +1,63 @@
+---
+title: "Chi-squared and Fisher's Exact"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+The notes for the topics on this page can be found in the lecture 8 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+```{r}
+vietnam <- tibble(
+  service = c(rep("yes", 2), rep("no", 2)), 
+  sleep = c(rep("yes", "no", 2), rep("yes", "no", 2)), 
+  count = c(173, 160, 599, 851)
+)
+```
+
+### Chi-squared 
+
+### Fisher's exact
+
+## SAS
+
+To conduct a chi-squared test or Fisher's exact test in SAS use the frequency procedure. The following code will produce return results for both a chi-squared test and a Fisher's exact test. The syntax is:
+
+```{}
+proc freq data = <dataset>; 
+  table <row variable>*<column variable> / chisq expected; 
+  weight <weighting variable if summary data>; 
+run; 
+```
+
+### Chi-squared & Fisher's exact
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data vietnam; 
+  input service $ sleep $ count; 
+  cards; 
+  yes yes 173
+  yes no 160
+  no yes 599
+  no no 851
+  ; 
+run; 
+  
+title 'Chi-squared test example'; 
+proc freq data = vietnam order = data; 
+  table service*sleep / relrisk chisq expected; 
+  weight count; 
+run; 
+```
+
+
+
+

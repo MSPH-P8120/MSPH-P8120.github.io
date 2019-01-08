@@ -90,15 +90,15 @@ xtabs(~ aids + azt, data = example_df)
 
 ### Hypothesis tests
 
-Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type `?<insert function>`
+Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type `?<insert function>`. For many of these tests, there are multiple functions that one could use; these are the one's we have found to work best. 
 
 |Hypothesis test                     | R function                     | Package          |Lecture    |
 |------------------------------------|--------------------------------|------------------|:---------:|
 |Confidence intervals, proportions   | `prop_test()`                  | catfun        |[3](ci_single_proportion.html) |
-|One sample test proportions, normal approximation  |`prop_test()`| catfun            |[4](hypothesis_single_prop.html)|
-|One sample test proportions, exact   | `prop_test()`            | catfun           |[4](hypothesis_single_prop.html)|
-|Chi-squared                         | `crosstab(..., chisq = TRUE)` | descr             |           |
-|Fisher's exact                      | `crosstab(..., fisher = TRUE)`| descr             |           |
+|One sample test proportions, normal approximation  |`prop_test()`| catfun            | [4](hypothesis_single_prop.html)|
+|One sample test proportions, exact   | `prop_test()`            | catfun           | [4](hypothesis_single_prop.html)|
+|Chi-squared                         | `crosstab(..., chisq = TRUE)` | descr             | [8](chi_squared_fisher.html)          |
+|Fisher's exact                      | `crosstab(..., fisher = TRUE)`| descr             | [8](chi_squared_fisher.html)           |
 |McNemar's test                      | `crosstab(..., mcnemar = TRUE)`   | descr         |           |
 |Logistic regression                 | `glm(..., family = binomial)`  | stats            |           |
 |GOF & Hosmer Lemeshow               | TBD                            | TBD              |           |
