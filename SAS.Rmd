@@ -71,6 +71,7 @@ Use the following table to locate procedures for hypothesis tests. If you are un
 |Odds ratio (2 x k table) | `proc freq`        | `relrisk`        |[5 & 7](measures_association.html) 
 |Risk ratio (2 x k table) | `proc freq`        | `relrisk`        |[5 & 7](measures_association.html) 
 |Risk difference        | `proc freq`        | `riskdiff`       |[5 & 7](measures_association.html) 
+
 ### Power
 
-
+Coming soon

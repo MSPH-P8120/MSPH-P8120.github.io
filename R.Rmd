@@ -116,5 +116,5 @@ Use the following table to locate functions for hypothesis tests. If you are uns
          
 ### Power
 
-Fun
+Coming soon
 
