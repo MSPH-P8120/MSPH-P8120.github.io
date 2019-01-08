@@ -39,7 +39,14 @@ Bundles of R functions are found in packages that can be installed and then used
 
 In addition, you will need to run, `devtools::install_github("nt-williams/catfun")`. *catfun* (think Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R's functionality for categorical data analysis.
 
+Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R these are good resources: 
+
+- Getting started and best practices from [P8105](http://p8105.com/best_practices.html) taught by Jeff Goldsmith
+- [R for Data Science](https://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham
+
 ### A tidy mindset
+
+Different "philosophies" exist on how to program in R. Many stick to programming in what's called base R while the examples throughout this site use what could be called a "tidy" mindset. That is, code is formatted and (for the most part) uses functions/packages that is reproducible and easy to follow. More information can be found [here](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html).
 
 ### Importing data
 
