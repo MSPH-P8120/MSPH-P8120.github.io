@@ -223,16 +223,115 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
+<p>To conduct a chi-squared test or Fisher’s exact test in R you can use the <code>CrossTable()</code> function from the <em>descr</em> package. <code>CrossTable()</code> isn’t set up to directly account for weighted cell counts. If you only have summary data you can first use <code>xtabs()</code> to build the contigency table and then use the <code>%&gt;%</code> operator to ‘pipe’ the table into <code>CrossTable()</code>; the below examples illustrate this.</p>
 <pre class="r"><code>vietnam &lt;- tibble(
   service = c(rep(&quot;yes&quot;, 2), rep(&quot;no&quot;, 2)), 
-  sleep = c(rep(&quot;yes&quot;, &quot;no&quot;, 2), rep(&quot;yes&quot;, &quot;no&quot;, 2)), 
+  sleep = c(rep(c(&quot;yes&quot;, &quot;no&quot;), 2)), 
   count = c(173, 160, 599, 851)
-)</code></pre>
+)
+
+vietnam &lt;- vietnam %&gt;% 
+  mutate(service = as_factor(service), 
+         sleep = as_factor(sleep))</code></pre>
 <div id="chi-squared" class="section level3">
 <h3>Chi-squared</h3>
+<p>To conduct a chi-squared test, set the <code>chisq</code> argument to <code>TRUE</code>.</p>
+<pre class="r"><code>library(descr)
+
+xtabs(count ~ service + sleep, data = vietnam) %&gt;% 
+  CrossTable(expected = TRUE, chisq = TRUE)</code></pre>
+<pre><code>##    Cell Contents 
+## |-------------------------|
+## |                       N | 
+## |              Expected N | 
+## | Chi-square contribution | 
+## |           N / Row Total | 
+## |           N / Col Total | 
+## |         N / Table Total | 
+## |-------------------------|
+## 
+## ================================
+##            sleep
+## service      yes      no   Total
+## --------------------------------
+## yes          173     160     333
+##            144.2   188.8        
+##            5.760   4.398        
+##            0.520   0.480   0.187
+##            0.224   0.158        
+##            0.097   0.090        
+## --------------------------------
+## no           599     851    1450
+##            627.8   822.2        
+##            1.323   1.010        
+##            0.413   0.587   0.813
+##            0.776   0.842        
+##            0.336   0.477        
+## --------------------------------
+## Total        772    1011    1783
+##            0.433   0.567        
+## ================================
+## 
+## Statistics for All Table Factors
+## 
+## Pearson&#39;s Chi-squared test 
+## ------------------------------------------------------------
+## Chi^2 = 12.49136      d.f. = 1      p = 0.000409 
+## 
+## Pearson&#39;s Chi-squared test with Yates&#39; continuity correction 
+## ------------------------------------------------------------
+## Chi^2 = 12.06166      d.f. = 1      p = 0.000515</code></pre>
 </div>
 <div id="fishers-exact" class="section level3">
 <h3>Fisher’s exact</h3>
+<p>To conduct a Fisher’s exact test, set the <code>fisher</code> argument to <code>TRUE</code></p>
+<pre class="r"><code>xtabs(count ~ service + sleep, data = vietnam) %&gt;% 
+  CrossTable(fisher = TRUE)</code></pre>
+<pre><code>##    Cell Contents 
+## |-------------------------|
+## |                       N | 
+## | Chi-square contribution | 
+## |           N / Row Total | 
+## |           N / Col Total | 
+## |         N / Table Total | 
+## |-------------------------|
+## 
+## ================================
+##            sleep
+## service      yes      no   Total
+## --------------------------------
+## yes          173     160     333
+##            5.760   4.398        
+##            0.520   0.480   0.187
+##            0.224   0.158        
+##            0.097   0.090        
+## --------------------------------
+## no           599     851    1450
+##            1.323   1.010        
+##            0.413   0.587   0.813
+##            0.776   0.842        
+##            0.336   0.477        
+## --------------------------------
+## Total        772    1011    1783
+##            0.433   0.567        
+## ================================
+## 
+##  
+## Fisher&#39;s Exact Test for Count Data
+## ------------------------------------------------------------
+## Sample estimate odds ratio: 1.535716 
+## 
+## Alternative hypothesis: true odds ratio is not equal to 1 
+## p = 0.000466 
+## 95% confidence interval: 1.200679 1.965386 
+## 
+## Alternative hypothesis: true odds ratio is less than 1 
+## p = 1 
+## 95%s confidence interval: % 0 1.890994 
+## 
+## Alternative hypothesis: true odds ratio is greater than 1 
+## p = 0.000269 
+## 95%s confidence interval: % 1.247644 Inf</code></pre>
 </div>
 </div>
 <div id="sas" class="section level2">
