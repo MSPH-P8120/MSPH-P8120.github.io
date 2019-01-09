@@ -42,7 +42,17 @@ data <insert SAS dataset name>
 run; 
 ```
 
+### Output delivery system (ODS)
 
+You will be asked to include SAS output in homework assignments. SAS has a built in output delivery system (ODS) that can save output as an rtf file to be used in a word document. The basic usage is: 
+
+```{}
+ods rtf file = "filepath and name";
+<procedure code>
+ods rtf close; 
+```
+
+You are not required to use this method when including SAS output in assignments.
 
 ### Hypothesis tests
 
