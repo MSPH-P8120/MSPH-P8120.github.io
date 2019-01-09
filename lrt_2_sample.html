@@ -11,7 +11,7 @@
 
 
 
-<title>Chi-squared and Fisher’s Exact</title>
+<title>Likelihood ratio test and 2-sample test of proportions</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -213,17 +213,16 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Chi-squared and Fisher’s Exact</h1>
+<h1 class="title toc-ignore">Likelihood ratio test and 2-sample test of proportions</h1>
 
 </div>
 
 
-<p>The notes for the topics on this page can be found in the lecture 8 folder on Canvas.</p>
+<p>The notes for the topics on this page can be found in the lectures 9 folders on Canvas.</p>
 <div id="section" class="section level1 tabset tabset-fade">
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<p>To conduct a chi-squared test or Fisher’s exact test in R you can use the <code>CrossTable()</code> function from the <em>descr</em> package. <code>CrossTable()</code> isn’t set up to directly account for weighted cell counts. If you only have summary data you can first use <code>xtabs()</code> to build the contigency table and then use the <code>%&gt;%</code> operator to ‘pipe’ the table into <code>CrossTable()</code>; the below examples illustrate this. For more help, type <code>?CrossTable</code> in the R console.</p>
 <pre class="r"><code>vietnam &lt;- tibble(
   service = c(rep(&quot;yes&quot;, 2), rep(&quot;no&quot;, 2)), 
   sleep = c(rep(c(&quot;yes&quot;, &quot;no&quot;), 2)), 
@@ -233,116 +232,45 @@ $(document).ready(function () {
 vietnam &lt;- vietnam %&gt;% 
   mutate(service = as_factor(service), 
          sleep = as_factor(sleep))</code></pre>
-<div id="chi-squared" class="section level3">
-<h3>Chi-squared</h3>
-<p>To conduct a chi-squared test, set the <code>chisq</code> argument to <code>TRUE</code>.</p>
-<pre class="r"><code>library(descr)
+<div id="likelihood-ratio-test" class="section level3">
+<h3>Likelihood ratio test</h3>
+<pre class="r"><code>library(DescTools)
 
 xtabs(count ~ service + sleep, data = vietnam) %&gt;% 
-  CrossTable(expected = TRUE, chisq = TRUE)</code></pre>
-<pre><code>##    Cell Contents 
-## |-------------------------|
-## |                       N | 
-## |              Expected N | 
-## | Chi-square contribution | 
-## |           N / Row Total | 
-## |           N / Col Total | 
-## |         N / Table Total | 
-## |-------------------------|
+  GTest()</code></pre>
+<pre><code>## 
+##  Log likelihood ratio (G-test) test of independence without
+##  correction
 ## 
-## ================================
-##            sleep
-## service      yes      no   Total
-## --------------------------------
-## yes          173     160     333
-##            144.2   188.8        
-##            5.760   4.398        
-##            0.520   0.480   0.187
-##            0.224   0.158        
-##            0.097   0.090        
-## --------------------------------
-## no           599     851    1450
-##            627.8   822.2        
-##            1.323   1.010        
-##            0.413   0.587   0.813
-##            0.776   0.842        
-##            0.336   0.477        
-## --------------------------------
-## Total        772    1011    1783
-##            0.433   0.567        
-## ================================
-## 
-## Statistics for All Table Factors
-## 
-## Pearson&#39;s Chi-squared test 
-## ------------------------------------------------------------
-## Chi^2 = 12.49136      d.f. = 1      p = 0.000409 
-## 
-## Pearson&#39;s Chi-squared test with Yates&#39; continuity correction 
-## ------------------------------------------------------------
-## Chi^2 = 12.06166      d.f. = 1      p = 0.000515</code></pre>
+## data:  .
+## G = 12.394, X-squared df = 1, p-value = 0.0004308</code></pre>
 </div>
-<div id="fishers-exact" class="section level3">
-<h3>Fisher’s exact</h3>
-<p>To conduct a Fisher’s exact test, set the <code>fisher</code> argument to <code>TRUE</code></p>
+<div id="sample-test-of-proportions" class="section level3">
+<h3>2-sample test of proportions</h3>
 <pre class="r"><code>xtabs(count ~ service + sleep, data = vietnam) %&gt;% 
-  CrossTable(fisher = TRUE)</code></pre>
-<pre><code>##    Cell Contents 
-## |-------------------------|
-## |                       N | 
-## | Chi-square contribution | 
-## |           N / Row Total | 
-## |           N / Col Total | 
-## |         N / Table Total | 
-## |-------------------------|
+  prop.test(correct = FALSE)</code></pre>
+<pre><code>## 
+##  2-sample test for equality of proportions without continuity
+##  correction
 ## 
-## ================================
-##            sleep
-## service      yes      no   Total
-## --------------------------------
-## yes          173     160     333
-##            5.760   4.398        
-##            0.520   0.480   0.187
-##            0.224   0.158        
-##            0.097   0.090        
-## --------------------------------
-## no           599     851    1450
-##            1.323   1.010        
-##            0.413   0.587   0.813
-##            0.776   0.842        
-##            0.336   0.477        
-## --------------------------------
-## Total        772    1011    1783
-##            0.433   0.567        
-## ================================
-## 
-##  
-## Fisher&#39;s Exact Test for Count Data
-## ------------------------------------------------------------
-## Sample estimate odds ratio: 1.535716 
-## 
-## Alternative hypothesis: true odds ratio is not equal to 1 
-## p = 0.000466 
-## 95% confidence interval: 1.200679 1.965386 
-## 
-## Alternative hypothesis: true odds ratio is less than 1 
-## p = 1 
-## 95%s confidence interval: % 0 1.890994 
-## 
-## Alternative hypothesis: true odds ratio is greater than 1 
-## p = 0.000269 
-## 95%s confidence interval: % 1.247644 Inf</code></pre>
+## data:  .
+## X-squared = 12.491, df = 1, p-value = 0.0004088
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  0.04707049 0.16576166
+## sample estimates:
+##    prop 1    prop 2 
+## 0.5195195 0.4131034</code></pre>
 </div>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<p>To conduct a chi-squared test or Fisher’s exact test in SAS use the frequency procedure. The following code will produce return results for both a chi-squared test and a Fisher’s exact test. The syntax is:</p>
 <pre><code>proc freq data = &lt;dataset&gt;; 
   table &lt;row variable&gt;*&lt;column variable&gt; / chisq expected; 
   weight &lt;weighting variable if summary data&gt;; 
 run; </code></pre>
-<div id="chi-squared-fishers-exact" class="section level3">
-<h3>Chi-squared &amp; Fisher’s exact</h3>
+<div id="likelihood-ratio-test-1" class="section level3">
+<h3>Likelihood ratio test</h3>
 <pre class="sas"><code>data vietnam; 
   input service $ sleep $ count; 
   cards; 
@@ -418,6 +346,93 @@ run; </code></pre>
 ##                    Odds Ratio                      1.5361        1.2095        1.9509
 ##                    Relative Risk (Column 1)        1.2576        1.1152        1.4181
 ##                    Relative Risk (Column 2)        0.8187        0.7263        0.9228
+## 
+##                                            Sample Size = 1783</code></pre>
+</div>
+<div id="sample-test-of-proportions-1" class="section level3">
+<h3>2-sample test of proportions</h3>
+<pre class="sas"><code>data vietnam; 
+  input service $ sleep $ count; 
+  cards; 
+  yes yes 173
+  yes no 160
+  no yes 599
+  no no 851
+  ; 
+run; 
+  
+proc freq data = vietnam order = data; 
+  table service*sleep / expected riskdiff(equal var = null); 
+  weight count; 
+run; </code></pre>
+<pre><code>##                                            The FREQ Procedure
+## 
+##                                        Table of service by sleep
+## 
+##                                   service     sleep
+## 
+##                                   Frequency|
+##                                   Expected |
+##                                   Percent  |
+##                                   Row Pct  |
+##                                   Col Pct  |yes     |no      |  Total
+##                                   ---------+--------+--------+
+##                                   yes      |    173 |    160 |    333
+##                                            | 144.18 | 188.82 |
+##                                            |   9.70 |   8.97 |  18.68
+##                                            |  51.95 |  48.05 |
+##                                            |  22.41 |  15.83 |
+##                                   ---------+--------+--------+
+##                                   no       |    599 |    851 |   1450
+##                                            | 627.82 | 822.18 |
+##                                            |  33.60 |  47.73 |  81.32
+##                                            |  41.31 |  58.69 |
+##                                            |  77.59 |  84.17 |
+##                                   ---------+--------+--------+
+##                                   Total         772     1011     1783
+##                                               43.30    56.70   100.00
+## 
+## 
+##                                 Statistics for Table of service by sleep
+## 
+##                                         Column 1 Risk Estimates
+##  
+##                                                    (Asymptotic) 95%         (Exact) 95%
+##                                Risk        ASE     Confidence Limits     Confidence Limits
+##              -----------------------------------------------------------------------------
+##              Row 1           0.5195     0.0274     0.4659     0.5732     0.4644     0.5743
+##              Row 2           0.4131     0.0129     0.3878     0.4384     0.3876     0.4389
+##              Total           0.4330     0.0117     0.4100     0.4560     0.4098     0.4564
+## 
+##              Difference      0.1064     0.0303     0.0471     0.1658                      
+## 
+##                                      Difference is (Row 1 - Row 2)
+## 
+## 
+##                                    Proportion (Risk) Difference Test
+##                                     H0: P1 - P2 = 0    Wald Method
+## 
+##                                    Proportion Difference      0.1064
+##                                    ASE (H0)                   0.0301
+##                                    Z                          3.5343
+##                                    One-sided Pr &gt;  Z          0.0002
+##                                    Two-sided Pr &gt; |Z|         0.0004
+## 
+##                                         Column 1 (sleep = yes)
+## 
+## 
+##                                         Column 2 Risk Estimates
+##  
+##                                                    (Asymptotic) 95%         (Exact) 95%
+##                                Risk        ASE     Confidence Limits     Confidence Limits
+##              -----------------------------------------------------------------------------
+##              Row 1           0.4805     0.0274     0.4268     0.5341     0.4257     0.5356
+##              Row 2           0.5869     0.0129     0.5616     0.6122     0.5611     0.6124
+##              Total           0.5670     0.0117     0.5440     0.5900     0.5436     0.5902
+## 
+##              Difference     -0.1064     0.0303    -0.1658    -0.0471                      
+## 
+##                                      Difference is (Row 1 - Row 2)
 ## 
 ##                                            Sample Size = 1783</code></pre>
 </div>

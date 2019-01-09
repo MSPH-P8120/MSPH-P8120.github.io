@@ -99,8 +99,8 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |One sample test proportions, exact   | `prop_test()`            | catfun           | [4](hypothesis_single_prop.html)|
 |Chi-squared                         | `CrossTable(..., chisq = TRUE)` | descr             | [8](chi_squared_fisher.html)          |
 |Fisher's exact                      | `CrossTable(..., fisher = TRUE)`| descr             | [8](chi_squared_fisher.html)           |
-|Liklihood ratio test                | `GTest()`                      | DescTools        |           |
-|Two sample test for proportions     | Coming soon                    | TBD              |           |
+|Liklihood ratio test                | `GTest()`                      | DescTools        | [9](lrt_2_sample.html)          |
+|Two sample test for proportions     | Coming soon                    | TBD              | [9](lrt_2_sample.html)          |
 |McNemar's test                      | `CrossTable(..., mcnemar = TRUE)`   | descr         |           |
 |Logistic regression                 | `glm(..., family = binomial)`  | stats            |           |
 |GOF & Hosmer Lemeshow               | TBD                            | TBD              |           |

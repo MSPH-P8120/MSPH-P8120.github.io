@@ -1,0 +1,98 @@
+---
+title: "Likelihood ratio test and 2-sample test of proportions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+The notes for the topics on this page can be found in the lectures 9 folders on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+```{r}
+vietnam <- tibble(
+  service = c(rep("yes", 2), rep("no", 2)), 
+  sleep = c(rep(c("yes", "no"), 2)), 
+  count = c(173, 160, 599, 851)
+)
+
+vietnam <- vietnam %>% 
+  mutate(service = as_factor(service), 
+         sleep = as_factor(sleep))
+```
+
+### Likelihood ratio test
+
+```{r}
+library(DescTools)
+
+xtabs(count ~ service + sleep, data = vietnam) %>% 
+  GTest()
+```
+
+### 2-sample test of proportions
+
+```{r}
+xtabs(count ~ service + sleep, data = vietnam) %>% 
+  prop.test(correct = FALSE)
+```
+
+
+## SAS
+
+```{}
+proc freq data = <dataset>; 
+  table <row variable>*<column variable> / chisq expected; 
+  weight <weighting variable if summary data>; 
+run; 
+```
+
+### Likelihood ratio test
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data vietnam; 
+  input service $ sleep $ count; 
+  cards; 
+  yes yes 173
+  yes no 160
+  no yes 599
+  no no 851
+  ; 
+run; 
+  
+title 'Chi-squared test example'; 
+proc freq data = vietnam order = data; 
+  table service*sleep / relrisk chisq expected; 
+  weight count; 
+run; 
+```
+
+### 2-sample test of proportions
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data vietnam; 
+  input service $ sleep $ count; 
+  cards; 
+  yes yes 173
+  yes no 160
+  no yes 599
+  no no 851
+  ; 
+run; 
+  
+proc freq data = vietnam order = data; 
+  table service*sleep / expected riskdiff(equal var = null); 
+  weight count; 
+run; 
+```
+
+
+
+
+
