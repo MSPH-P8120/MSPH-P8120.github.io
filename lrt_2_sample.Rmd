@@ -39,10 +39,11 @@ xtabs(count ~ service + sleep, data = vietnam) %>%
 ### 2-sample test of proportions
 
 ```{r}
-xtabs(count ~ service + sleep, data = vietnam) %>% 
-  prop.test(correct = FALSE)
-```
+library(catfun)
 
+xtabs(count ~ service + sleep, data = vietnam) %>% 
+  prop_test()
+```
 
 ## SAS
 
