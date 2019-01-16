@@ -1,0 +1,95 @@
+---
+title: "Power"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(SASmarkdown)
+```
+
+# {.tabset .tabset-fade}
+
+## R
+
+The *pwr* package has a variety of functions for conducting power analyses. It is important to note, however, that these functions to not return the exact same results as SAS. 
+
+### Computing power for fixed sample size
+
+The `pwr.2p.test()` function can be used to calculate power for equal group sample sizes. The first arument `h` takes Cohen's H as the measure of effect; to calculate Cohen's H use the `ES.h()` function as demonstrated. Unlike SAS, the `n` argument is the number of observations in each group and not the entire sample. 
+
+```{r warning = FALSE}
+library(pwr)
+
+pwr.2p.test(h = ES.h(0.35, 0.2), 
+            n = 110, 
+            sig.level = 0.05, 
+            alternative = "two.sided")
+```
+
+### Computing sample size given power (balanced)
+
+The `pwr.2p.test()` function can also be used to calculate sample size given power. Instead of specifying the number of observations per group, we specify the desired power. 
+
+```{r}
+pwr.2p.test(h = ES.h(0.35, 0.2), 
+            power = 0.80, 
+            sig.level = 0.05, 
+            alternative = "two.sided")
+```
+
+### Computing sample size given power (unbalanced)
+
+TBD
+
+## SAS
+
+Power analyses in SAS are conducting using the power procedure. 
+
+### Computing power for fixed sample size
+
+```{sas, engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe", error = FALSE}
+title1 'Computing Power Given Sample Size';
+proc power; 
+  twosamplefreq test = pchi
+  alpha = 0.05
+  groupproportions = (0.35 0.20)
+  nullproportiondiff = 0
+  groupweights = (1 1)
+  ntotal = 220
+  power = .;
+run;
+```
+
+### Computing sample size given power (balanced)
+
+```{sas, engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe", error = FALSE}
+title1 'Computing Sample Size Given Power';
+proc power; 
+  twosamplefreq test = pchi
+  alpha = 0.05
+  groupproportions = (0.35 0.20)
+  nullproportiondiff = 0
+  npergroup = .
+  power = 0.80;
+run;
+```
+
+### Computing sample size given power (unbalanced)
+
+```{sas, engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe", error = FALSE}
+title1 'Computing Sample Size Given Power (Unbalanced Groups)';
+proc power; 
+  twosamplefreq test = pchi
+  alpha = 0.05
+  groupproportions = (0.35 0.20)
+  nullproportiondiff = 0
+  groupweights = (2 1)
+  ntotal = .
+  power = 0.85;
+run;
+```
+
+

@@ -92,31 +92,36 @@ xtabs(~ aids + azt, data = example_df)
 
 Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type `?<insert function>`. For many of these tests, there are multiple functions that one could use; these are the one's we have found to work best. 
 
-|Hypothesis test                     | R function                     | Package          |Lecture    |
-|------------------------------------|--------------------------------|------------------|:---------:|
-|Confidence intervals, proportions   | `prop_test()`                  | catfun        |[3](ci_single_proportion.html) |
-|One sample test proportions, normal approximation  |`prop_test()`| catfun            | [4](hypothesis_single_prop.html)|
-|One sample test proportions, exact   | `prop_test()`            | catfun           | [4](hypothesis_single_prop.html)|
-|Chi-squared                         | `CrossTable(..., chisq = TRUE)` | descr             | [8](chi_squared_fisher.html)          |
-|Fisher's exact                      | `CrossTable(..., fisher = TRUE)`| descr             | [8](chi_squared_fisher.html)           |
-|Liklihood ratio test                | `GTest()`                      | DescTools        | [9](lrt_2_sample.html)          |
-|Two sample test for proportions     | `prop_test()`                   | catfun            | [9](lrt_2_sample.html)          |
-|McNemar's test                      | `CrossTable(..., mcnemar = TRUE)`   | descr         |           |
-|Logistic regression                 | `glm(..., family = binomial)`  | stats            |           |
-|GOF & Hosmer Lemeshow               | TBD                            | TBD              |           |
-|Conditional logistic regression     | `clogit()`                     | survival         |           |
-|Cochran Armitage Trend test         | `CocrhanArmitageTest()`        | DescTools        |           |
-|Breslow Day test                    | `BreslowDayTest`               | DescTools        |           |
-
+|Hypothesis test                                  | R function                        | Package       | Lecture                                 |
+|-------------------------------------------------|-----------------------------------|---------------|:---------------------------------------:|
+|Confidence intervals, proportions                | `prop_test()`                     | catfun        | [3](ci_single_proportion.html)          |
+|One sample test proportions, normal approximation|`prop_test()`                      | catfun        | [4](hypothesis_single_prop.html)        |
+|One sample test proportions, exact               | `prop_test()`                     | catfun        | [4](hypothesis_single_prop.html)        |
+|Chi-squared                                      | `CrossTable(..., chisq = TRUE)`   | descr         | [8](chi_squared_fisher.html)            |
+|Fisher's exact                                   | `CrossTable(..., fisher = TRUE)`  | descr         | [8](chi_squared_fisher.html)            |
+|Liklihood ratio test                             | `GTest()`                         | DescTools     | [9](lrt_2_sample.html)                  |
+|Two sample test for proportions                  | `prop_test()`                     | catfun        | [9](lrt_2_sample.html)                  |
+|McNemar's test                                   | `CrossTable(..., mcnemar = TRUE)` | descr         |                                         |
+|Logistic regression                              | `glm(..., family = binomial)`     | stats         |                                         |
+|GOF & Hosmer Lemeshow                            | TBD                               | TBD           |                                         |
+|Conditional logistic regression                  | `clogit()`                        | survival      |                                         |
+|Cochran Armitage Trend test                      | `CocrhanArmitageTest()`           | DescTools     |                                         |
+|Breslow Day test                                 | `BreslowDayTest`                  | DescTools     |                                         |
+        
 ### Measures of association
 
-| Measure               | R function         | Package  |Lecture                               |
-|-----------------------|--------------------|----------|:------------------------------------:|
-|Odds ratio (2 x k table) | `oddsratio()`      | epitools |[5 & 7](measures_association.html)    |
-|Risk ratio (2 x k table) | `riskratio()`      | epitools |[5 & 7](measures_association.html)    |
-|Risk difference        | `riskdiff()`       | catfun   |[5 & 7](measures_association.html)    |
+| Measure                            | R function          | Package          | Lecture                           |
+|------------------------------------|---------------------|------------------|:---------------------------------:|
+|Odds ratio (2 x k table)            | `oddsratio()`       | epitools         | [5 & 7](measures_association.html)|
+|Risk ratio (2 x k table)            | `riskratio()`       | epitools         | [5 & 7](measures_association.html)|
+|Risk difference                     | `riskdiff()`        | catfun           | [5 & 7](measures_association.html)|
          
 ### Power
 
-Coming soon
+| Power analysis                     | R function          | Package          | Lecture                           |
+|------------------------------------|---------------------|------------------|:---------------------------------:|
+| Power from sample size             | `pwr.2p.test()`     | pwr              | [10](power.html)                  |
+| Sample size from power (balanced)  | `pwr.2p.test()`     | pwr              | [10](power.html)                  |
+| Sample size from power (unbalanced)| TBD                 | TBD              | [10](power.html)                  |
+
 

@@ -58,30 +58,34 @@ You are not required to use this method when including SAS output in assignments
 
 Use the following table to locate procedures for hypothesis tests. If you are unsure of the usage of a procedure, refer to the online SAS guide.
 
-|Hypothesis test                     | SAS procedure                  | Arguments needed | Lecture number |
-|------------------------------------|--------------------------------|------------------|:-----------------:|
-|Confidence intervals, proportions   | `proc freq` | Same as normal and exact tests |[3](ci_single_proportion.html)|
-|One sample test proportions, normal approximation  | `proc freq` | `binomial(p = <insert null>)` | [4](hypothesis_single_prop.html)|
-|One sample test proportions, exact   |  `proc freq` | Same as normal approx., also requires `exact binomial` | [4](hypothesis_single_prop.html)|
-|Chi-squared                         | `proc freq` | `chisq expected` | [8](chi_squared_fisher.html) |
-|Fisher's exact                      | `proc freq` | Same as chi-squared test | [8](chi_squared_fisher.html) |
-|Likelihood ratio test               | `proc freq` | Same as chi-squared test | [9](lrt_2_sample.html) |
-|Two sample test of proportions      | `proc freq` | `expected riskdiff(equal var = null)` | [9](lrt_2_sample.html) |
-|McNemar's test                      || |
-|Logistic regression                 | `proc logistic` |  |
-|GOF & Hosmer Lemeshow               | | |
-|Conditional logistic regression     | |  |
-|Cochran Armitage Trend test         | |  |
-|Brewlow Day test                    | |  |
-
+|Hypothesis test                                  | SAS procedure      | Arguments needed                    | Lecture number                   |
+|-------------------------------------------------|--------------------|-------------------------------------|:--------------------------------:|
+|Confidence intervals, proportions                |`proc freq`         |Same as normal and exact             | [3](ci_single_proportion.html)   |
+|One sample test proportions, normal approximation|`proc freq`         |`binomial(p = <insert null>)`        | [4](hypothesis_single_prop.html) |
+|One sample test proportions, exact               |`proc freq`         |`exact binomial`                     | [4](hypothesis_single_prop.html) |
+|Chi-squared                                      |`proc freq`         |`chisq expected`                     | [8](chi_squared_fisher.html)     |
+|Fisher's exact                                   |`proc freq`         |Same as chi-squared                  | [8](chi_squared_fisher.html)     |
+|Likelihood ratio test                            |`proc freq`         |Same as chi-squared                  | [9](lrt_2_sample.html)           |
+|Two sample test of proportions                   |`proc freq`         |`expected riskdiff(equal var = null)`| [9](lrt_2_sample.html)           |
+|McNemar's test                                   |                    |                                     |                                  |
+|Logistic regression                              |`proc logistic`     |                                     |                                  |
+|GOF & Hosmer Lemeshow                            |                    |                                     |                                  |
+|Conditional logistic regression                  |                    |                                     |                                  |
+|Cochran Armitage Trend test                      |                    |                                     |                                  |
+|Brewlow Day test                                 |                    |                                     |                                  |
+              
 ### Measures of association
 
-| Measure               | SAS procedure      | Arguments needed | Lecture number  |
-|-----------------------|--------------------|------------------|:---------------:|
-|Odds ratio (2 x k table) | `proc freq`        | `relrisk`        |[5 & 7](measures_association.html) 
-|Risk ratio (2 x k table) | `proc freq`        | `relrisk`        |[5 & 7](measures_association.html) 
-|Risk difference        | `proc freq`        | `riskdiff`       |[5 & 7](measures_association.html) 
+| Measure                                         | SAS procedure      | Arguments needed                    | Lecture number                   |
+|-------------------------------------------------|--------------------|-------------------------------------|:--------------------------------:|
+|Odds ratio (2 x k table)                         | `proc freq`        |`relrisk`                            |[5 & 7](measures_association.html)|
+|Risk ratio (2 x k table)                         | `proc freq`        |`relrisk`                            |[5 & 7](measures_association.html)|
+|Risk difference                                  | `proc freq`        |`riskdiff`                           |[5 & 7](measures_association.html)|
 
 ### Power
 
-Coming soon
+| Power analysis                     | SAS procedure       | Arguments needed | Lecture          |
+|------------------------------------|---------------------|------------------|:----------------:|
+| Power from sample size             | `proc power`        | `relrisk`        | [10](power.html) |
+| Sample size from power (balanced)  | `proc power`        | `relrisk`        | [10](power.html) |
+| Sample size from power (unbalanced)| `proc power`        | `riskdiff`       | [10](power.html) |

@@ -25,9 +25,8 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
-<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
-<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -102,6 +101,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -116,7 +118,6 @@ body {
   padding-top: 56px;
   margin-top: -56px;
 }
-
 .section h2 {
   padding-top: 56px;
   margin-top: -56px;
@@ -136,6 +137,43 @@ body {
 .section h6 {
   padding-top: 56px;
   margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -157,18 +195,77 @@ $(document).ready(function () {
 });
 </script>
 
-
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -352,10 +449,10 @@ ods rtf close; </code></pre>
 <p>Use the following table to locate procedures for hypothesis tests. If you are unsure of the usage of a procedure, refer to the online SAS guide.</p>
 <table>
 <colgroup>
-<col width="33%" />
-<col width="30%" />
-<col width="17%" />
-<col width="18%" />
+<col width="35%" />
+<col width="14%" />
+<col width="26%" />
+<col width="24%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -369,7 +466,7 @@ ods rtf close; </code></pre>
 <tr class="odd">
 <td>Confidence intervals, proportions</td>
 <td><code>proc freq</code></td>
-<td>Same as normal and exact tests</td>
+<td>Same as normal and exact</td>
 <td align="center"><a href="ci_single_proportion.html">3</a></td>
 </tr>
 <tr class="even">
@@ -381,7 +478,7 @@ ods rtf close; </code></pre>
 <tr class="odd">
 <td>One sample test proportions, exact</td>
 <td><code>proc freq</code></td>
-<td>Same as normal approx., also requires <code>exact binomial</code></td>
+<td><code>exact binomial</code></td>
 <td align="center"><a href="hypothesis_single_prop.html">4</a></td>
 </tr>
 <tr class="even">
@@ -393,13 +490,13 @@ ods rtf close; </code></pre>
 <tr class="odd">
 <td>Fisher’s exact</td>
 <td><code>proc freq</code></td>
-<td>Same as chi-squared test</td>
+<td>Same as chi-squared</td>
 <td align="center"><a href="chi_squared_fisher.html">8</a></td>
 </tr>
 <tr class="even">
 <td>Likelihood ratio test</td>
 <td><code>proc freq</code></td>
-<td>Same as chi-squared test</td>
+<td>Same as chi-squared</td>
 <td align="center"><a href="lrt_2_sample.html">9</a></td>
 </tr>
 <tr class="odd">
@@ -482,13 +579,42 @@ ods rtf close; </code></pre>
 </div>
 <div id="power" class="section level3">
 <h3>Power</h3>
-<p>Coming soon</p>
+<table>
+<thead>
+<tr class="header">
+<th>Power analysis</th>
+<th>SAS procedure</th>
+<th>Arguments needed</th>
+<th align="center">Lecture</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Power from sample size</td>
+<td><code>proc power</code></td>
+<td><code>relrisk</code></td>
+<td align="center"><a href="power.html">10</a></td>
+</tr>
+<tr class="even">
+<td>Sample size from power (balanced)</td>
+<td><code>proc power</code></td>
+<td><code>relrisk</code></td>
+<td align="center"><a href="power.html">10</a></td>
+</tr>
+<tr class="odd">
+<td>Sample size from power (unbalanced)</td>
+<td><code>proc power</code></td>
+<td><code>riskdiff</code></td>
+<td align="center"><a href="power.html">10</a></td>
+</tr>
+</tbody>
+</table>
 </div>
 
 <br><br>
 <center>
 <footer>
-  <img src="p8120_logo.png" alt="stickers" style="width:15%">
+  <img src="biostat_categorical.png" alt="stickers" style="width:30%">
   <br>
 </footer>
 
