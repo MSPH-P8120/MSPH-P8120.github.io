@@ -90,7 +90,7 @@ xtabs(~ aids + azt, data = example_df)
 
 ### Hypothesis tests
 
-Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function type `?<insert function>`. For many of these tests, there are multiple functions that one could use; these are the one's we have found to work best. 
+Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function run `?<insert function>`. For many of these tests, there are multiple functions that one could use; these are the one's we have found to work best. Lecture numbers are linked to examples.
 
 |Hypothesis test                                  | R function                        | Package       | Lecture                                 |
 |-------------------------------------------------|-----------------------------------|---------------|:---------------------------------------:|
@@ -110,6 +110,8 @@ Use the following table to locate functions for hypothesis tests. If you are uns
         
 ### Measures of association
 
+Use the following table to locate functions for measures of association. If you are unsure of the usage of a function run `?<insert function>`. Lecture numbers are linked to examples. 
+
 | Measure                            | R function          | Package          | Lecture                           |
 |------------------------------------|---------------------|------------------|:---------------------------------:|
 |Odds ratio (2 x k table)            | `oddsratio()`       | epitools         | [5 & 7](measures_association.html)|
@@ -117,6 +119,8 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |Risk difference                     | `riskdiff()`        | catfun           | [5 & 7](measures_association.html)|
          
 ### Power
+
+Use the following table to locate functions for power analyses. If you are unsure of the usage of a function run `?<insert function>`. Lecture numbers are linked to examples. 
 
 | Power analysis                     | R function          | Package          | Lecture                           |
 |------------------------------------|---------------------|------------------|:---------------------------------:|

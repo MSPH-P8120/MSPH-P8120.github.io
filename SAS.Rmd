@@ -56,7 +56,7 @@ You are not required to use this method when including SAS output in assignments
 
 ### Hypothesis tests
 
-Use the following table to locate procedures for hypothesis tests. If you are unsure of the usage of a procedure, refer to the online SAS guide.
+Use the following table to locate procedures for hypothesis tests. If you are unsure of the usage of a procedure, refer to the online SAS guide. Lecture numbers are linked to examples. 
 
 |Hypothesis test                                  | SAS procedure      | Arguments needed                    | Lecture number                   |
 |-------------------------------------------------|--------------------|-------------------------------------|:--------------------------------:|
@@ -76,6 +76,8 @@ Use the following table to locate procedures for hypothesis tests. If you are un
               
 ### Measures of association
 
+Use the following table to locate procedures for measures of association. If you are unsure of the usage of a procedure, refer to the online SAS guide. Lecture numbers are linked to examples. 
+
 | Measure                                         | SAS procedure      | Arguments needed                    | Lecture number                   |
 |-------------------------------------------------|--------------------|-------------------------------------|:--------------------------------:|
 |Odds ratio (2 x k table)                         | `proc freq`        |`relrisk`                            |[5 & 7](measures_association.html)|
@@ -84,8 +86,10 @@ Use the following table to locate procedures for hypothesis tests. If you are un
 
 ### Power
 
-| Power analysis                     | SAS procedure       | Arguments needed | Lecture          |
-|------------------------------------|---------------------|------------------|:----------------:|
-| Power from sample size             | `proc power`        | `relrisk`        | [10](power.html) |
-| Sample size from power (balanced)  | `proc power`        | `relrisk`        | [10](power.html) |
-| Sample size from power (unbalanced)| `proc power`        | `riskdiff`       | [10](power.html) |
+Use the following table to locate procedures for power. If you are unsure of the usage of a procedure, refer to the online SAS guide. Lecture numbers are linked to examples. 
+
+| Power analysis                     | SAS procedure       | Notes                      | Lecture          |
+|------------------------------------|---------------------|----------------------------|:----------------:|
+| Power from sample size             | `proc power`        | `power = .`                | [10](power.html) |
+| Sample size from power (balanced)  | `proc power`        | `power = .`                | [10](power.html) |
+| Sample size from power (unbalanced)| `proc power`        | must specify `groupweights`| [10](power.html) |
