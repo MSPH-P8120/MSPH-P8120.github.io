@@ -101,12 +101,13 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |Fisher's exact                                   | `CrossTable(..., fisher = TRUE)`  | descr         | [8](chi_squared_fisher.html)            |
 |Liklihood ratio test                             | `GTest()`                         | DescTools     | [9](lrt_2_sample.html)                  |
 |Two sample test for proportions                  | `prop_test()`                     | catfun        | [9](lrt_2_sample.html)                  |
-|McNemar's test                                   | `CrossTable(..., mcnemar = TRUE)` | descr         |                                         |
-|Logistic regression                              | `glm(..., family = binomial)`     | stats         |                                         |
-|GOF & Hosmer Lemeshow                            | TBD                               | TBD           |                                         |
-|Conditional logistic regression                  | `clogit()`                        | survival      |                                         |
-|Cochran Armitage Trend test                      | `CocrhanArmitageTest()`           | DescTools     |                                         |
-|Breslow Day test                                 | `BreslowDayTest`                  | DescTools     |                                         |
+|Logistic regression                              | `glm(..., family = binomial)`     | stats         | 13, 14, & 15                            |
+|GOF & Hosmer Lemeshow                            | TBD                               | TBD           | 16                                      |
+|Breslow Day test                                 | `BreslowDayTest`                  | DescTools     | 19                                      |
+|Cochran-Mantel-Haenszel test                     | TBD                               | TBD           | 20                                      |
+|McNemar's test                                   | `CrossTable(..., mcnemar = TRUE)` | descr         | 21                                      |
+|Conditional logistic regression                  | `clogit()`                        | survival      | 22                                      |
+|Cochran Armitage Trend test                      | `CocrhanArmitageTest()`           | DescTools     | 23                                      |
         
 ### Measures of association
 

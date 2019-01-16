@@ -67,12 +67,13 @@ Use the following table to locate procedures for hypothesis tests. If you are un
 |Fisher's exact                                   |`proc freq`         |Same as chi-squared                  | [8](chi_squared_fisher.html)     |
 |Likelihood ratio test                            |`proc freq`         |Same as chi-squared                  | [9](lrt_2_sample.html)           |
 |Two sample test of proportions                   |`proc freq`         |`expected riskdiff(equal var = null)`| [9](lrt_2_sample.html)           |
-|McNemar's test                                   |                    |                                     |                                  |
-|Logistic regression                              |`proc logistic`     |                                     |                                  |
-|GOF & Hosmer Lemeshow                            |                    |                                     |                                  |
-|Conditional logistic regression                  |                    |                                     |                                  |
-|Cochran Armitage Trend test                      |                    |                                     |                                  |
-|Brewlow Day test                                 |                    |                                     |                                  |
+|Logistic regression                              |`proc logistic`     |                                     | 13, 14, & 15                     |
+|GOF & Hosmer Lemeshow                            |`proc logistic`     |                                     | 16                               |
+|Breslow Day test                                 |`proc freq`         |                                     | 19                               |
+|Cochran-Mantel-Haenzsel test                     |`proc freq`         |                                     | 20                               |
+|McNemar's test                                   |`proc freq`         |                                     | 21                               |
+|Conditional logistic regression                  |`proc logistic`     |                                     | 22                               |
+|Cochran Armitage Trend test                      |`proc freq`         |                                     | 23                               |
               
 ### Measures of association
 
