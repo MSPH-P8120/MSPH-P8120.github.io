@@ -35,7 +35,7 @@ R is an open-source functional programming language built for statistical comput
 
 Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running: 
 
-`install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools"))` 
+`install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc"))` 
 
 In addition, you will need to run, `devtools::install_github("nt-williams/catfun")`. *catfun* (think Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R's functionality for categorical data analysis.
 
@@ -125,8 +125,8 @@ Use the following table to locate functions for power analyses. If you are unsur
 
 | Power analysis                     | R function          | Package          | Lecture                           |
 |------------------------------------|---------------------|------------------|:---------------------------------:|
-| Power from sample size             | `pwr.2p.test()`     | pwr              | [10](power.html)                  |
-| Sample size from power (balanced)  | `pwr.2p.test()`     | pwr              | [10](power.html)                  |
-| Sample size from power (unbalanced)| TBD                 | TBD              | [10](power.html)                  |
+| Power from sample size             | `power.prop.test()` | stats            | [10](power.html)                  |
+| Sample size from power (balanced)  | `power.prop.test()` | stats            | [10](power.html)                  |
+| Sample size from power (unbalanced)| `bsamsize()`        | Hmisc            | [10](power.html)                  |
 
 

@@ -388,7 +388,7 @@ div.tocify {
   <a href="SAS.html">SAS</a>
 </li>
 <li>
-  <a href="mailto:&lt;you@youremail.com&gt;">
+  <a href="mailto:&lt;cmm2212@cumc.columbia.edu&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
   </a>
@@ -418,7 +418,7 @@ div.tocify {
 <p>This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded <a href="https://www.r-project.org/">here</a> and R Studio (an IDE recommended when using R) can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>.</p>
 <p>R is an open-source functional programming language built for statistical computing. R’s popularity has continued to grow and is becoming one of the main-stays in the Data Science community. Unlike SAS, R is supported by it’s users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R.</p>
 <p>Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running:</p>
-<p><code>install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools"))</code></p>
+<p><code>install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc"))</code></p>
 <p>In addition, you will need to run, <code>devtools::install_github("nt-williams/catfun")</code>. <em>catfun</em> (think Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R’s functionality for categorical data analysis.</p>
 <p>Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R these are good resources:</p>
 <ul>
@@ -624,20 +624,20 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 <tbody>
 <tr class="odd">
 <td>Power from sample size</td>
-<td><code>pwr.2p.test()</code></td>
-<td>pwr</td>
+<td><code>power.prop.test()</code></td>
+<td>stats</td>
 <td align="center"><a href="power.html">10</a></td>
 </tr>
 <tr class="even">
 <td>Sample size from power (balanced)</td>
-<td><code>pwr.2p.test()</code></td>
-<td>pwr</td>
+<td><code>power.prop.test()</code></td>
+<td>stats</td>
 <td align="center"><a href="power.html">10</a></td>
 </tr>
 <tr class="odd">
 <td>Sample size from power (unbalanced)</td>
-<td>TBD</td>
-<td>TBD</td>
+<td><code>bsamsize()</code></td>
+<td>Hmisc</td>
 <td align="center"><a href="power.html">10</a></td>
 </tr>
 </tbody>
