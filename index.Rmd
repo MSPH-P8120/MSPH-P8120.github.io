@@ -10,4 +10,4 @@ Both R and SAS have their benefits and flaws. Being able to leverage the benefit
 
 ### Policy on help
 
-When emailing your TA for help with R or SAS please ensure to cc Nick (ntw2117@cumc.columbia.edu) in addition to Dr. Mauro and Anjile. In addition, you must attach screenshots of both your code and the accompanying error message; these are necessary to succesfully trouble shoot any problems and we are unable to provide help without them.
+When emailing your TA for help with R or SAS please ensure to cc Nick (ntw2117@cumc.columbia.edu) in addition to Dr. Mauro and Anjile. In addition, you must attach screenshots of both your code and the accompanying error message; these are necessary to successfully trouble shoot any problems and we are unable to provide help without them.

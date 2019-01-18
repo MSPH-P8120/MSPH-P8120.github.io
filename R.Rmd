@@ -31,7 +31,7 @@ azt <- azt %>%
 
 This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/).
 
-R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming one of the main-stays in the Data Science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R. 
+R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R. 
 
 Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running: 
 
@@ -99,7 +99,7 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |One sample test proportions, exact               | `prop_test()`                     | catfun        | [4](hypothesis_single_prop.html)        |
 |Chi-squared                                      | `CrossTable(..., chisq = TRUE)`   | descr         | [8](chi_squared_fisher.html)            |
 |Fisher's exact                                   | `CrossTable(..., fisher = TRUE)`  | descr         | [8](chi_squared_fisher.html)            |
-|Liklihood ratio test                             | `GTest()`                         | DescTools     | [9](lrt_2_sample.html)                  |
+|Likelihood ratio test                             | `GTest()`                         | DescTools     | [9](lrt_2_sample.html)                  |
 |Two sample test for proportions                  | `prop_test()`                     | catfun        | [9](lrt_2_sample.html)                  |
 |Logistic regression                              | `glm(..., family = binomial)`     | stats         | 13, 14, & 15                            |
 |GOF & Hosmer Lemeshow                            | TBD                               | TBD           | 16                                      |
