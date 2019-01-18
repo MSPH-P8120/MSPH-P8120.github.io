@@ -94,5 +94,5 @@ Use the following table to locate procedures for power. If you are unsure of the
 | Power analysis                     | SAS procedure       | Notes                      | Lecture          |
 |------------------------------------|---------------------|----------------------------|:----------------:|
 | Power from sample size             | `proc power`        | `power = .`                | [10](power.html) |
-| Sample size from power (balanced)  | `proc power`        | `power = .`                | [10](power.html) |
+| Sample size from power (balanced)  | `proc power`        | `npergroup = .`            | [10](power.html) |
 | Sample size from power (unbalanced)| `proc power`        | must specify `groupweights`| [10](power.html) |
