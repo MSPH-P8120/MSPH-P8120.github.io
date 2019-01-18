@@ -47,8 +47,10 @@ run;
 You will be asked to include SAS output in homework assignments. SAS has a built in output delivery system (ODS) that can save output as an rtf file to be used in a word document. The basic usage is: 
 
 ```{}
-ods rtf file = "filepath and name";
-<procedure code>
+ods rtf file = "C://my_computer/contains_some_file/some_file.rtf";
+
+<insert SAS procedure>
+
 ods rtf close; 
 ```
 

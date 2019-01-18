@@ -8,7 +8,7 @@ navbar:
     - text: "SAS"
       href: SAS.html
     - icon: fa-envelope fa-lg
-      href: mailto:<you@youremail.com>
+      href: mailto:<cmm2212@cumc.columbia.edu>
     - icon: fa-github fa-lg
       href: http://github.com/MSPH-P8120/MSPH-P8120.github.io
 output:
