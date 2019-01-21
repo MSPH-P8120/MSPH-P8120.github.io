@@ -29,28 +29,30 @@ azt <- azt %>%
 
 ### Getting started
 
-This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/).
+This document is intended to be used as a guide to R for P8120:Analysis of Categorical Data. This document is not meant to be exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. 
 
-R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R. 
+R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/). We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.
+
+R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is often many ways to the same task in R. 
 
 Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running: 
 
 `install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc"))` 
 
-In addition, you will need to run, `devtools::install_github("nt-williams/catfun")`. *catfun* (think Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R's functionality for categorical data analysis.
+In addition, you will need to run in your console window, `devtools::install_github("nt-williams/catfun")`. *catfun* (because Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R's functionality for categorical data analysis.
 
-Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R these are good resources: 
+Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R, these are good resources: 
 
 - Getting started and best practices from [P8105](http://p8105.com/best_practices.html) taught by Jeff Goldsmith
 - [R for Data Science](https://r4ds.had.co.nz/) by Garrett Grolemund and Hadley Wickham
 
 ### A tidy mindset
 
-Different "philosophies" exist on how to program in R. Many stick to programming in what's called base R while the examples throughout this site use what could be called a "tidy" mindset. That is, code is formatted and (for the most part) uses functions/packages that is reproducible and easy to follow. More information can be found [here](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html).
+Different "philosophies" exist on how to program in R. Many stick to programming in what's called base R, while the examples throughout this site use a "tidy" mindset. Under the "tidy" mindset, code is formatted in a very specific way so that it is reproducible and easy to follow. More information can be found [here](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html).
 
 ### Importing data
 
-We will only be working with csv data files in this course. To import a csv file, we recommend using the `read_csv()` function from the *readr* package. The only required argument to `read_csv()` is the file path in quotation marks. `read_csv()` will automatically add column names and choose variable types (i.e. character, numeric, date, etc.). 
+We will only be working with csv data files in this course. To import a csv file, we recommend using the `read_csv()` function from the *readr* package. The only required argument to `read_csv()` is the file path in quotation marks. `read_csv()` will automatically add column names and choose variable types (i.e. character, numeric, date, etc.). Column names usually come from the first row of your dataset. 
 
 ```{r}
 library(readr)
