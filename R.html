@@ -415,12 +415,13 @@ div.tocify {
 
 <div id="getting-started" class="section level3">
 <h3>Getting started</h3>
-<p>This document is intended to be used as a guide to R for P8120 (Analysis of Categorical Data). This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. R can be downloaded <a href="https://www.r-project.org/">here</a> and R Studio (an IDE recommended when using R) can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>.</p>
-<p>R is an open-source functional programming language built for statistical computing. R’s popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it’s users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is not one way to do any task in R.</p>
+<p>This document is intended to be used as a guide to R for P8120:Analysis of Categorical Data. This document is not meant to be exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed.</p>
+<p>R can be downloaded <a href="https://www.r-project.org/">here</a> and R Studio (an IDE recommended when using R) can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>. We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.</p>
+<p>R is an open-source functional programming language built for statistical computing. R’s popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it’s users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is often many ways to the same task in R.</p>
 <p>Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running:</p>
 <p><code>install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc"))</code></p>
-<p>In addition, you will need to run, <code>devtools::install_github("nt-williams/catfun")</code>. <em>catfun</em> (think Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R’s functionality for categorical data analysis.</p>
-<p>Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R these are good resources:</p>
+<p>In addition, you will need to run in your console window, <code>devtools::install_github("nt-williams/catfun")</code>. <em>catfun</em> (because Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R’s functionality for categorical data analysis.</p>
+<p>Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R, these are good resources:</p>
 <ul>
 <li>Getting started and best practices from <a href="http://p8105.com/best_practices.html">P8105</a> taught by Jeff Goldsmith</li>
 <li><a href="https://r4ds.had.co.nz/">R for Data Science</a> by Garrett Grolemund and Hadley Wickham</li>
@@ -428,11 +429,11 @@ div.tocify {
 </div>
 <div id="a-tidy-mindset" class="section level3">
 <h3>A tidy mindset</h3>
-<p>Different “philosophies” exist on how to program in R. Many stick to programming in what’s called base R while the examples throughout this site use what could be called a “tidy” mindset. That is, code is formatted and (for the most part) uses functions/packages that is reproducible and easy to follow. More information can be found <a href="https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html">here</a>.</p>
+<p>Different “philosophies” exist on how to program in R. Many stick to programming in what’s called base R, while the examples throughout this site use a “tidy” mindset. Under the “tidy” mindset, code is formatted in a very specific way so that it is reproducible and easy to follow. More information can be found <a href="https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html">here</a>.</p>
 </div>
 <div id="importing-data" class="section level3">
 <h3>Importing data</h3>
-<p>We will only be working with csv data files in this course. To import a csv file, we recommend using the <code>read_csv()</code> function from the <em>readr</em> package. The only required argument to <code>read_csv()</code> is the file path in quotation marks. <code>read_csv()</code> will automatically add column names and choose variable types (i.e. character, numeric, date, etc.).</p>
+<p>We will only be working with csv data files in this course. To import a csv file, we recommend using the <code>read_csv()</code> function from the <em>readr</em> package. The only required argument to <code>read_csv()</code> is the file path in quotation marks. <code>read_csv()</code> will automatically add column names and choose variable types (i.e. character, numeric, date, etc.). Column names usually come from the first row of your dataset.</p>
 <pre class="r"><code>library(readr)
 
 example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
