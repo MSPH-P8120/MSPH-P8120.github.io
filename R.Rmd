@@ -89,16 +89,24 @@ Making cross-tabulations in R can be done a variety of ways. One of the preferre
 The minimum syntax for `xtabs()` is: 
 
 ```{r eval = FALSE}
-xtabs(<weighting variable> ~ <row variable> + <column variable>, data = <insert dataset>)
+xtabs(<weighting variable or counts> ~ <row variable> + <column variable>, data = <insert dataset>)
 ```
 
-This example uses a dataset builds a cross-tabulation from summary data. The variable 'ncontrols' contains the counts per group which is why it is before the tilde.
+The weighting or count variable is something you would include if you were only given group-level data instead of individual-level data. For example, lets look at the built in R dataset `esoph`. You can load the data by calling `data(esoph)`. First call `head(esoph)` and notice the two variables `ncases` and `ncontrols`. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call `nlevels()` on the variables `alcgp` and `agegp` to see how many factor levels exist in these variables. 
+
+```{r}
+head(esoph)
+nlevels(esoph$agegp)
+nlevels(esoph$alcgp)
+```
+
+Lets now create a 4x6 table of the number of controls from the `alcgp` and `agegp` variables using the `xtabs()` function. 
 
 ```{r}
 xtabs(ncontrols ~ alcgp + agegp, data = esoph)
 ```
 
-In this example, the dataset `example_df` is individual level data, thus there is no weighting variable.  
+If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset `example_df` (which we previousliy imported) contains individual-level data, thus there is no weighting variable.  
 
 ```{r}
 xtabs(~ aids + azt, data = example_df)

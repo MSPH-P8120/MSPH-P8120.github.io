@@ -471,8 +471,21 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 <h3>Cross-tabulation</h3>
 <p>Making cross-tabulations in R can be done a variety of ways. One of the preferred methods is to use the function <code>xtabs()</code></p>
 <p>The minimum syntax for <code>xtabs()</code> is:</p>
-<pre class="r"><code>xtabs(&lt;weighting variable&gt; ~ &lt;row variable&gt; + &lt;column variable&gt;, data = &lt;insert dataset&gt;)</code></pre>
-<p>This example uses a dataset builds a cross-tabulation from summary data. The variable ‘ncontrols’ contains the counts per group which is why it is before the tilde.</p>
+<pre class="r"><code>xtabs(&lt;weighting variable or counts&gt; ~ &lt;row variable&gt; + &lt;column variable&gt;, data = &lt;insert dataset&gt;)</code></pre>
+<p>The weighting or count variable is something you would include if you were only given group-level data instead of individual-level data. For example, lets look at the built in R dataset <code>esoph</code>. You can load the data by calling <code>data(esoph)</code>. First call <code>head(esoph)</code> and notice the two variables <code>ncases</code> and <code>ncontrols</code>. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call <code>nlevels()</code> on the variables <code>alcgp</code> and <code>agegp</code> to see how many factor levels exist in these variables.</p>
+<pre class="r"><code>head(esoph)</code></pre>
+<pre><code>##   agegp     alcgp    tobgp ncases ncontrols
+## 1 25-34 0-39g/day 0-9g/day      0        40
+## 2 25-34 0-39g/day    10-19      0        10
+## 3 25-34 0-39g/day    20-29      0         6
+## 4 25-34 0-39g/day      30+      0         5
+## 5 25-34     40-79 0-9g/day      0        27
+## 6 25-34     40-79    10-19      0         7</code></pre>
+<pre class="r"><code>nlevels(esoph$agegp)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>nlevels(esoph$alcgp)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>Lets now create a 4x6 table of the number of controls from the <code>alcgp</code> and <code>agegp</code> variables using the <code>xtabs()</code> function.</p>
 <pre class="r"><code>xtabs(ncontrols ~ alcgp + agegp, data = esoph)</code></pre>
 <pre><code>##            agegp
 ## alcgp       25-34 35-44 45-54 55-64 65-74 75+
@@ -480,7 +493,7 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 ##   40-79        45    80    81    84    53  12
 ##   80-119        5    20    39    43    29   2
 ##   120+          5    10    15    26     8   3</code></pre>
-<p>In this example, the dataset <code>example_df</code> is individual level data, thus there is no weighting variable.</p>
+<p>If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset <code>example_df</code> (which we previousliy imported) contains individual-level data, thus there is no weighting variable.</p>
 <pre class="r"><code>xtabs(~ aids + azt, data = example_df)</code></pre>
 <pre><code>##     azt
 ## aids   0   1
