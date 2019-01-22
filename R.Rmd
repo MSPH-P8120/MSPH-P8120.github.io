@@ -29,15 +29,15 @@ azt <- azt %>%
 
 ### Getting started
 
-This document is intended to be used as a guide to R for P8120:Analysis of Categorical Data. This document is not meant to be exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. 
+This document is intended to be used as a guide to R for P8120: Analysis of Categorical Data. This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. 
 
 R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/). We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.
 
-R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is often many ways to the same task in R. 
+R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a mainstay in the data science community. Unlike SAS, R is supported by its users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there are often many ways to the same task in R. 
 
 #### Workflow
 
-We recommend that you create a categorical folder on your computer with separate sub-folders for each homework assignment. For assignments in which we provide you with a data file you should also create a data sub-folder within the appropriate homework folder. Doing the above will help create a clear work space. 
+We recommend that you create a categorical folder on your computer with separate sub-folders for each homework assignment. For assignments in which we provide you with a data file, you should also create a data sub-folder within the appropriate homework folder. Doing the above will help create a clear workspace. 
 
 When using R your new workflow should be: 
 
@@ -64,7 +64,7 @@ Bundles of R functions are found in packages that can be installed and then used
 
 `install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc", "devtools"))` 
 
-In addition, you will need to run in your console window, `devtools::install_github("nt-williams/catfun")`. *catfun* (because Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R's functionality for categorical data analysis.
+In addition, you will need to run in your console window, `devtools::install_github("nt-williams/catfun")`. *catfun* (because Categorical is fun) is a package currently under development by the Categorical team to improve R's functionality for categorical data analysis.
 
 Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R, these are good resources: 
 
@@ -101,7 +101,7 @@ Making cross-tabulations in R can be done a variety of ways. One of the preferre
 xtabs(<weighting variable or counts> ~ <row variable> + <column variable>, data = <insert dataset>)
 ```
 
-The weighting or count variable should only be included if you were given group-level instead of individual-level data. For example, lets look at the built in R dataset `esoph`. You can load the data by calling `data(esoph)`. First call `head(esoph)` and notice the two variables `ncases` and `ncontrols`. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call `nlevels()` on the variables `alcgp` and `agegp` to see how many factor levels exist in each. 
+The weighting or count variable should only be included if you were given group-level instead of individual-level data. For example, let's look at the built-in R dataset `esoph`. You can load the data by calling `data(esoph)`. First, call `head(esoph)` and notice the two variables `ncases` and `ncontrols`. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call `nlevels()` on the variables `alcgp` and `agegp` to see how many factor levels exist in each. 
 
 ```{r}
 head(esoph)
@@ -109,13 +109,13 @@ nlevels(esoph$alcgp)
 nlevels(esoph$agegp)
 ```
 
-Lets now create a cross-tabulation of the number of controls with alcohol group as the rows and age group as the columns; this should result in a 4x6 table. 
+Let's now create a cross-tabulation of the number of controls with alcohol group as the rows and age group as the columns; this should result in a 4x6 table. 
 
 ```{r}
 xtabs(ncontrols ~ alcgp + agegp, data = esoph)
 ```
 
-If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset `example_df` (which we previously imported) contains individual-level data, thus there is no weighting variable.  
+If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset `example_df` (which we previously imported) contains individual-level data, thus there is no weight or count variable.  
 
 ```{r}
 xtabs(~ aids + azt, data = example_df)
