@@ -418,7 +418,9 @@ div.tocify {
 <p>This document is intended to be used as a guide to R for P8120:Analysis of Categorical Data. This document is not meant to be exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed.</p>
 <p>R can be downloaded <a href="https://www.r-project.org/">here</a> and R Studio (an IDE recommended when using R) can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>. We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.</p>
 <p>R is an open-source functional programming language built for statistical computing. R’s popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it’s users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is often many ways to the same task in R.</p>
-<p>We recommend that you create a categorical folder on your computer with separate sub-folders for each homework assignment. For assignments in which we provide you with a datafille you should also create a data sub-folder within the appropriate homework folder. Doing the above will help create a clear workspace.</p>
+<div id="workflow" class="section level4">
+<h4>Workflow</h4>
+<p>We recommend that you create a categorical folder on your computer with separate sub-folders for each homework assignment. For assignments in which we provide you with a data file you should also create a data sub-folder within the appropriate homework folder. Doing the above will help create a clear work space.</p>
 <p>When using R your new workflow should be:</p>
 <ul>
 <li>open R studio</li>
@@ -429,6 +431,10 @@ div.tocify {
 </ul>
 <p>Always remember to save your work often. To create a new project use File &gt; New Project… &gt; Existing Directory &gt; Browse &gt; select appropriate homework folder &gt; create project; to create a new r script use File &gt; New File &gt; R Script; to run code you can either copy and paste code in script to the console or highlight code and press Ctrl + Enter (Windows) or Command + Enter (Mac); to save a script use File &gt; Save As.</p>
 <p>Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it’s much simpler and cleaner to write <code>data\my_data.csv</code> than <code>C:\\my_computer\categorical\homework_10\data\my_data.csv</code>.</p>
+<p>All R code is run in the console. However, this does not mean you should actually type your code there. Code submitted in the console cannot be edited once run and is not saved. Instead, you should write code in R scripts. Scripts can be edited, saved, and simplify collaboration. As an example, try running <code>4 + 2</code> in both the console and an R script.</p>
+</div>
+<div id="packages" class="section level4">
+<h4>Packages</h4>
 <p>Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running:</p>
 <p><code>install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc", "devtools"))</code></p>
 <p>In addition, you will need to run in your console window, <code>devtools::install_github("nt-williams/catfun")</code>. <em>catfun</em> (because Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R’s functionality for categorical data analysis.</p>
@@ -437,6 +443,7 @@ div.tocify {
 <li>Getting started and best practices from <a href="http://p8105.com/best_practices.html">P8105</a> taught by Jeff Goldsmith</li>
 <li><a href="https://r4ds.had.co.nz/">R for Data Science</a> by Garrett Grolemund and Hadley Wickham</li>
 </ul>
+</div>
 </div>
 <div id="a-tidy-mindset" class="section level3">
 <h3>A tidy mindset</h3>
@@ -469,10 +476,9 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 </div>
 <div id="cross-tabulation" class="section level3">
 <h3>Cross-tabulation</h3>
-<p>Making cross-tabulations in R can be done a variety of ways. One of the preferred methods is to use the function <code>xtabs()</code></p>
-<p>The minimum syntax for <code>xtabs()</code> is:</p>
+<p>Making cross-tabulations in R can be done a variety of ways. One of the preferred methods is to use the function <code>xtabs()</code>. The minimum syntax for <code>xtabs()</code> is:</p>
 <pre class="r"><code>xtabs(&lt;weighting variable or counts&gt; ~ &lt;row variable&gt; + &lt;column variable&gt;, data = &lt;insert dataset&gt;)</code></pre>
-<p>The weighting or count variable is something you would include if you were only given group-level data instead of individual-level data. For example, lets look at the built in R dataset <code>esoph</code>. You can load the data by calling <code>data(esoph)</code>. First call <code>head(esoph)</code> and notice the two variables <code>ncases</code> and <code>ncontrols</code>. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call <code>nlevels()</code> on the variables <code>alcgp</code> and <code>agegp</code> to see how many factor levels exist in these variables.</p>
+<p>The weighting or count variable should only be included if you were given group-level instead of individual-level data. For example, lets look at the built in R dataset <code>esoph</code>. You can load the data by calling <code>data(esoph)</code>. First call <code>head(esoph)</code> and notice the two variables <code>ncases</code> and <code>ncontrols</code>. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call <code>nlevels()</code> on the variables <code>alcgp</code> and <code>agegp</code> to see how many factor levels exist in each.</p>
 <pre class="r"><code>head(esoph)</code></pre>
 <pre><code>##   agegp     alcgp    tobgp ncases ncontrols
 ## 1 25-34 0-39g/day 0-9g/day      0        40
@@ -481,11 +487,11 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 ## 4 25-34 0-39g/day      30+      0         5
 ## 5 25-34     40-79 0-9g/day      0        27
 ## 6 25-34     40-79    10-19      0         7</code></pre>
-<pre class="r"><code>nlevels(esoph$agegp)</code></pre>
-<pre><code>## [1] 6</code></pre>
 <pre class="r"><code>nlevels(esoph$alcgp)</code></pre>
 <pre><code>## [1] 4</code></pre>
-<p>Lets now create a 4x6 table of the number of controls from the <code>alcgp</code> and <code>agegp</code> variables using the <code>xtabs()</code> function.</p>
+<pre class="r"><code>nlevels(esoph$agegp)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>Lets now create a cross-tabulation of the number of controls with alcohol group as the rows and age group as the columns; this should result in a 4x6 table.</p>
 <pre class="r"><code>xtabs(ncontrols ~ alcgp + agegp, data = esoph)</code></pre>
 <pre><code>##            agegp
 ## alcgp       25-34 35-44 45-54 55-64 65-74 75+
@@ -493,13 +499,13 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 ##   40-79        45    80    81    84    53  12
 ##   80-119        5    20    39    43    29   2
 ##   120+          5    10    15    26     8   3</code></pre>
-<p>If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset <code>example_df</code> (which we previousliy imported) contains individual-level data, thus there is no weighting variable.</p>
+<p>If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset <code>example_df</code> (which we previously imported) contains individual-level data, thus there is no weighting variable.</p>
 <pre class="r"><code>xtabs(~ aids + azt, data = example_df)</code></pre>
 <pre><code>##     azt
 ## aids   0   1
 ##    0 124 145
 ##    1  44  25</code></pre>
-<p><code>xtabs()</code> produces very sparse tables. If you are looking for more informative tables try the <code>crosstab()</code> function from the <em>descr</em> package (see table below).</p>
+<p><code>xtabs()</code> produces very sparse tables. If you are looking for more informative tables try the <code>crosstab()</code> function from the <em>descr</em> package (see Hypothesis tests section below).</p>
 </div>
 <div id="hypothesis-tests" class="section level3">
 <h3>Hypothesis tests</h3>

@@ -35,7 +35,9 @@ R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE reco
 
 R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it's users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is often many ways to the same task in R. 
 
-We recommend that you create a categorical folder on your computer with separate sub-folders for each homework assignment. For assignments in which we provide you with a datafille you should also create a data sub-folder within the appropriate homework folder. Doing the above will help create a clear workspace. 
+#### Workflow
+
+We recommend that you create a categorical folder on your computer with separate sub-folders for each homework assignment. For assignments in which we provide you with a data file you should also create a data sub-folder within the appropriate homework folder. Doing the above will help create a clear work space. 
 
 When using R your new workflow should be: 
 
@@ -48,6 +50,10 @@ When using R your new workflow should be:
 Always remember to save your work often. To create a new project use File > New Project... > Existing Directory > Browse > select appropriate homework folder > create project; to create a new r script use File > New File > R Script; to run code you can either copy and paste code in script to the console or highlight code and press Ctrl + Enter (Windows) or Command + Enter (Mac); to save a script use File > Save As. 
 
 Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it's much simpler and cleaner to write `data\my_data.csv` than `C:\\my_computer\categorical\homework_10\data\my_data.csv`. 
+
+All R code is run in the console. However, this does not mean you should actually type your code there. Code submitted in the console cannot be edited once run and is not saved. Instead, you should write code in R scripts. Scripts can be edited, saved, and simplify collaboration. As an example, try running `4 + 2` in both the console and an R script. 
+
+#### Packages
 
 Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running: 
 
@@ -84,35 +90,33 @@ Data for homework can be found on Courseworks under the appropriate homework fol
 
 ### Cross-tabulation
 
-Making cross-tabulations in R can be done a variety of ways. One of the preferred methods is to use the function `xtabs()`
-
-The minimum syntax for `xtabs()` is: 
+Making cross-tabulations in R can be done a variety of ways. One of the preferred methods is to use the function `xtabs()`. The minimum syntax for `xtabs()` is: 
 
 ```{r eval = FALSE}
 xtabs(<weighting variable or counts> ~ <row variable> + <column variable>, data = <insert dataset>)
 ```
 
-The weighting or count variable is something you would include if you were only given group-level data instead of individual-level data. For example, lets look at the built in R dataset `esoph`. You can load the data by calling `data(esoph)`. First call `head(esoph)` and notice the two variables `ncases` and `ncontrols`. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call `nlevels()` on the variables `alcgp` and `agegp` to see how many factor levels exist in these variables. 
+The weighting or count variable should only be included if you were given group-level instead of individual-level data. For example, lets look at the built in R dataset `esoph`. You can load the data by calling `data(esoph)`. First call `head(esoph)` and notice the two variables `ncases` and `ncontrols`. The names of the variables indicate that this dataset contains group-level data. Looking at the first row of data we can conclude that in this study there were 40 individuals in the control group whose age was between 25-34, used 0-39g of alcohol per day, and used 0-9g of tobacco per day. We can also call `nlevels()` on the variables `alcgp` and `agegp` to see how many factor levels exist in each. 
 
 ```{r}
 head(esoph)
-nlevels(esoph$agegp)
 nlevels(esoph$alcgp)
+nlevels(esoph$agegp)
 ```
 
-Lets now create a 4x6 table of the number of controls from the `alcgp` and `agegp` variables using the `xtabs()` function. 
+Lets now create a cross-tabulation of the number of controls with alcohol group as the rows and age group as the columns; this should result in a 4x6 table. 
 
 ```{r}
 xtabs(ncontrols ~ alcgp + agegp, data = esoph)
 ```
 
-If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset `example_df` (which we previousliy imported) contains individual-level data, thus there is no weighting variable.  
+If your dataset contained individual-level data you would simply drop the weight/count variable. For example, the dataset `example_df` (which we previously imported) contains individual-level data, thus there is no weighting variable.  
 
 ```{r}
 xtabs(~ aids + azt, data = example_df)
 ```
 
-`xtabs()` produces very sparse tables. If you are looking for more informative tables try the `crosstab()` function from the *descr* package (see table below).
+`xtabs()` produces very sparse tables. If you are looking for more informative tables try the `crosstab()` function from the *descr* package (see Hypothesis tests section below).
 
 ### Hypothesis tests
 
