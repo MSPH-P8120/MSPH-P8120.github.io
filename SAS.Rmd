@@ -18,6 +18,8 @@ SAS is available on all computers at the CUMC library or can be purchased throug
 
 SAS is a powerful statistical software and programming language commonly used in universities, government, and the private sector. Programming in SAS can roughly be broken down into two sections: data steps (begun by a `data` statement) and statistical procedures (begun by a `proc` statement). Almost all code blocks in SAS begin with one of these two statements and almost all code blocks are ended with `run;`. Within code blocks, arguments in SAS are ended with a semicolon. 
 
+#### Workflow
+
 When starting a new session the basic workflow is: 
 
 - open a new program
@@ -25,7 +27,11 @@ When starting a new session the basic workflow is:
 - run code 
 - export necessary procedures 
 
-Always remember to save your work often. To open a new program use File > New Program; to run code highlight the code of interest and click the running individual on the toolbar; to save a program use File > Save As....  
+Always remember to save your work often. 
+
+- To open a new program: *File > New Program*
+- To run code: highlight the code of interest and click the *running individual* on the toolbar
+- To save a program: *File > Save As...* 
 
 ### Importing data and manipulation
 
@@ -52,7 +58,7 @@ run;
 ```
 
 
-The data step in SAS is where all data manipulation occurs, this includes being able to import data and create datasets by "hand". Sometimes you will be asked to conduct analyses on group-level instead of individual-level data. In these instances you will need to create a dataset using a data step. The first argument to any data step is the name of the dataset you are creating. The next argument should be `input` where you specify variable names and types (for this course you only need to worry about numeric variables and character variables; if a variable is of type character it should be followed by a $). After input, the next argument is `cards` followed by a semicolon. After cards, you begin writing your data; there should only be as many columns as there are variables you created and after the last line of data you must go to the next line and include a semicolon. 
+The data step in SAS is where all data manipulation occurs, this includes being able to import data and create data sets by "hand". Sometimes you will be asked to conduct analyses on group-level instead of individual-level data. In these instances you will need to create a dataset using a data step. The first argument to any data step is the name of the dataset you are creating. The next argument should be `input` where you specify variable names and types (for this course you only need to worry about numeric variables and character variables; if a variable is of type character it should be followed by a $). After input, the next argument is `cards` followed by a semicolon. After cards, you begin writing your data; there should only be as many columns as there are variables you created and after the last line of data you must go to the next line and include a semicolon. 
 
 *Syntax*
 

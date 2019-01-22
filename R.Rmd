@@ -47,7 +47,12 @@ When using R your new workflow should be:
 - type code in r script 
 - run code in r console 
 
-Always remember to save your work often. To create a new project use File > New Project... > Existing Directory > Browse > select appropriate homework folder > create project; to create a new r script use File > New File > R Script; to run code you can either copy and paste code in script to the console or highlight code and press Ctrl + Enter (Windows) or Command + Enter (Mac); to save a script use File > Save As. 
+Always remember to save your work often. 
+
+- To create a new project: *File > New Project... > Existing Directory > Browse > select appropriate homework folder > create project*
+- To create a new r script: *File > New File > R Script*
+- To run code: either copy and paste code in script to the console or highlight code and press *Ctrl + Enter (Windows)* or *Command + Enter (Mac)* 
+- To save a script: *File > Save As* 
 
 Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it's much simpler and cleaner to write `data\my_data.csv` than `C:\\my_computer\categorical\homework_10\data\my_data.csv`. 
 
