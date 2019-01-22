@@ -418,8 +418,19 @@ div.tocify {
 <p>This document is intended to be used as a guide to R for P8120:Analysis of Categorical Data. This document is not meant to be exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed.</p>
 <p>R can be downloaded <a href="https://www.r-project.org/">here</a> and R Studio (an IDE recommended when using R) can be downloaded <a href="https://www.rstudio.com/products/rstudio/download/">here</a>. We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.</p>
 <p>R is an open-source functional programming language built for statistical computing. R’s popularity has continued to grow and is becoming a main-stay in the data science community. Unlike SAS, R is supported by it’s users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there is often many ways to the same task in R.</p>
+<p>We recommend that you create a categorical folder on your computer with separate sub-folders for each homework assignment. For assignments in which we provide you with a datafille you should also create a data sub-folder within the appropriate homework folder. Doing the above will help create a clear workspace.</p>
+<p>When using R your new workflow should be:</p>
+<ul>
+<li>open R studio</li>
+<li>create a new project</li>
+<li>create a new r script</li>
+<li>type code in r script</li>
+<li>run code in r console</li>
+</ul>
+<p>Always remember to save your work often. To create a new project use File &gt; New Project… &gt; Existing Directory &gt; Browse &gt; select appropriate homework folder &gt; create project; to create a new r script use File &gt; New File &gt; R Script; to run code you can either copy and paste code in script to the console or highlight code and press Ctrl + Enter (Windows) or Command + Enter (Mac); to save a script use File &gt; Save As.</p>
+<p>Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it’s much simpler and cleaner to write <code>data\my_data.csv</code> than <code>C:\\my_computer\categorical\homework_10\data\my_data.csv</code>.</p>
 <p>Bundles of R functions are found in packages that can be installed and then used. The R functions within this document come from a variety of packages. To use these functions please install the following packages by running:</p>
-<p><code>install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc"))</code></p>
+<p><code>install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc", "devtools"))</code></p>
 <p>In addition, you will need to run in your console window, <code>devtools::install_github("nt-williams/catfun")</code>. <em>catfun</em> (because Categorical is fun) is a package currently underdevelopment by the Categorical team to improve R’s functionality for categorical data analysis.</p>
 <p>Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R, these are good resources:</p>
 <ul>

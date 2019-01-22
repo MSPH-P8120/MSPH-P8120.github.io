@@ -18,7 +18,14 @@ SAS is available on all computers at the CUMC library or can be purchased throug
 
 SAS is a powerful statistical software and programming language commonly used in universities, government, and the private sector. Programming in SAS can roughly be broken down into two sections: data steps (begun by a `data` statement) and statistical procedures (begun by a `proc` statement). Almost all code blocks in SAS begin with one of these two statements and almost all code blocks are ended with `run;`. Within code blocks, arguments in SAS are ended with a semicolon. 
 
-When starting a new session the basic workflow is: open a new program, type some code, run code, export necessary procedures, and of course save work often. To open a new program use File > New Program; to run code highlight the code of interest and click the running individual on the toolbar; to save a program use File > Save As....  
+When starting a new session the basic workflow is: 
+
+- open a new program
+- type some code 
+- run code 
+- export necessary procedures 
+
+Always remember to save your work often. To open a new program use File > New Program; to run code highlight the code of interest and click the running individual on the toolbar; to save a program use File > Save As....  
 
 ### Importing data and manipulation
 
