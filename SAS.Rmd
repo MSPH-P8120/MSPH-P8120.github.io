@@ -14,15 +14,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This document is intended to be used as a guide to SAS for P8120: Analysis of Categorical Data. This document is not exhaustive; please consult one of the TA's, Dr. Mauro, or the online SAS user [guide](https://support.sas.com/documentation/cdl/en/statug/63962/HTML/default/viewer.htm#titlepage.htm) for more help if needed. 
 
-SAS is available on all computers at the CUMC library or can be purchased through the IT department in the Hammer Library for $85 (Windows computers only). In addition, there is now a free version of SAS that works on multiple operating systems called SAS University Edition. Instructions for download can be found [here](https://www.dropbox.com/referrer_cleansing_redirect?hmac=cxF93jVNXPpoZWrA2SBuSWWWeyeOSH7oaGdKbbuS0DI%3D&url=https%3A%2F%2Fwww.sas.com%2Fen_us%2Fsoftware%2Funiversity-edition.html). 
+SAS is available on all computers at the CUMC library or can be purchased through the IT department in the Hammer Library for $85 (Windows computers only). In addition, there is now a free version of SAS that works on multiple operating systems called SAS University Edition. Instructions for download can be found [here](https://www.dropbox.com/referrer_cleansing_redirect?hmac=cxF93jVNXPpoZWrA2SBuSWWWeyeOSH7oaGdKbbuS0DI%3D&url=https%3A%2F%2Fwww.sas.com%2Fen_us%2Fsoftware%2Funiversity-edition.html). Another free option is SAS OnDemand, which some students may already be using in P8483. Instructions to download and use the software can be found [here](https://www.dropbox.com/referrer_cleansing_redirect?hmac=IA9dIx9JzInqhe3XNgAM%2B4pMGQ9t5NxCv%2Fa0YBHd078%3D&url=https%3A%2F%2Fwww.sas.com%2Fen_us%2Fsoftware%2Fon-demand-for-academics.html%23for-students-).
 
 SAS is a powerful statistical software and programming language commonly used in universities, government, and the private sector. Programming in SAS can roughly be broken down into two sections: data steps (begun by a `data` statement) and statistical procedures (begun by a `proc` statement). Almost all code blocks in SAS begin with one of these two statements and almost all code blocks are ended with `run;`. Within code blocks, arguments in SAS are ended with a semicolon. 
 
+When starting a new session the basic workflow is: open a new program, type some code, run code, export necessary procedures, and of course save work often. To open a new program use File > New Program; to run code highlight the code of interest and click the running individual on the toolbar; to save a program use File > Save As....  
+
 ### Importing data and manipulation
 
-Importing data in SAS can be done a couple of different ways. We recommend using one of two methods: the import procedure or a data step. 
+Importing data in SAS can be done a couple of different ways. We recommend using the import procedure. 
 
-The import procedure is the most straightforward way of importing data into SAS. The procedure requires two arguments and a third optional requirement is recommended: `out`, `datafile`, and `dbms`. The `out` argument specifies the name of the newly created SAS dataset; the `datafile` argument specifies the complete path for the file containing the data to be imported in quotation marks; the `dbms` argument is optional and specifies the file type to be parsed. The most commonly used identifiers are `csv`, `tab`, `xlsx`, and `dlm`. If importing a csv file, this argument is not necessary. Further help can be found [here](http://support.sas.com/documentation/cdl/en/proc/65145/HTML/default/viewer.htm#n18jyszn33umngn14czw2qfw7thc.htm). The syntax is as follows: 
+The import procedure is the most straightforward way of importing data into SAS. The procedure requires two arguments and a third optional requirement is recommended: `out`, `datafile`, and `dbms`. The `out` argument specifies the name of the newly created SAS dataset; the `datafile` argument specifies the complete path for the file containing the data to be imported in quotation marks; the `dbms` argument is optional and specifies the file type to be parsed. The most commonly used identifiers are `csv`, `tab`, `xlsx`, and `dlm`. If importing a csv file, this argument is not necessary. Further help can be found [here](http://support.sas.com/documentation/cdl/en/proc/65145/HTML/default/viewer.htm#n18jyszn33umngn14czw2qfw7thc.htm). 
+
+*Syntax*
 
 ```{}
 proc import out = <SAS dataset name>
@@ -31,16 +35,40 @@ proc import out = <SAS dataset name>
 run; 
 ```
 
-The data step in SAS is where all data manipulation occurs, this includes being able to import data. While using a data step to import data is more complicated, it offers the user more control over the import process. The first argument to any data step is the name of the dataset you are creating. When importing a datafile, the next argument is `infile` followed by the full path to the data on your computer, the `delimiter` argument which specifies the delimiter used to separate values (',' for a csv), the `missover` argument, the `firstobs` argument (if a file already has variable names in it set this to 2, otherwise set to 1), and `DSD`. Following the infile argument is the `input` argument where you can specify variable names and whether or not they should be treated as numeric or categorical variables; if a variable should be treated as categorical, it's name is followed by a $. The syntax is as follows: 
+*Example*
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+proc import out = azt
+            datafile = "C:\Users\niwi8\OneDrive\Documents\p8120_ta\p8120\data\AZT.csv"
+            dbms = csv replace; 
+run; 
+```
+
+
+The data step in SAS is where all data manipulation occurs, this includes being able to import data and create datasets by "hand". Sometimes you will be asked to conduct analyses on group-level instead of individual-level data. In these instances you will need to create a dataset using a data step. The first argument to any data step is the name of the dataset you are creating. The next argument should be `input` where you specify variable names and types (for this course you only need to worry about numeric variables and character variables; if a variable is of type character it should be followed by a $). After input, the next argument is `cards` followed by a semicolon. After cards, you begin writing your data; there should only be as many columns as there are variables you created and after the last line of data you must go to the next line and include a semicolon. 
+
+*Syntax*
 
 ```{}
-data <insert SAS dataset name>
-  infile 'file path'
-    delimiter = ','
-    missover
-    firstobs = 2
-    DSD; 
-  input <name of a numeric variable> <name of a categorical variable> $; 
+data <dataset name>
+  input <a character variable> $ <a numeric variable>
+  cards; 
+  some_data 123
+  ; 
+run; 
+```
+
+*Example*
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data vietnam; 
+  input service $ sleep $ count; 
+  cards; 
+  yes yes 173
+  yes no 160
+  no yes 599
+  no no 851
+  ; 
 run; 
 ```
 

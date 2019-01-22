@@ -1,0 +1,12 @@
+The first argument to any data step is the name of the dataset you are creating. When importing a datafile, the next argument is `infile` followed by the full path to the data on your computer, the `delimiter` argument which specifies the delimiter used to separate values (',' for a csv), the `missover` argument, the `firstobs` argument (if a file already has variable names in it set this to 2, otherwise set to 1), and `DSD`. Following the infile argument is the `input` argument where you can specify variable names and whether or not they should be treated as numeric or categorical variables; if a variable should be treated as categorical, it's name is followed by a $. The syntax is as follows: 
+
+```{}
+data <insert SAS dataset name>
+  infile 'file path'
+    delimiter = ','
+    missover
+    firstobs = 2
+    DSD; 
+  input <name of a numeric variable> <name of a categorical variable> $; 
+run; 
+```
