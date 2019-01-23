@@ -33,7 +33,7 @@ This document is intended to be used as a guide to R for P8120: Analysis of Cate
 
 R can be downloaded [here](https://cran.cnr.berkeley.edu/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/). We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.
 
-R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a mainstay in the data science community. Unlike SAS, R is supported by its users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there are often many ways to the same task in R. 
+R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a mainstay in the data science community. Unlike SAS, R is supported by its users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there are often many ways to do the same task in R. 
 
 #### Workflow
 
@@ -50,8 +50,8 @@ When using R your new workflow should be:
 Always remember to save your work often. 
 
 - To create a new project: *File > New Project... > Existing Directory > Browse > select appropriate homework folder > create project*
-- To create a new r script: *File > New File > R Script*
-- To run code: either copy and paste code in script to the console or highlight code and press *Ctrl + Enter (Windows)* or *Command + Enter (Mac)* 
+- To create a new script: *File > New File > R Script*
+- To run code: either copy and paste code in your script to the console or highlight code and press *Ctrl + Enter (Windows)* or *Command + Enter (Mac)* 
 - To save a script: *File > Save As* 
 
 Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it's much simpler and cleaner to write `data\my_data.csv` than `C:\\my_computer\categorical\homework_10\data\my_data.csv`. 
@@ -85,7 +85,7 @@ library(readr)
 example_df <- read_csv("../data/AZT.csv")
 ```
 
-In the above example, we saved the imported dataset as an r object called `example_df` using `<-`. We can now call `example_df` in functions. For example, we can use the `head()` function to look at the first five observations in the newly imported dataset. If you want to look at the entire dataset, use the function `View()`. If you wanted to know how many observations or how many variables were in a dataset you could call `nrow()` or `ncol()`.
+In the above example, we saved the imported dataset as an R object called `example_df` using `<-` (keyboard shortcut: *Alt + -*). We can now call `example_df` in functions. For example, we can use the `head()` function to look at the first five observations in the newly imported dataset. If you want to look at the entire dataset, use the function `View()`. If you wanted to know how many observations or how many variables were in a dataset you could call `nrow()` or `ncol()`.
 
 ```{r}
 head(example_df)
