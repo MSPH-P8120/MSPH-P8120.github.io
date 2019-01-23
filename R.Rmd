@@ -31,7 +31,7 @@ azt <- azt %>%
 
 This document is intended to be used as a guide to R for P8120: Analysis of Categorical Data. This document is not exhaustive; please consult one of the TA’s, Dr. Mauro, or the internet for more help if needed. 
 
-R can be downloaded [here](https://www.r-project.org/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/). We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.
+R can be downloaded [here](https://cran.cnr.berkeley.edu/) and R Studio (an IDE recommended when using R) can be downloaded [here](https://www.rstudio.com/products/rstudio/download/). We will only support the use of R with RStudio. Even if you already have R and/or RStudio on your computer, we recommended updating to the newest versions available.
 
 R is an open-source functional programming language built for statistical computing. R's popularity has continued to grow and is becoming a mainstay in the data science community. Unlike SAS, R is supported by its users. Anybody with the technical know-how can write their own functions to be used by the R community. However, because it is supported by its users, there are often many ways to the same task in R. 
 
