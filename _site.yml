@@ -9,8 +9,24 @@ navbar:
       href: SAS.html
     - text: "Data"
       menu:
+        - text: AZT
+          href: example_data/AZT.csv
         - text: Benign
           href: example_data/benign.csv
+        - text: Breast Cancer
+          href: example_data/breast.csv
+        - text: Car
+          href: example_data/car.csv
+        - text: Depression 
+          href: example_data/depression.csv
+        - text: Germinal Matrix Hemorrhage
+          href: example_data/gmh.csv
+        - text: Low Birthweight
+          href: example_data/lowbwt.csv
+        - text: Respiratory
+          href: example_data/respiredata_final.csv
+        - text: UMARU
+          href: example_data/UMARUdata2.csv
     - icon: fa-envelope fa-lg
       href: mailto:<cmm2212@cumc.columbia.edu>
     - icon: fa-github fa-lg
