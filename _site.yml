@@ -7,6 +7,10 @@ navbar:
       href: R.html
     - text: "SAS"
       href: SAS.html
+    - text: "Data"
+      menu:
+        - text: Benign
+          href: example_data/benign.csv
     - icon: fa-envelope fa-lg
       href: mailto:<cmm2212@cumc.columbia.edu>
     - icon: fa-github fa-lg
