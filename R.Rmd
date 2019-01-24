@@ -64,7 +64,7 @@ Bundles of R functions are found in packages that can be installed and then used
 
 `install.packages(c("tidyverse", "descr", "descTools", "surival", "epitools", "Hmisc", "devtools"))` 
 
-In addition, you will need to run in your console window, `devtools::install_github("nt-williams/catfun")`. *catfun* (because Categorical is fun) is a package currently under development by the Categorical team to improve R's functionality for categorical data analysis.
+In addition, you will need to run in your console window, `devtools::install_github("nt-williams/catfun")`. *catfun* (because Categorical is fun) is a package currently under development by the Categorical team to improve R's functionality for categorical data analysis. If during the download of *catfun* you are asked if you wish to update any packages you should indicate to update all. 
 
 Because this is not a course on statistical computing, we will spend minimal time on the finer details of R. If you would like a more comprehensive guide to the basics of R, these are good resources: 
 
