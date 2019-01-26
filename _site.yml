@@ -35,4 +35,5 @@ output:
   html_document:
     theme: cosmo
     include:
+      in_header: ga.html
       after_body: footer.html

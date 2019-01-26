@@ -54,7 +54,7 @@ Always remember to save your work often.
 - To run code: either copy and paste code in your script to the console or highlight code and press *Ctrl + Enter (Windows)* or *Command + Enter (Mac)* 
 - To save a script: *File > Save As* 
 
-Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it's much simpler and cleaner to write `data\my_data.csv` than `C:\\my_computer\categorical\homework_10\data\my_data.csv`. 
+Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it's much simpler and cleaner to write `data\my_data.csv` than `C:\my_computer\categorical\homework_10\data\my_data.csv`. 
 
 All R code is run in the console. However, this does not mean you should actually type your code there. Code submitted in the console cannot be edited once run and is not saved. Instead, you should write code in R scripts. Scripts can be edited, saved, and simplify collaboration. As an example, try running `4 + 2` in both the console and an R script. 
 

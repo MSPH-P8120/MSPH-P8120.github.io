@@ -27,6 +27,15 @@
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133330767-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133330767-1');
+</script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -472,7 +481,7 @@ div.tocify {
 <li>To run code: either copy and paste code in your script to the console or highlight code and press <em>Ctrl + Enter (Windows)</em> or <em>Command + Enter (Mac)</em></li>
 <li>To save a script: <em>File &gt; Save As</em></li>
 </ul>
-<p>Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it’s much simpler and cleaner to write <code>data\my_data.csv</code> than <code>C:\\my_computer\categorical\homework_10\data\my_data.csv</code>.</p>
+<p>Using R projects encourages organization. It also sets up a working directory which allows you to use relative paths. Relative paths let you specify shortened file paths instead of full ones. For example, it’s much simpler and cleaner to write <code>data\my_data.csv</code> than <code>C:\my_computer\categorical\homework_10\data\my_data.csv</code>.</p>
 <p>All R code is run in the console. However, this does not mean you should actually type your code there. Code submitted in the console cannot be edited once run and is not saved. Instead, you should write code in R scripts. Scripts can be edited, saved, and simplify collaboration. As an example, try running <code>4 + 2</code> in both the console and an R script.</p>
 </div>
 <div id="packages" class="section level4">
