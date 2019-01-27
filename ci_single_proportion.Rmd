@@ -22,6 +22,10 @@ library(catfun)
 prop_test(2, 6, method = "wald", conf.level = .95)
 ```
 
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/HI14fIC6eiM" frameborder="0" allowfullscreen></iframe>
+</div>
+
 ## SAS
 
 To create confidence intervals for a single proportion in SAS use the frequency procedure. 
