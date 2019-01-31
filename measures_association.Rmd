@@ -15,7 +15,7 @@ The notes for the topics on this page can be found in the lectures 5 and 7 folde
 
 ## R
 
-Odds ratios and risk ratios can be calculated from contingency tables using the functions `oddsratio()` and `riskratio()` from the *epitools* package. Risk difference can be calculated from contingency tables using the `riskdiff()` function from the *catfun* package.
+Odds ratios and risk ratios can be calculated from contingency tables using the functions `oddsratio()` and `riskratio()` from the *epitools* package. Risk difference can be calculated from contingency tables using the `riskdiff()` function from the *catfun* package. For further help, please watch the video [example](#r-demonstration).
 
 ```{r warning=FALSE}
 library(epitools)
@@ -56,6 +56,12 @@ xtabs(count ~ treatment + disease, data = trial) %>%
 trial %>% 
   riskdiff("treatment", "disease", weight = "count")
 ```
+
+### R demonstration
+
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/LWvuOJ986xI" frameborder="0" allowfullscreen></iframe>
+</div>
 
 ## SAS
 
