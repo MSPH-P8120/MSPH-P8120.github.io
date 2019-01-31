@@ -13,7 +13,7 @@ The notes for the topics on this page can be found in the lecture 4 folder on Ca
 
 ## R
 
-One method to conduct a hypothesis test for a single proportion in R is to use the `prop_test` function in the *catfun* package. For more information run `?prop_test` in the R console. 
+One method to conduct a hypothesis test for a single proportion in R is to use the `prop_test` function in the *catfun* package. For more information run `?prop_test` in the R console. For further help, please watch the video [example](#r-demonstration).
 
 ### Score test
 
@@ -33,9 +33,15 @@ library(catfun)
 prop_test(2, 6, method = "wald", p = 0.2, exact = TRUE)
 ```
 
+### R demonstration
+
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/WblDls-luPk" frameborder="0" allowfullscreen></iframe>
+</div>
+
 ## SAS
 
-To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. For further help, please watch the video [example](#video-example).
+To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. For further help, please watch the video [example](#sas-demonstration).
 
 The syntax is: 
 
@@ -87,7 +93,7 @@ proc freq data = followupEX order = data;
 run; 
 ```
 
-# Video example
+### SAS demonstration
 
 <div align="center">
 <iframe width="854" height="480" src="https://www.youtube.com/embed/bgA5Xnj6zf4" frameborder="0" allowfullscreen></iframe>

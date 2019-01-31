@@ -365,7 +365,7 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<p>One method to conduct a hypothesis test for a single proportion in R is to use the <code>prop_test</code> function in the <em>catfun</em> package. For more information run <code>?prop_test</code> in the R console.</p>
+<p>One method to conduct a hypothesis test for a single proportion in R is to use the <code>prop_test</code> function in the <em>catfun</em> package. For more information run <code>?prop_test</code> in the R console. For further help, please watch the video <a href="#r-demonstration">example</a>.</p>
 <div id="score-test" class="section level3">
 <h3>Score test</h3>
 <pre class="r"><code>library(catfun)
@@ -407,10 +407,17 @@ prop_test(2, 6, method = &quot;wald&quot;, p = 0.2, exact = TRUE)</code></pre>
 ## 
 ## Exact p-value: 0.6875</code></pre>
 </div>
+<div id="r-demonstration" class="section level3">
+<h3>R demonstration</h3>
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/WblDls-luPk" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+</div>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<p>To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. For further help, please watch the video <a href="#video-example">example</a>.</p>
+<p>To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. For further help, please watch the video <a href="#sas-demonstration">example</a>.</p>
 <p>The syntax is:</p>
 <pre><code>proc freq data = &lt;dataset&gt;; 
   table &lt;variable name&gt; / binomial(p = &lt;null value&gt;) alpha = &lt;alpha level&gt;; 
@@ -517,13 +524,13 @@ run; </code></pre>
 ## 
 ##                                             Sample Size = 6</code></pre>
 </div>
-</div>
-</div>
-<div id="video-example" class="section level1">
-<h1>Video example</h1>
+<div id="sas-demonstration" class="section level3">
+<h3>SAS demonstration</h3>
 <div align="center">
 <iframe width="854" height="480" src="https://www.youtube.com/embed/bgA5Xnj6zf4" frameborder="0" allowfullscreen>
 </iframe>
+</div>
+</div>
 </div>
 </div>
 
