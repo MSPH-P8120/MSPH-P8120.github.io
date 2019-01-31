@@ -410,12 +410,13 @@ prop_test(2, 6, method = &quot;wald&quot;, p = 0.2, exact = TRUE)</code></pre>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<p>To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure.</p>
+<p>To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. For further help, please watch the video <a href="#video-example">example</a>.</p>
 <p>The syntax is:</p>
 <pre><code>proc freq data = &lt;dataset&gt;; 
   table &lt;variable name&gt; / binomial(p = &lt;null value&gt;) alpha = &lt;alpha level&gt;; 
   weight &lt;weighting variable if summary data&gt;; 
 run; </code></pre>
+<p>Variable name corresponds to the variable in the dataset, null value corresponds to your null hypothesis, alpha level corresponds to your pre-specified alpha level, and weight corresponds to the variable in the dataset that contains your counts (in these cases, the same variable that proceeds your table statement).</p>
 <div id="score-test-1" class="section level3">
 <h3>Score test</h3>
 <pre class="sas"><code>data followup; 
@@ -516,6 +517,13 @@ run; </code></pre>
 ## 
 ##                                             Sample Size = 6</code></pre>
 </div>
+</div>
+</div>
+<div id="video-example" class="section level1">
+<h1>Video example</h1>
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/bgA5Xnj6zf4" frameborder="0" allowfullscreen>
+</iframe>
 </div>
 </div>
 

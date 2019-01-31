@@ -35,7 +35,7 @@ prop_test(2, 6, method = "wald", p = 0.2, exact = TRUE)
 
 ## SAS
 
-To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. 
+To conduct a hypothesis test for a single proportion in SAS you use the frequency procedure. For further help, please watch the video [example](#video-example).
 
 The syntax is: 
 
@@ -45,6 +45,8 @@ proc freq data = <dataset>;
   weight <weighting variable if summary data>; 
 run; 
 ```
+
+Variable name corresponds to the variable in the dataset, null value corresponds to your null hypothesis, alpha level corresponds to your pre-specified alpha level, and weight corresponds to the variable in the dataset that contains your counts (in these cases, the same variable that proceeds your table statement).
 
 ### Score test
 
@@ -84,5 +86,11 @@ proc freq data = followupEX order = data;
   weight loss; 
 run; 
 ```
+
+# Video example
+
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/bgA5Xnj6zf4" frameborder="0" allowfullscreen></iframe>
+</div>
 
 
