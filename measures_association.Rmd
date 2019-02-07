@@ -74,6 +74,8 @@ proc freq data = <dataset>;
 run; 
 ```
 
+For further help, please watch the video [example](#sas-demonstration).
+
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 data trial; 
   input disease $ treatment $ count; 
@@ -90,5 +92,11 @@ proc freq data = trial order = data;
   weight count; 
 run; 
 ```
+
+### SAS demonstration
+
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/M8wanrAapWM" frameborder="0" allowfullscreen></iframe>
+</div>
 
 
