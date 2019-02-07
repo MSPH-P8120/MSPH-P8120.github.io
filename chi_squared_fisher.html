@@ -365,7 +365,7 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<p>To conduct a chi-squared test or Fisher’s exact test in R you can use the <code>CrossTable()</code> function from the <em>descr</em> package. <code>CrossTable()</code> isn’t set up to directly account for weighted cell counts. If you only have summary data you can first use <code>xtabs()</code> to build the contigency table and then use the <code>%&gt;%</code> operator to ‘pipe’ the table into <code>CrossTable()</code>; the below examples illustrate this. For more help, type <code>?CrossTable</code> in the R console.</p>
+<p>To conduct a chi-squared test or Fisher’s exact test in R you can use the <code>CrossTable()</code> function from the <em>descr</em> package. <code>CrossTable()</code> isn’t set up to directly account for weighted cell counts. If you only have summary data you can first use <code>xtabs()</code> to build the contigency table and then use the <code>%&gt;%</code> operator to ‘pipe’ the table into <code>CrossTable()</code>; the below examples illustrate this. For more help, type <code>?CrossTable</code> in the R console. For further help, please watch the video <a href="#r-demonstration">example</a>.</p>
 <pre class="r"><code>vietnam &lt;- tibble(
   service = c(rep(&quot;yes&quot;, 2), rep(&quot;no&quot;, 2)), 
   sleep = c(rep(c(&quot;yes&quot;, &quot;no&quot;), 2)), 
@@ -474,6 +474,13 @@ xtabs(count ~ service + sleep, data = vietnam) %&gt;%
 ## Alternative hypothesis: true odds ratio is greater than 1 
 ## p = 0.000269 
 ## 95%s confidence interval: % 1.247644 Inf</code></pre>
+</div>
+<div id="r-demonstration" class="section level3">
+<h3>R demonstration</h3>
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/KYQwVoTdlB8" frameborder="0" allowfullscreen>
+</iframe>
+</div>
 </div>
 </div>
 <div id="sas" class="section level2">

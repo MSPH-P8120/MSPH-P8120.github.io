@@ -15,7 +15,7 @@ The notes for the topics on this page can be found in the lecture 8 folder on Ca
 
 ## R
 
-To conduct a chi-squared test or Fisher's exact test in R you can use the `CrossTable()` function from the *descr* package. `CrossTable()` isn't set up to directly account for weighted cell counts. If you only have summary data you can first use `xtabs()` to build the contigency table and then use the `%>%` operator to 'pipe' the table into `CrossTable()`; the below examples illustrate this. For more help, type `?CrossTable` in the R console. 
+To conduct a chi-squared test or Fisher's exact test in R you can use the `CrossTable()` function from the *descr* package. `CrossTable()` isn't set up to directly account for weighted cell counts. If you only have summary data you can first use `xtabs()` to build the contigency table and then use the `%>%` operator to 'pipe' the table into `CrossTable()`; the below examples illustrate this. For more help, type `?CrossTable` in the R console. For further help, please watch the video [example](#r-demonstration).
 
 ```{r}
 vietnam <- tibble(
@@ -48,6 +48,12 @@ To conduct a Fisher's exact test, set the `fisher` argument to `TRUE`
 xtabs(count ~ service + sleep, data = vietnam) %>% 
   CrossTable(fisher = TRUE)
 ```
+
+### R demonstration
+
+<div align="center">
+<iframe width="854" height="480" src="https://www.youtube.com/embed/KYQwVoTdlB8" frameborder="0" allowfullscreen></iframe>
+</div>
 
 ## SAS
 
