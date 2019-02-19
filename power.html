@@ -364,54 +364,54 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<p>The <em>pwr</em> package has a variety of functions for conducting power analyses. It is important to note, however, that these functions to not return the exact same results as SAS.</p>
+<p>The <code>prop_power()</code> function from the <em>catfun</em> package can be used for conducting power analyses for comparisons of two proportions in R.</p>
 <div id="computing-power-for-fixed-sample-size" class="section level3">
 <h3>Computing power for fixed sample size</h3>
-<p>The <code>power.prop.test()</code> function can be used to calculate power for equal group sample sizes. For unbalanced group sample sizes, the package <em>Hmisc</em> has a series of functions that can be used.</p>
-<pre class="r"><code>power.prop.test(n = 110, 
-                p1 = 0.35, p2 = 0.2, 
-                sig.level = 0.05)</code></pre>
+<p>The <code>prop_power()</code> function can be used to calculate power for equal group sample sizes.</p>
+<pre class="r"><code>prop_power(n = 220, p1 = 0.35, p2 = 0.2, alpha = 0.05)</code></pre>
 <pre><code>## 
-##      Two-sample comparison of proportions power calculation 
+##   Two-sample comparison of proportions power calculation 
+## ---------------------------------------------------------------------------
 ## 
-##               n = 110
-##              p1 = 0.35
-##              p2 = 0.2
-##       sig.level = 0.05
-##           power = 0.705077
-##     alternative = two.sided
-## 
-## NOTE: n is number in *each* group</code></pre>
+## Total sample size: 220 
+## N1: 110 
+## N2: 110 
+## Proportion 1: 0.35 
+## Proportion 2: 0.2 
+## Power: 0.705077 
+## Significance level: 0.05</code></pre>
 </div>
 <div id="computing-sample-size-given-power-balanced" class="section level3">
 <h3>Computing sample size given power (balanced)</h3>
-<p>The <code>power.prop.test()</code> function can also be used to calculate sample size given power. Instead of specifying the number of observations per group, we specify the desired power.</p>
-<pre class="r"><code>power.prop.test(p1 = 0.35, p2 = 0.2, 
-                power = 0.80, 
-                sig.level = 0.05)</code></pre>
+<p>The <code>prop_power()</code> function can also be used to calculate sample size given power. Instead of specifying the number of observations per group or the total sample size, we specify the desired power.</p>
+<pre class="r"><code>prop_power(p1 = 0.35, p2 = 0.2, power = 0.80, alpha = 0.05)</code></pre>
 <pre><code>## 
-##      Two-sample comparison of proportions power calculation 
+##   Two-sample comparison of proportions power calculation 
+## ---------------------------------------------------------------------------
 ## 
-##               n = 137.9148
-##              p1 = 0.35
-##              p2 = 0.2
-##       sig.level = 0.05
-##           power = 0.8
-##     alternative = two.sided
-## 
-## NOTE: n is number in *each* group</code></pre>
+## Total sample size: 275.8295 
+## N1: 137.9148 
+## N2: 137.9148 
+## Proportion 1: 0.35 
+## Proportion 2: 0.2 
+## Power: 0.8 
+## Significance level: 0.05</code></pre>
 </div>
 <div id="computing-sample-size-given-power-unbalanced" class="section level3">
 <h3>Computing sample size given power (unbalanced)</h3>
-<p>The <code>bsamsize()</code> function can be used to calculate unbalanced sample sizes. The fraction argument is set to 2/3 indicating that 2/3 of the total sample will be members of group one.</p>
-<pre class="r"><code>library(Hmisc)
-
-bsamsize(p1 = 0.35, p2 = 0.2, 
-         fraction = 2/3, 
-         alpha = 0.05, 
-         power = 0.85)</code></pre>
-<pre><code>##       n1       n2 
-## 239.7468 119.8734</code></pre>
+<p>The <code>prop_power()</code> function can be used to calculate unbalanced sample sizes. The fraction argument is set to 2/3 indicating that 2/3 of the total sample will be members of group one.</p>
+<pre class="r"><code>prop_power(p1 = 0.35, p2 = 0.2, fraction = 2/3, alpha = 0.05, power = 0.85)</code></pre>
+<pre><code>## 
+##   Two-sample comparison of proportions power calculation 
+## ---------------------------------------------------------------------------
+## 
+## Total sample size: 359.6202 
+## N1: 239.7468 
+## N2: 119.8734 
+## Proportion 1: 0.35 
+## Proportion 2: 0.2 
+## Power: 0.85 
+## Significance level: 0.05</code></pre>
 </div>
 </div>
 <div id="sas" class="section level2">

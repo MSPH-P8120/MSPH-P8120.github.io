@@ -7,6 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
+library(catfun)
 library(SASmarkdown)
 ```
 
@@ -14,39 +15,30 @@ library(SASmarkdown)
 
 ## R
 
-The *pwr* package has a variety of functions for conducting power analyses. It is important to note, however, that these functions to not return the exact same results as SAS. 
+The `prop_power()` function from the *catfun* package can be used for conducting power analyses for comparisons of two proportions in R. 
 
 ### Computing power for fixed sample size
 
-The `power.prop.test()` function can be used to calculate power for equal group sample sizes. For unbalanced group sample sizes, the package *Hmisc* has a series of functions that can be used. 
+The `prop_power()` function can be used to calculate power for equal group sample sizes. 
 
-```{r warning = FALSE}
-power.prop.test(n = 110, 
-                p1 = 0.35, p2 = 0.2, 
-                sig.level = 0.05)
+```{r}
+prop_power(n = 220, p1 = 0.35, p2 = 0.2, alpha = 0.05)
 ```
 
 ### Computing sample size given power (balanced)
 
-The `power.prop.test()` function can also be used to calculate sample size given power. Instead of specifying the number of observations per group, we specify the desired power. 
+The `prop_power()` function can also be used to calculate sample size given power. Instead of specifying the number of observations per group or the total sample size, we specify the desired power. 
 
 ```{r}
-power.prop.test(p1 = 0.35, p2 = 0.2, 
-                power = 0.80, 
-                sig.level = 0.05)
+prop_power(p1 = 0.35, p2 = 0.2, power = 0.80, alpha = 0.05)
 ```
 
 ### Computing sample size given power (unbalanced)
 
-The `bsamsize()` function can be used to calculate unbalanced sample sizes. The fraction argument is set to 2/3 indicating that 2/3 of the total sample will be members of group one. 
+The `prop_power()` function can be used to calculate unbalanced sample sizes. The fraction argument is set to 2/3 indicating that 2/3 of the total sample will be members of group one. 
 
-```{r message = FALSE, warning = FALSE}
-library(Hmisc)
-
-bsamsize(p1 = 0.35, p2 = 0.2, 
-         fraction = 2/3, 
-         alpha = 0.05, 
-         power = 0.85)
+```{r}
+prop_power(p1 = 0.35, p2 = 0.2, fraction = 2/3, alpha = 0.05, power = 0.85)
 ```
 
 ## SAS

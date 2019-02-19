@@ -160,8 +160,8 @@ Use the following table to locate functions for power analyses. If you are unsur
 
 | Power analysis                     | R function          | Package          | Lecture                           |
 |------------------------------------|---------------------|------------------|:---------------------------------:|
-| Power from sample size             | `power.prop.test()` | stats            | [10](power.html)                  |
-| Sample size from power (balanced)  | `power.prop.test()` | stats            | [10](power.html)                  |
-| Sample size from power (unbalanced)| `bsamsize()`        | Hmisc            | [10](power.html)                  |
+| Power from sample size             | `prop_power()` | catfun            | [10](power.html)                  |
+| Sample size from power (balanced)  | `prop_power()` | catfun            | [10](power.html)                  |
+| Sample size from power (unbalanced)| `prop_power()`        | catfun            | [10](power.html)                  |
 
 
