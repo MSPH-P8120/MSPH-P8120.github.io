@@ -34,6 +34,7 @@ navbar:
 output:
   html_document:
     theme: cosmo
+    css: styles.css
     include:
       in_header: ga.html
       after_body: footer.html
