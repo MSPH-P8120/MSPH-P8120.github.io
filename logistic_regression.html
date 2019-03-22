@@ -11,7 +11,7 @@
 
 
 
-<title>Confidence Intervals for Single Proportions</title>
+<title>Logistic Regression</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -363,95 +363,122 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Confidence Intervals for Single Proportions</h1>
+<h1 class="title toc-ignore">Logistic Regression</h1>
 
 </div>
 
 
-<p>The notes for the topics on this page can be found in the lecture 3 folder on Canvas.</p>
+<p>The notes for the topics on this page can be found in the lectures 5 and 7 folders on Canvas.</p>
 <div id="section" class="section level1 tabset tabset-fade">
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<p>The <code>prop_test</code> function in the <em>catfun</em> package provides both approximated confidence intervals and exact confidence intervals for single proportions. For more information run <code>?prop_test</code> in the R console. Another possible function is <code>BinomCI()</code> in the <em>DescTools</em> package.</p>
-<pre class="r"><code>library(catfun)
+<div id="summary-data" class="section level3">
+<h3>Summary data</h3>
+<pre class="r"><code>library(broom)
 
-prop_test(2, 6, method = &quot;wald&quot;, conf.level = .95)</code></pre>
-<pre><code>## 2  out of  6,  null probability =  0.5
-## ---------------------------------------- 
-## Observed proportion: 0.3333 
-## Confidence interval method: wald 
-## Confidence interval: 0 0.7105286 
+trial &lt;- tibble(
+  estrogen = c(rep(c(&quot;no&quot;, &quot;yes&quot;), 2)), 
+  event = c(0, 0, 1, 1), 
+  count = c(7479, 7755, 623, 751)
+)
+
+trial_mod &lt;- glm(event ~ estrogen, weights = count, data = trial, 
+                 family = &quot;binomial&quot;)
+
+summary(trial_mod)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = event ~ estrogen, family = &quot;binomial&quot;, data = trial, 
+##     weights = count)
 ## 
-## Exact limits: 0.04327187 0.7772219 
+## Deviance Residuals: 
+##      1       2       3       4  
+## -34.59  -37.86   56.54   60.38  
 ## 
-## Test that 0.3333 = 0.5 
-## ---------------------------------------- 
-## Chi-squared: 0.6666667 
-## Degrees freedom: 1 
-## p-value: 0.41422</code></pre>
-<div align="center">
-<iframe width="854" height="480" src="https://www.youtube.com/embed/HI14fIC6eiM" frameborder="0" allowfullscreen>
-</iframe>
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -2.48531    0.04170 -59.601  &lt; 2e-16 ***
+## estrogenyes  0.15062    0.05656   2.663  0.00775 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 9479.5  on 3  degrees of freedom
+## Residual deviance: 9472.4  on 2  degrees of freedom
+## AIC: 9476.4
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<pre class="r"><code>broom::tidy(trial_mod) %&gt;% 
+  filter(term != &quot;(Intercept)&quot;) %&gt;% 
+  mutate(odds_ratio = exp(estimate), 
+         lower = exp(estimate - 1.96*std.error), 
+         upper = exp(estimate + 1.96*std.error))</code></pre>
+<pre><code>## # A tibble: 1 x 8
+##   term        estimate std.error statistic p.value odds_ratio lower upper
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 estrogenyes    0.151    0.0566      2.66 0.00775       1.16  1.04  1.30</code></pre>
+</div>
+<div id="individual-level-data" class="section level3">
+<h3>Individual level data</h3>
+<pre class="r"><code>library(broom)
+
+low_bwt &lt;- read_csv(&quot;../../data/lowbwt.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   id = col_double(),
+##   low = col_double(),
+##   smoke = col_double(),
+##   age = col_double(),
+##   visits = col_double()
+## )</code></pre>
+<pre class="r"><code>bwt_mod &lt;- glm(low ~ age, data = low_bwt, family = &quot;binomial&quot;)
+
+summary(bwt_mod)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = low ~ age, family = &quot;binomial&quot;, data = low_bwt)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.0402  -0.9018  -0.7754   1.4119   1.7800  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)  0.38458    0.73212   0.525    0.599
+## age         -0.05115    0.03151  -1.623    0.105
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 234.67  on 188  degrees of freedom
+## Residual deviance: 231.91  on 187  degrees of freedom
+## AIC: 235.91
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<pre class="r"><code>broom::tidy(bwt_mod) %&gt;% 
+  filter(term != &quot;(Intercept)&quot;) %&gt;% 
+  mutate(odds_ratio = exp(estimate), 
+         lower = exp(estimate - 1.96*std.error), 
+         upper = exp(estimate + 1.96*std.error))</code></pre>
+<pre><code>## # A tibble: 1 x 8
+##   term  estimate std.error statistic p.value odds_ratio lower upper
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 age    -0.0512    0.0315     -1.62   0.105      0.950 0.893  1.01</code></pre>
+<pre class="r"><code>broom::tidy(bwt_mod) %&gt;% 
+  filter(term != &quot;(Intercept)&quot;) %&gt;% 
+  transmute(or_5 = exp(estimate * 5), 
+            lower = exp(estimate * 5 - 1.96*std.error*5), 
+            upper = exp(estimate * 5 + 1.96*std.error*5))</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##    or_5 lower upper
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.774 0.569  1.05</code></pre>
 </div>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<p>To create confidence intervals for a single proportion in SAS use the frequency procedure.</p>
-<p>The syntax is:</p>
-<pre><code>proc freq data = &lt;dataset&gt;; 
-  table &lt;variable name&gt; / binomial(p = &lt;null value&gt;) alpha = &lt;alpha level&gt;; 
-  weight &lt;weighting variable if summary data&gt;; 
-run; </code></pre>
-<p>The following example tests if the proportion 0.33 (2/6) is equal to 0.5 in the population. Because this is summary level data, we include a weight statement and indicate that the variable loss contains the counts.</p>
-<pre class="sas"><code>data followup1; 
-  input loss; 
-  cards; 
-  2
-  4
-  ;
-run; 
-
-title &#39;Loss to Follow-up Exact CI Example&#39;; 
-proc freq data = followup1 order = data; 
-  table loss / binomial(p = 0.5) alpha = 0.05; 
-  weight loss; 
-run; </code></pre>
-<pre><code>##                                    Loss to Follow-up Exact CI Example
-## 
-##                                            The FREQ Procedure
-## 
-##                                                         Cumulative    Cumulative
-##                        loss    Frequency     Percent     Frequency      Percent
-##                        ---------------------------------------------------------
-##                           2           2       33.33             2        33.33  
-##                           4           4       66.67             6       100.00  
-## 
-## 
-##                                           Binomial Proportion
-##                                                 loss = 2
-## 
-##                                     Proportion                0.3333
-##                                     ASE                       0.1925
-##                                     95% Lower Conf Limit      0.0000
-##                                     95% Upper Conf Limit      0.7105
-##                                                                     
-##                                     Exact Conf Limits               
-##                                     95% Lower Conf Limit      0.0433
-##                                     95% Upper Conf Limit      0.7772
-## 
-##                                       Test of H0: Proportion = 0.5
-## 
-##                                     ASE under H0              0.2041
-##                                     Z                        -0.8165
-##                                     One-sided Pr &lt;  Z         0.2071
-##                                     Two-sided Pr &gt; |Z|        0.4142
-## 
-##                                             Sample Size = 6</code></pre>
-<div align="center">
-<iframe width="854" height="480" src="https://www.youtube.com/embed/_inwEs5Xe-M" frameborder="0" allowfullscreen>
-</iframe>
-</div>
+<pre class="sas"><code></code></pre>
 </div>
 </div>
 

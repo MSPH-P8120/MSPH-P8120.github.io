@@ -1,0 +1,71 @@
+---
+title: "Logistic Regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+The notes for the topics on this page can be found in the lectures 5 and 7 folders on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+### Summary data
+
+```{r}
+library(broom)
+
+trial <- tibble(
+  estrogen = c(rep(c("no", "yes"), 2)), 
+  event = c(0, 0, 1, 1), 
+  count = c(7479, 7755, 623, 751)
+)
+
+trial_mod <- glm(event ~ estrogen, weights = count, data = trial, 
+                 family = "binomial")
+
+summary(trial_mod)
+
+broom::tidy(trial_mod) %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(odds_ratio = exp(estimate), 
+         lower = exp(estimate - 1.96*std.error), 
+         upper = exp(estimate + 1.96*std.error))
+```
+
+### Individual level data
+
+```{r}
+library(broom)
+
+low_bwt <- read_csv("../../data/lowbwt.csv")
+
+bwt_mod <- glm(low ~ age, data = low_bwt, family = "binomial")
+
+summary(bwt_mod)
+
+broom::tidy(bwt_mod) %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(odds_ratio = exp(estimate), 
+         lower = exp(estimate - 1.96*std.error), 
+         upper = exp(estimate + 1.96*std.error))
+
+broom::tidy(bwt_mod) %>% 
+  filter(term != "(Intercept)") %>% 
+  transmute(or_5 = exp(estimate * 5), 
+            lower = exp(estimate * 5 - 1.96*std.error*5), 
+            upper = exp(estimate * 5 + 1.96*std.error*5))
+```
+
+## SAS
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+```
+
+
+
