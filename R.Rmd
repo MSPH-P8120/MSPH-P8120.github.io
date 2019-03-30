@@ -136,7 +136,7 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |Fisher's exact                                   | `CrossTable(..., fisher = TRUE)`  | descr         | [8](chi_squared_fisher.html)            |
 |Likelihood ratio test                             | `GTest()`                         | DescTools     | [9](lrt_2_sample.html)                  |
 |Two sample test for proportions                  | `prop_test()`                     | catfun        | [9](lrt_2_sample.html)                  |
-|Logistic regression                              | `glm(..., family = binomial)`     | stats         | 13, 14, & 15                            |
+|Logistic regression                              | `glm(..., family = binomial)`     | stats         | [13, 14, & 15](logistic_regression.html)                            |
 |GOF & Hosmer Lemeshow                            | TBD                               | TBD           | 16                                      |
 |Breslow Day test                                 | `BreslowDayTest`                  | DescTools     | 19                                      |
 |Cochran-Mantel-Haenszel test                     | TBD                               | TBD           | 20                                      |
