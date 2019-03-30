@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-The notes for the topics on this page can be found in the lectures 5 and 7 folders on Canvas. 
+The notes for the topics on this page can be found in the lectures 13, 14, and 15 folders on Canvas. 
 
 # {.tabset .tabset-fade}
 
