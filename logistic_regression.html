@@ -373,8 +373,8 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
-<div id="summary-data" class="section level3">
-<h3>Summary data</h3>
+<div id="group-level-data" class="section level3">
+<h3>Group level data</h3>
 <pre class="r"><code>library(broom)
 
 trial &lt;- tibble(
@@ -478,7 +478,349 @@ summary(bwt_mod)</code></pre>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<pre class="sas"><code></code></pre>
+<div id="group-level-data-1" class="section level3">
+<h3>Group level data</h3>
+<p>A single binary predictor:</p>
+<pre class="sas"><code>title &#39;Example Estrogen Trial&#39;; 
+data trial; 
+  input estrogen events trials; 
+  cards; 
+  0 623 8102
+  1 751 8506
+  ; 
+run; 
+  
+proc format; 
+  value estfmt 0 = &#39;placebo&#39; 
+               1 = &#39;estrogen&#39;; 
+run; 
+               
+proc logistic data = trial; 
+  class estrogen (ref = &#39;placebo&#39;) / param = ref; 
+  model events/trials = estrogen / cl; 
+  format estrogen estfmt.; 
+run; </code></pre>
+<pre><code>##                                          Example Estrogen Trial
+## 
+##                                          The LOGISTIC Procedure
+## 
+##                                            Model Information
+## 
+##                             Data Set                       WORK.TRIAL      
+##                             Response Variable (Events)     events          
+##                             Response Variable (Trials)     trials          
+##                             Model                          binary logit    
+##                             Optimization Technique         Fisher&#39;s scoring
+## 
+## 
+##                                 Number of Observations Read           2
+##                                 Number of Observations Used           2
+##                                 Sum of Frequencies Read           16608
+##                                 Sum of Frequencies Used           16608
+## 
+## 
+##                                             Response Profile
+##  
+##                                    Ordered     Binary           Total
+##                                      Value     Outcome      Frequency
+## 
+##                                          1     Event             1374
+##                                          2     Nonevent         15234
+## 
+## 
+##                                         Class Level Information
+##  
+##                                                               Design
+##                                   Class        Value        Variables
+## 
+##                                   estrogen     estrogen             1
+##                                                placebo              0
+## 
+## 
+##                                         Model Convergence Status
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                                          Model Fit Statistics
+##  
+##                                                       Intercept and Covariates
+##                                        Intercept            Log       Full Log
+##                          Criterion          Only     Likelihood     Likelihood
+## 
+##                          AIC            9481.507       9476.393         20.560
+##                          SC             9489.225       9491.829         35.995
+##                          -2 Log L       9479.507       9472.393         16.560
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio         7.1138        1         0.0076
+##                         Score                    7.1014        1         0.0077
+##                         Wald                     7.0909        1         0.0077
+## 
+## 
+##                                        Type 3 Analysis of Effects
+##  
+##                                                         Wald
+##                               Effect        DF    Chi-Square    Pr &gt; ChiSq
+## 
+##                               estrogen       1        7.0909        0.0077
+## 
+## 
+##                                 Analysis of Maximum Likelihood Estimates
+##  
+##                                                       Standard          Wald
+##               Parameter             DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##               Intercept              1     -2.4853      0.0417     3552.2194        &lt;.0001
+##               estrogen  estrogen     1      0.1506      0.0566        7.0909        0.0077
+## 
+## 
+##                                           Odds Ratio Estimates
+##                                                     
+##                                                        Point          95% Wald
+##                     Effect                          Estimate      Confidence Limits
+## 
+##                     estrogen estrogen vs placebo       1.163       1.041       1.299
+## 
+## 
+##                       Association of Predicted Probabilities and Observed Responses
+## 
+##                           Percent Concordant        26.8    Somers&#39; D    0.038
+##                           Percent Discordant        23.1    Gamma        0.075
+##                           Percent Tied              50.1    Tau-a        0.006
+##                           Pairs                 20931516    c            0.519
+## 
+## 
+##                            Parameter Estimates and Wald Confidence Intervals
+##  
+##                        Parameter              Estimate     95% Confidence Limits
+## 
+##                        Intercept               -2.4853      -2.5670      -2.4036
+##                        estrogen  estrogen       0.1506       0.0398       0.2615</code></pre>
+<p>A multivariable example:</p>
+<pre class="sas"><code>title&#39;ExampleInfection and Treatment adjusting for Hospital Risk&#39;;
+data hosp;
+  input hospital $ treatment $ events trials;
+  cards;
+  low treat 5 104
+  low cont 10 105
+  med treat 35 110
+  med cont 102 197
+  high treat 95 105
+  high cont 99 104
+  ;
+run;
+  
+proc logistic data = hosp; 
+  class hospital (ref = &#39;low&#39;)
+        treatment (ref = &#39;cont&#39;) / param = ref; 
+  model events/trials = treatment hospital / cl; 
+run; </code></pre>
+<pre><code>##                        ExampleInfection and Treatment adjusting for Hospital Risk
+## 
+##                                          The LOGISTIC Procedure
+## 
+##                                            Model Information
+## 
+##                             Data Set                       WORK.HOSP       
+##                             Response Variable (Events)     events          
+##                             Response Variable (Trials)     trials          
+##                             Model                          binary logit    
+##                             Optimization Technique         Fisher&#39;s scoring
+## 
+## 
+##                                 Number of Observations Read           6
+##                                 Number of Observations Used           6
+##                                 Sum of Frequencies Read             725
+##                                 Sum of Frequencies Used             725
+## 
+## 
+##                                             Response Profile
+##  
+##                                    Ordered     Binary           Total
+##                                      Value     Outcome      Frequency
+## 
+##                                          1     Event              346
+##                                          2     Nonevent           379
+## 
+## 
+##                                         Class Level Information
+##  
+##                                                              Design
+##                                    Class         Value     Variables
+## 
+##                                    hospital      high       1      0
+##                                                  low        0      0
+##                                                  med        0      1
+## 
+##                                    treatment     cont       0       
+##                                                  treat      1       
+## 
+## 
+##                                         Model Convergence Status
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                                          Model Fit Statistics
+##  
+##                                                       Intercept and Covariates
+##                                        Intercept            Log       Full Log
+##                          Criterion          Only     Likelihood     Likelihood
+## 
+##                          AIC            1005.561        630.800         33.773
+##                          SC             1010.147        649.145         52.117
+##                          -2 Log L       1003.561        622.800         25.773
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio       380.7607        3         &lt;.0001
+##                         Score                  317.5771        3         &lt;.0001
+##                         Wald                   186.7202        3         &lt;.0001
+## 
+## 
+##                                       Type 3 Analysis of Effects
+##  
+##                                                         Wald
+##                              Effect         DF    Chi-Square    Pr &gt; ChiSq
+## 
+##                              treatment       1       14.4446        0.0001
+##                              hospital        2      185.3958        &lt;.0001
+## 
+## 
+##                                Analysis of Maximum Likelihood Estimates
+##  
+##                                                     Standard          Wald
+##                Parameter          DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##                Intercept           1     -2.2269      0.2783       64.0366        &lt;.0001
+##                treatment treat     1     -0.8058      0.2120       14.4446        0.0001
+##                hospital  high      1      5.2597      0.3876      184.1831        &lt;.0001
+##                hospital  med       1      2.2891      0.2936       60.7987        &lt;.0001
+## 
+## 
+##                                          Odds Ratio Estimates
+##                                                    
+##                                                     Point          95% Wald
+##                       Effect                     Estimate      Confidence Limits
+## 
+##                       treatment treat vs cont       0.447       0.295       0.677
+##                       hospital  high vs low       192.420      90.025     411.281
+##                       hospital  med  vs low         9.866       5.549      17.539
+## 
+## 
+##                       Association of Predicted Probabilities and Observed Responses
+## 
+##                            Percent Concordant      81.5    Somers&#39; D    0.745
+##                            Percent Discordant       6.9    Gamma        0.843
+##                            Percent Tied            11.6    Tau-a        0.372
+##                            Pairs                 131134    c            0.873
+## 
+## 
+##                            Parameter Estimates and Wald Confidence Intervals
+##  
+##                          Parameter           Estimate     95% Confidence Limits
+## 
+##                          Intercept            -2.2269      -2.7724      -1.6815
+##                          treatment treat      -0.8058      -1.2213      -0.3902
+##                          hospital  high        5.2597       4.5001       6.0193
+##                          hospital  med         2.2891       1.7137       2.8644</code></pre>
+</div>
+<div id="individual-level-data-1" class="section level3">
+<h3>Individual level data</h3>
+<pre class="sas"><code>title &#39;Example Low Birth-weight and Maternal Age&#39;; 
+proc import datafile = &#39;C:\Users\niwi8\OneDrive\Documents\p8120_ta\data\lowbwt.csv&#39;
+            out = lowbwt
+            dbms = csv; 
+run; 
+            
+proc logistic data = lowbwt descending; 
+  model low = age / waldrl; 
+  units age = 5; 
+run; </code></pre>
+<pre><code>##                                Example Low Birth-weight and Maternal Age
+## 
+##                                          The LOGISTIC Procedure
+## 
+##                                            Model Information
+## 
+##                              Data Set                      WORK.LOWBWT     
+##                              Response Variable             low             
+##                              Number of Response Levels     2               
+##                              Model                         binary logit    
+##                              Optimization Technique        Fisher&#39;s scoring
+## 
+## 
+##                                 Number of Observations Read         189
+##                                 Number of Observations Used         189
+## 
+## 
+##                                             Response Profile
+##  
+##                                  Ordered                          Total
+##                                    Value     low              Frequency
+## 
+##                                        1     1                       59
+##                                        2     0                      130
+## 
+##                                     Probability modeled is low=&#39;1&#39;.
+## 
+## 
+##                                         Model Convergence Status
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                                           Model Fit Statistics
+##  
+##                                                               Intercept
+##                                                Intercept            and
+##                                  Criterion          Only     Covariates
+## 
+##                                  AIC             236.672        235.912
+##                                  SC              239.914        242.395
+##                                  -2 Log L        234.672        231.912
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio         2.7600        1         0.0966
+##                         Score                    2.6737        1         0.1020
+##                         Wald                     2.6324        1         0.1047
+## 
+## 
+##                                Analysis of Maximum Likelihood Estimates
+##  
+##                                                  Standard          Wald
+##                   Parameter    DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##                   Intercept     1      0.3841      0.7321        0.2752        0.5998
+##                   age           1     -0.0511      0.0315        2.6324        0.1047
+## 
+## 
+##                      Association of Predicted Probabilities and Observed Responses
+## 
+##                            Percent Concordant     52.5    Somers&#39; D    0.105
+##                            Percent Discordant     42.0    Gamma        0.111
+##                            Percent Tied            5.5    Tau-a        0.045
+##                            Pairs                  7670    c            0.553
+## 
+## 
+##                            Odds Ratio Estimates and Wald Confidence Intervals
+##  
+##                        Effect         Unit     Estimate     95% Confidence Limits
+## 
+##                        age          5.0000        0.774        0.569        1.055</code></pre>
+</div>
 </div>
 </div>
 

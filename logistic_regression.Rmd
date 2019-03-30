@@ -15,7 +15,7 @@ The notes for the topics on this page can be found in the lectures 5 and 7 folde
 
 ## R
 
-### Summary data
+### Group level data
 
 ```{r}
 library(broom)
@@ -64,8 +64,72 @@ broom::tidy(bwt_mod) %>%
 
 ## SAS
 
+### Group level data
+
+A single binary predictor: 
+
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title 'Example Estrogen Trial'; 
+data trial; 
+  input estrogen events trials; 
+  cards; 
+  0 623 8102
+  1 751 8506
+  ; 
+run; 
+  
+proc format; 
+  value estfmt 0 = 'placebo' 
+               1 = 'estrogen'; 
+run; 
+               
+proc logistic data = trial; 
+  class estrogen (ref = 'placebo') / param = ref; 
+  model events/trials = estrogen / cl; 
+  format estrogen estfmt.; 
+run; 
 ```
+
+A multivariable example: 
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title'ExampleInfection and Treatment adjusting for Hospital Risk';
+data hosp;
+  input hospital $ treatment $ events trials;
+  cards;
+  low treat 5 104
+  low cont 10 105
+  med treat 35 110
+  med cont 102 197
+  high treat 95 105
+  high cont 99 104
+  ;
+run;
+  
+proc logistic data = hosp; 
+  class hospital (ref = 'low')
+        treatment (ref = 'cont') / param = ref; 
+  model events/trials = treatment hospital / cl; 
+run; 
+```
+
+### Individual level data
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title 'Example Low Birth-weight and Maternal Age'; 
+proc import datafile = 'C:\Users\niwi8\OneDrive\Documents\p8120_ta\data\lowbwt.csv'
+            out = lowbwt
+            dbms = csv; 
+run; 
+            
+proc logistic data = lowbwt descending; 
+  model low = age / waldrl; 
+  units age = 5; 
+run; 
+```
+
+
+
 
 
 
