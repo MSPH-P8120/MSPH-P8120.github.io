@@ -19,7 +19,7 @@ To conduct logistic regression in R we can use the `glm` function with `family =
 
 ### Group level data
 
-When working with aggregate or group level data you can simply specify the `weight statement`. In the following example, we "tidy" the output and then calculate the confidence interval for the exponentiated coefficient. You cannot have continuous predictors when working with summary data. 
+When working with aggregate or group level data you can simply specify the `weight` statement. In the following example, we "tidy" the output and then calculate the confidence interval for the exponentiated coefficient. You cannot have continuous predictors when working with summary data. 
 
 ```{r}
 library(broom)
@@ -37,14 +37,16 @@ summary(trial_mod)
 
 broom::tidy(trial_mod) %>% 
   filter(term != "(Intercept)") %>% 
-  mutate(odds_ratio = exp(estimate), 
+  transmute(odds_ratio = exp(estimate), 
          lower = exp(estimate - 1.96*std.error), 
          upper = exp(estimate + 1.96*std.error))
 ```
 
 ### Individual level data
 
-```{r}
+If you are working with continuous predictors, it might be useful to examine a 5-unit increase in your variable instead of a single unit increase. To do this, we first "tidy" the model output and then use `transmute` to calculate this effect. 
+
+```{r message = FALSE}
 library(broom)
 
 low_bwt <- read_csv("../../data/lowbwt.csv")
@@ -55,7 +57,7 @@ summary(bwt_mod)
 
 broom::tidy(bwt_mod) %>% 
   filter(term != "(Intercept)") %>% 
-  mutate(odds_ratio = exp(estimate), 
+  transmute(odds_ratio = exp(estimate), 
          lower = exp(estimate - 1.96*std.error), 
          upper = exp(estimate + 1.96*std.error))
 
@@ -99,7 +101,7 @@ run;
 A multivariable example: 
 
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
-title'ExampleInfection and Treatment adjusting for Hospital Risk';
+title 'Example Infection and Treatment adjusting for Hospital Risk';
 data hosp;
   input hospital $ treatment $ events trials;
   cards;
