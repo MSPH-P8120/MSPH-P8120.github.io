@@ -15,7 +15,11 @@ The notes for the topics on this page can be found in the lectures 13, 14, and 1
 
 ## R
 
+To conduct logistic regression in R we can use the `glm` function with `family = binomial`. The general syntax for regression models in R is `response ~ covariate one + covariate two + ..., data = dataset`. It is useful to save your model as an object, you can then call other functions such as `summary` which will output your estimated coefficients. It is also useful to use `tidy` from the *broom* package to convert certain output from the object storing your model as a dataframe that can then be further manipulated.  
+
 ### Group level data
+
+When working with aggregate or group level data you can simply specify the `weight statement`. In the following example, we "tidy" the output and then calculate the confidence interval for the exponentiated coefficient. You cannot have continuous predictors when working with summary data. 
 
 ```{r}
 library(broom)
@@ -63,6 +67,8 @@ broom::tidy(bwt_mod) %>%
 ```
 
 ## SAS
+
+To conduct logistic regression in SAS you can use `proc logistic`. Depending on which type of data layout you have, SAS code for fitting a logistic model will change. Some analyses of how well the model fits the data will depend on the type of data you have. We cannot compare the findings from a logistic model with a table analysis if we have subject level data that contains a continuous covariate (and we are interested in investigating that continuous covariate).
 
 ### Group level data
 

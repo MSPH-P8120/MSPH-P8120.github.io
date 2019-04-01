@@ -373,8 +373,10 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
+<p>To conduct logistic regression in R we can use the <code>glm</code> function with <code>family = binomial</code>. The general syntax for regression models in R is <code>response ~ covariate one + covariate two + ..., data = dataset</code>. It is useful to save your model as an object, you can then call other functions such as <code>summary</code> which will output your estimated coefficients. It is also useful to use <code>tidy</code> from the <em>broom</em> package to convert certain output from the object storing your model as a dataframe that can then be further manipulated.</p>
 <div id="group-level-data" class="section level3">
 <h3>Group level data</h3>
+<p>When working with aggregate or group level data you can simply specify the <code>weight statement</code>. In the following example, we “tidy” the output and then calculate the confidence interval for the exponentiated coefficient. You cannot have continuous predictors when working with summary data.</p>
 <pre class="r"><code>library(broom)
 
 trial &lt;- tibble(
@@ -478,6 +480,7 @@ summary(bwt_mod)</code></pre>
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
+<p>To conduct logistic regression in SAS you can use <code>proc logistic</code>. Depending on which type of data layout you have, SAS code for fitting a logistic model will change. Some analyses of how well the model fits the data will depend on the type of data you have. We cannot compare the findings from a logistic model with a table analysis if we have subject level data that contains a continuous covariate (and we are interested in investigating that continuous covariate).</p>
 <div id="group-level-data-1" class="section level3">
 <h3>Group level data</h3>
 <p>A single binary predictor:</p>
