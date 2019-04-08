@@ -39,6 +39,8 @@ Importing data in SAS can be done a couple of different ways. We recommend using
 
 The import procedure is the most straightforward way of importing data into SAS. The procedure requires two arguments and a third optional requirement is recommended: `out`, `datafile`, and `dbms`. The `out` argument specifies the name of the newly created SAS dataset; the `datafile` argument specifies the complete path for the file containing the data to be imported in quotation marks; the `dbms` argument is optional and specifies the file type to be parsed. The most commonly used identifiers are `csv`, `tab`, `xlsx`, and `dlm`. If importing a csv file, this argument is not necessary. Further help can be found [here](http://support.sas.com/documentation/cdl/en/proc/65145/HTML/default/viewer.htm#n18jyszn33umngn14czw2qfw7thc.htm). 
 
+**If using SAS Studio, you must first upload the data into SAS Studio and then reference that file path.**
+
 *Syntax*
 
 ```{}
