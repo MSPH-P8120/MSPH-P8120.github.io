@@ -427,7 +427,8 @@ summary(trial_mod)</code></pre>
 <p>If you are working with continuous predictors, it might be useful to examine a 5-unit increase in your variable instead of a single unit increase. To do this, we first “tidy” the model output and then use <code>transmute</code> to calculate this effect.</p>
 <pre class="r"><code>library(broom)
 
-low_bwt &lt;- read_csv(&quot;../../data/lowbwt.csv&quot;)
+low_bwt &lt;- read_csv(&quot;../../data/lowbwt.csv&quot;) %&gt;% 
+  mutate_at(vars(&quot;smoke&quot;, &quot;visits&quot;, &quot;low&quot;), as_factor)
 
 bwt_mod &lt;- glm(low ~ age, data = low_bwt, family = &quot;binomial&quot;)
 
@@ -470,6 +471,23 @@ summary(bwt_mod)</code></pre>
 ##    or_5 lower upper
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 0.774 0.569  1.05</code></pre>
+</div>
+<div id="likelihood-ratio-test" class="section level3">
+<h3>Likelihood ratio test</h3>
+<p>To conduct a likelihood ratio test for nested models in R you can use the <code>lrtest</code> function from the <em>lmtest</em> package. To do so, you first fit your two models and save them as objects. You can then call <code>lrtest(&lt;insert model 1&gt;, &lt;insert model 2&gt;)</code>.</p>
+<pre class="r"><code>library(lmtest)
+
+bwt_mod_1 &lt;- glm(low ~ smoke + age, data = low_bwt, family = &quot;binomial&quot;)
+bwt_mod_2 &lt;- glm(low ~ smoke + age + visits, data = low_bwt, family = &quot;binomial&quot;)
+
+lrtest(bwt_mod_1, bwt_mod_2)</code></pre>
+<pre><code>## Likelihood ratio test
+## 
+## Model 1: low ~ smoke + age
+## Model 2: low ~ smoke + age + visits
+##   #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+## 1   3 -113.64                     
+## 2   5 -113.20  2 0.8798     0.6441</code></pre>
 </div>
 </div>
 <div id="sas" class="section level2">
@@ -817,6 +835,253 @@ run; </code></pre>
 ##                        Effect         Unit     Estimate     95% Confidence Limits
 ## 
 ##                        age          5.0000        0.774        0.569        1.055</code></pre>
+</div>
+<div id="likelihood-ratio-test-1" class="section level3">
+<h3>Likelihood ratio test</h3>
+<pre class="sas"><code>proc import datafile = &#39;C:\Users\niwi8\OneDrive\Documents\p8120_ta\data\lowbwt.csv&#39;
+            out = lowbwt
+            dbms = csv; 
+run; 
+
+title1 &#39;Likeliohood ratio test&#39;;
+title2 &#39;LNull/Reduced Model&#39;; 
+proc logistic data = lowbwt descending; 
+  class smoke (ref = &#39;0&#39;) / param = ref; 
+  model low = smoke age / cl; 
+run; 
+
+title2 &#39;Full Model&#39;; 
+proc logistic data = lowbwt descending; 
+  class smoke (ref = &#39;0&#39;)
+        visits (ref = &#39;0&#39;) / param = ref; 
+  model low = smoke age visits / cl; 
+run; </code></pre>
+<pre><code>##                                          Likeliohood ratio test
+##                                           LNull/Reduced Model
+## 
+##                                          The LOGISTIC Procedure
+## 
+##                                            Model Information
+## 
+##                              Data Set                      WORK.LOWBWT     
+##                              Response Variable             low             
+##                              Number of Response Levels     2               
+##                              Model                         binary logit    
+##                              Optimization Technique        Fisher&#39;s scoring
+## 
+## 
+##                                 Number of Observations Read         189
+##                                 Number of Observations Used         189
+## 
+## 
+##                                             Response Profile
+##  
+##                                  Ordered                          Total
+##                                    Value     low              Frequency
+## 
+##                                        1     1                       59
+##                                        2     0                      130
+## 
+##                                     Probability modeled is low=&#39;1&#39;.
+## 
+## 
+##                                         Class Level Information
+##  
+##                                                            Design
+##                                      Class     Value     Variables
+## 
+##                                      smoke     0                 0
+##                                                1                 1
+## 
+## 
+##                                         Model Convergence Status
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                                           Model Fit Statistics
+##  
+##                                                               Intercept
+##                                                Intercept            and
+##                                  Criterion          Only     Covariates
+## 
+##                                  AIC             236.672        233.276
+##                                  SC              239.914        243.002
+##                                  -2 Log L        234.672        227.276
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio         7.3957        2         0.0248
+##                         Score                    7.2899        2         0.0261
+##                         Wald                     7.0647        2         0.0292
+## 
+## 
+##                                        Type 3 Analysis of Effects
+##  
+##                                                        Wald
+##                                Effect      DF    Chi-Square    Pr &gt; ChiSq
+## 
+##                                smoke        1        4.6220        0.0316
+##                                age          1        2.4241        0.1195
+## 
+## 
+##                                Analysis of Maximum Likelihood Estimates
+##  
+##                                                   Standard          Wald
+##                  Parameter      DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##                  Intercept       1      0.0609      0.7573        0.0065        0.9359
+##                  smoke     1     1      0.6918      0.3218        4.6220        0.0316
+##                  age             1     -0.0498      0.0320        2.4241        0.1195
+## 
+## 
+##                                           Odds Ratio Estimates
+##                                                     
+##                                                Point          95% Wald
+##                             Effect          Estimate      Confidence Limits
+## 
+##                             smoke 1 vs 0       1.997       1.063       3.753
+##                             age                0.951       0.894       1.013
+## 
+## 
+##                      Association of Predicted Probabilities and Observed Responses
+## 
+##                            Percent Concordant     59.8    Somers&#39; D    0.222
+##                            Percent Discordant     37.5    Gamma        0.228
+##                            Percent Tied            2.7    Tau-a        0.096
+##                            Pairs                  7670    c            0.611
+## 
+## 
+##                            Parameter Estimates and Wald Confidence Intervals
+##  
+##                            Parameter       Estimate     95% Confidence Limits
+## 
+##                            Intercept         0.0609      -1.4234       1.5452
+##                            smoke     1       0.6918       0.0611       1.3226
+##                            age              -0.0498      -0.1124       0.0129
+##  
+##                                                                                                         
+##  
+##                                          Likeliohood ratio test
+##                                                Full Model
+## 
+##                                          The LOGISTIC Procedure
+## 
+##                                            Model Information
+## 
+##                              Data Set                      WORK.LOWBWT     
+##                              Response Variable             low             
+##                              Number of Response Levels     2               
+##                              Model                         binary logit    
+##                              Optimization Technique        Fisher&#39;s scoring
+## 
+## 
+##                                 Number of Observations Read         189
+##                                 Number of Observations Used         189
+## 
+## 
+##                                             Response Profile
+##  
+##                                  Ordered                          Total
+##                                    Value     low              Frequency
+## 
+##                                        1     1                       59
+##                                        2     0                      130
+## 
+##                                     Probability modeled is low=&#39;1&#39;.
+## 
+## 
+##                                         Class Level Information
+##  
+##                                                             Design
+##                                      Class      Value     Variables
+## 
+##                                      smoke      0          0       
+##                                                 1          1       
+## 
+##                                      visits     0          0      0
+##                                                 1          1      0
+##                                                 2          0      1
+## 
+## 
+##                                         Model Convergence Status
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                                           Model Fit Statistics
+##  
+##                                                               Intercept
+##                                                Intercept            and
+##                                  Criterion          Only     Covariates
+## 
+##                                  AIC             236.672        236.396
+##                                  SC              239.914        252.605
+##                                  -2 Log L        234.672        226.396
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio         8.2755        4         0.0820
+##                         Score                    8.1381        4         0.0866
+##                         Wald                     7.8514        4         0.0972
+## 
+## 
+##                                        Type 3 Analysis of Effects
+##  
+##                                                        Wald
+##                                Effect      DF    Chi-Square    Pr &gt; ChiSq
+## 
+##                                smoke        1        3.9243        0.0476
+##                                age          1        1.6668        0.1967
+##                                visits       2        0.8684        0.6478
+## 
+## 
+##                                Analysis of Maximum Likelihood Estimates
+##  
+##                                                   Standard          Wald
+##                  Parameter      DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##                  Intercept       1      0.0503      0.7618        0.0044        0.9473
+##                  smoke     1     1      0.6462      0.3262        3.9243        0.0476
+##                  age             1     -0.0427      0.0331        1.6668        0.1967
+##                  visits    1     1     -0.3779      0.4199        0.8099        0.3681
+##                  visits    2     1     -0.2073      0.4148        0.2498        0.6172
+## 
+## 
+##                                          Odds Ratio Estimates
+##                                                    
+##                                                Point          95% Wald
+##                            Effect           Estimate      Confidence Limits
+## 
+##                            smoke  1 vs 0       1.908       1.007       3.617
+##                            age                 0.958       0.898       1.022
+##                            visits 1 vs 0       0.685       0.301       1.561
+##                            visits 2 vs 0       0.813       0.360       1.833
+## 
+## 
+##                      Association of Predicted Probabilities and Observed Responses
+## 
+##                            Percent Concordant     62.7    Somers&#39; D    0.264
+##                            Percent Discordant     36.3    Gamma        0.267
+##                            Percent Tied            1.1    Tau-a        0.114
+##                            Pairs                  7670    c            0.632
+## 
+## 
+##                            Parameter Estimates and Wald Confidence Intervals
+##  
+##                            Parameter       Estimate     95% Confidence Limits
+## 
+##                            Intercept         0.0503      -1.4428       1.5434
+##                            smoke     1       0.6462      0.00686       1.2856
+##                            age              -0.0427      -0.1076       0.0221
+##                            visits    1      -0.3779      -1.2008       0.4450
+##                            visits    2      -0.2073      -1.0204       0.6057</code></pre>
 </div>
 </div>
 </div>

@@ -49,7 +49,8 @@ If you are working with continuous predictors, it might be useful to examine a 5
 ```{r message = FALSE}
 library(broom)
 
-low_bwt <- read_csv("../../data/lowbwt.csv")
+low_bwt <- read_csv("../../data/lowbwt.csv") %>% 
+  mutate_at(vars("smoke", "visits", "low"), as_factor)
 
 bwt_mod <- glm(low ~ age, data = low_bwt, family = "binomial")
 
@@ -66,6 +67,19 @@ broom::tidy(bwt_mod) %>%
   transmute(or_5 = exp(estimate * 5), 
             lower = exp(estimate * 5 - 1.96*std.error*5), 
             upper = exp(estimate * 5 + 1.96*std.error*5))
+```
+
+### Likelihood ratio test
+
+To conduct a likelihood ratio test for nested models in R you can use the `lrtest` function from the *lmtest* package. To do so, you first fit your two models and save them as objects. You can then call `lrtest(<insert model 1>, <insert model 2>)`. 
+
+```{r message = FALSE}
+library(lmtest)
+
+bwt_mod_1 <- glm(low ~ smoke + age, data = low_bwt, family = "binomial")
+bwt_mod_2 <- glm(low ~ smoke + age + visits, data = low_bwt, family = "binomial")
+
+lrtest(bwt_mod_1, bwt_mod_2)
 ```
 
 ## SAS
@@ -135,6 +149,31 @@ proc logistic data = lowbwt descending;
   units age = 5; 
 run; 
 ```
+
+### Likelihood ratio test
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+proc import datafile = 'C:\Users\niwi8\OneDrive\Documents\p8120_ta\data\lowbwt.csv'
+            out = lowbwt
+            dbms = csv; 
+run; 
+
+title1 'Likeliohood ratio test';
+title2 'LNull/Reduced Model'; 
+proc logistic data = lowbwt descending; 
+  class smoke (ref = '0') / param = ref; 
+  model low = smoke age / cl; 
+run; 
+
+title2 'Full Model'; 
+proc logistic data = lowbwt descending; 
+  class smoke (ref = '0')
+        visits (ref = '0') / param = ref; 
+  model low = smoke age visits / cl; 
+run; 
+```
+
+
 
 
 
