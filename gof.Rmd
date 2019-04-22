@@ -1,0 +1,84 @@
+---
+title: "Goodness of Fit"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+```
+
+The notes for the topics on this page can be found in the lectures 16 and 17 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+### Deviance
+
+```{r}
+library(catfun)
+
+cad <- tibble(
+  gender = c(rep("male", 6), rep("female", 6)), 
+  agecat = c(rep(c("<60", "60-69", "70+"), 4)), 
+  event = c(rep(c(0, 0, 0, 1, 1, 1), 2)), 
+  count = c(110, 131, 126, 13, 37, 45, 411, 110, 189, 41, 24, 12)
+)
+
+saturated <- glm(event ~ gender*agecat, weight = count, data = cad, family = "binomial")
+working <- glm(event ~ gender + agecat, weight = count, data = cad, family = "binomial")
+
+gof_deviance(working, saturated)
+```
+
+### Hosmer-Lemeshow
+
+```{r}
+library(ResourceSelection)
+library(readxl)
+
+evans_county <- read_excel("C:/Users/niwi8/OneDrive/Documents/p8120_ta/data/evanscounty.xlsx")
+
+evans_model <- glm(chd ~ cat + age + ecg + smk + chl + hpt, data = evans_county, family = "binomial")
+
+hoslem.test(evans_model$y, fitted(evans_model), g = 10)
+```
+
+## SAS
+
+### Deviance
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data cad; 
+  input gender $ agecat $ events trials; 
+  cards; 
+  male <60 13 123
+  male 60-69 37 168
+  male 70+ 45 171
+  female <60 41 452
+  female 60-69 24 134
+  female 70+ 12 201
+  ; 
+run; 
+            
+proc logistic data = cad; 
+  class gender (ref = 'female')
+        agecat (ref = '<60') / param = ref; 
+  model events / trials = gender agecat / cl scale = none; 
+run; 
+```
+
+### Hosmer-Lemeshow
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+proc import datafile = 'C:/Users/niwi8/OneDrive/Documents/p8120_ta/data/evanscounty.xlsx'
+            out = evanscounty
+            dbms = xlsx; 
+run; 
+            
+proc logistic data = evanscounty descending; 
+  model chd = cat age ecg smk chl hpt / lackfit; run; 
+```
+

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Goodness of Fit</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133330767-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133330767-1');
+</script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="R.html">R</a>
+</li>
+<li>
+  <a href="SAS.html">SAS</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="example_data/AZT.csv">AZT</a>
+    </li>
+    <li>
+      <a href="example_data/benign.csv">Benign</a>
+    </li>
+    <li>
+      <a href="example_data/breast.csv">Breast Cancer</a>
+    </li>
+    <li>
+      <a href="example_data/car.csv">Car</a>
+    </li>
+    <li>
+      <a href="example_data/depression.csv">Depression</a>
+    </li>
+    <li>
+      <a href="example_data/gmh.csv">Germinal Matrix Hemorrhage</a>
+    </li>
+    <li>
+      <a href="example_data/lowbwt.csv">Low Birthweight</a>
+    </li>
+    <li>
+      <a href="example_data/respiredata_final.csv">Respiratory</a>
+    </li>
+    <li>
+      <a href="example_data/UMARUdata2.csv">UMARU</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;cmm2212@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/MSPH-P8120/MSPH-P8120.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Goodness of Fit</h1>
+
+</div>
+
+
+<p>The notes for the topics on this page can be found in the lectures 16 and 17 folder on Canvas.</p>
+<div id="section" class="section level1 tabset tabset-fade">
+<h1></h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<div id="deviance" class="section level3">
+<h3>Deviance</h3>
+<pre class="r"><code>library(catfun)
+
+cad &lt;- tibble(
+  gender = c(rep(&quot;male&quot;, 6), rep(&quot;female&quot;, 6)), 
+  agecat = c(rep(c(&quot;&lt;60&quot;, &quot;60-69&quot;, &quot;70+&quot;), 4)), 
+  event = c(rep(c(0, 0, 0, 1, 1, 1), 2)), 
+  count = c(110, 131, 126, 13, 37, 45, 411, 110, 189, 41, 24, 12)
+)
+
+saturated &lt;- glm(event ~ gender*agecat, weight = count, data = cad, family = &quot;binomial&quot;)
+working &lt;- glm(event ~ gender + agecat, weight = count, data = cad, family = &quot;binomial&quot;)
+
+gof_deviance(working, saturated)</code></pre>
+<pre><code>## # A tibble: 2 x 6
+##   model     deviance df.residual  stat    df   p.value
+##   &lt;chr&gt;        &lt;dbl&gt;       &lt;int&gt; &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;
+## 1 working       964.           8  15.1     2  0.000535
+## 2 saturated     949.           6  NA      NA NA</code></pre>
+</div>
+<div id="hosmer-lemeshow" class="section level3">
+<h3>Hosmer-Lemeshow</h3>
+<pre class="r"><code>library(ResourceSelection)
+library(readxl)
+
+evans_county &lt;- read_excel(&quot;C:/Users/niwi8/OneDrive/Documents/p8120_ta/data/evanscounty.xlsx&quot;)
+
+evans_model &lt;- glm(chd ~ cat + age + ecg + smk + chl + hpt, data = evans_county, family = &quot;binomial&quot;)
+
+hoslem.test(evans_model$y, fitted(evans_model), g = 10)</code></pre>
+<pre><code>## 
+##  Hosmer and Lemeshow goodness of fit (GOF) test
+## 
+## data:  evans_model$y, fitted(evans_model)
+## X-squared = 5.4074, df = 8, p-value = 0.7133</code></pre>
+</div>
+</div>
+<div id="sas" class="section level2">
+<h2>SAS</h2>
+<div id="deviance-1" class="section level3">
+<h3>Deviance</h3>
+<pre class="sas"><code>data cad; 
+  input gender $ agecat $ events trials; 
+  cards; 
+  male &lt;60 13 123
+  male 60-69 37 168
+  male 70+ 45 171
+  female &lt;60 41 452
+  female 60-69 24 134
+  female 70+ 12 201
+  ; 
+run; 
+            
+proc logistic data = cad; 
+  class gender (ref = &#39;female&#39;)
+        agecat (ref = &#39;&lt;60&#39;) / param = ref; 
+  model events / trials = gender agecat / cl scale = none; 
+run; </code></pre>
+<pre><code>##                                          The LOGISTIC Procedure
+## 
+##                                            Model Information
+## 
+##                             Data Set                       WORK.CAD        
+##                             Response Variable (Events)     events          
+##                             Response Variable (Trials)     trials          
+##                             Model                          binary logit    
+##                             Optimization Technique         Fisher&#39;s scoring
+## 
+## 
+##                                 Number of Observations Read           6
+##                                 Number of Observations Used           6
+##                                 Sum of Frequencies Read            1249
+##                                 Sum of Frequencies Used            1249
+## 
+## 
+##                                             Response Profile
+##  
+##                                    Ordered     Binary           Total
+##                                      Value     Outcome      Frequency
+## 
+##                                          1     Event              172
+##                                          2     Nonevent          1077
+## 
+## 
+##                                         Class Level Information
+##  
+##                                                             Design
+##                                     Class      Value      Variables
+## 
+##                                     gender     female      0       
+##                                                male        1       
+## 
+##                                     agecat     60-69       1      0
+##                                                70+         0      1
+##                                                &lt;60         0      0
+## 
+## 
+##                                         Model Convergence Status
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                             Deviance and Pearson Goodness-of-Fit Statistics
+##  
+##                      Criterion          Value       DF     Value/DF     Pr &gt; ChiSq
+## 
+##                      Deviance         15.0659        2       7.5330         0.0005
+##                      Pearson          14.2936        2       7.1468         0.0008
+## 
+##                                 Number of events/trials observations: 6
+## 
+## 
+##                                          Model Fit Statistics
+##  
+##                                                       Intercept and Covariates
+##                                        Intercept            Log       Full Log
+##                          Criterion          Only     Likelihood     Likelihood
+## 
+##                          AIC            1003.161        972.169         52.479
+##                          SC             1008.291        992.689         73.000
+##                          -2 Log L       1001.161        964.169         44.479
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio        36.9918        3         &lt;.0001
+##                         Score                   37.9118        3         &lt;.0001
+##                         Wald                    36.0422        3         &lt;.0001
+## 
+## 
+##                                        Type 3 Analysis of Effects
+##  
+##                                                        Wald
+##                                Effect      DF    Chi-Square    Pr &gt; ChiSq
+## 
+##                                gender       1       16.5123        &lt;.0001
+##                                agecat       2        9.4288        0.0090
+## 
+## 
+##                                 Analysis of Maximum Likelihood Estimates
+##  
+##                                                      Standard          Wald
+##                Parameter           DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##                Intercept            1     -2.4553      0.1542      253.5990        &lt;.0001
+##                gender    male       1      0.7091      0.1745       16.5123        &lt;.0001
+##                agecat    60-69      1      0.6501      0.2123        9.3785        0.0022
+##                agecat    70+        1      0.3765      0.2092        3.2385        0.0719
+## 
+## 
+##                                          Odds Ratio Estimates
+##                                                    
+##                                                    Point          95% Wald
+##                        Effect                   Estimate      Confidence Limits
+## 
+##                        gender male vs female       2.032       1.443       2.861
+##                        agecat 60-69 vs &lt;60         1.916       1.264       2.904
+##                        agecat 70+   vs &lt;60         1.457       0.967       2.196
+## 
+## 
+##                       Association of Predicted Probabilities and Observed Responses
+## 
+##                            Percent Concordant      54.2    Somers&#39; D    0.267
+##                            Percent Discordant      27.6    Gamma        0.326
+##                            Percent Tied            18.2    Tau-a        0.063
+##                            Pairs                 185244    c            0.633
+## 
+## 
+##                            Parameter Estimates and Wald Confidence Intervals
+##  
+##                         Parameter            Estimate     95% Confidence Limits
+## 
+##                         Intercept             -2.4553      -2.7575      -2.1531
+##                         gender    male         0.7091       0.3671       1.0511
+##                         agecat    60-69        0.6501       0.2340       1.0661
+##                         agecat    70+          0.3765      -0.0336       0.7865</code></pre>
+</div>
+<div id="hosmer-lemeshow-1" class="section level3">
+<h3>Hosmer-Lemeshow</h3>
+<pre class="sas"><code>proc import datafile = &#39;C:/Users/niwi8/OneDrive/Documents/p8120_ta/data/evanscounty.xlsx&#39;
+            out = evanscounty
+            dbms = xlsx; 
+run; 
+            
+proc logistic data = evanscounty descending; 
+  model chd = cat age ecg smk chl hpt / lackfit; run; </code></pre>
+<pre><code>##                                          The LOGISTIC Procedure
+## 
+##                                            Model Information
+## 
+##                          Data Set                      WORK.EVANSCOUNTY        
+##                          Response Variable             chd                  chd
+##                          Number of Response Levels     2                       
+##                          Model                         binary logit            
+##                          Optimization Technique        Fisher&#39;s scoring        
+## 
+## 
+##                                 Number of Observations Read         609
+##                                 Number of Observations Used         609
+## 
+## 
+##                                             Response Profile
+##  
+##                                  Ordered                          Total
+##                                    Value     chd              Frequency
+## 
+##                                        1     1                       71
+##                                        2     0                      538
+## 
+##                                     Probability modeled is chd=&#39;1&#39;.
+## 
+## 
+##                                         Model Convergence Status
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                                           Model Fit Statistics
+##  
+##                                                               Intercept
+##                                                Intercept            and
+##                                  Criterion          Only     Covariates
+## 
+##                                  AIC             440.558        414.394
+##                                  SC              444.970        445.277
+##                                  -2 Log L        438.558        400.394
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio        38.1645        6         &lt;.0001
+##                         Score                   38.9267        6         &lt;.0001
+##                         Wald                    34.9941        6         &lt;.0001
+## 
+## 
+##                                Analysis of Maximum Likelihood Estimates
+##  
+##                                                  Standard          Wald
+##                   Parameter    DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##                   Intercept     1     -6.7747      1.1402       35.3015        &lt;.0001
+##                   cat           1      0.5978      0.3520        2.8843        0.0894
+##                   age           1      0.0322      0.0152        4.5097        0.0337
+##                   ecg           1      0.3695      0.2936        1.5839        0.2082
+##                   smk           1      0.8348      0.3052        7.4802        0.0062
+##                   chl           1     0.00875     0.00326        7.1864        0.0073
+##                   hpt           1      0.4392      0.2908        2.2806        0.1310
+## 
+## 
+##                                           Odds Ratio Estimates
+##                                                     
+##                                             Point          95% Wald
+##                                Effect    Estimate      Confidence Limits
+## 
+##                                cat          1.818       0.912       3.624
+##                                age          1.033       1.002       1.064
+##                                ecg          1.447       0.814       2.573
+##                                smk          2.304       1.267       4.191
+##                                chl          1.009       1.002       1.015
+##                                hpt          1.551       0.877       2.743
+## 
+## 
+##                      Association of Predicted Probabilities and Observed Responses
+## 
+##                            Percent Concordant     70.5    Somers&#39; D    0.411
+##                            Percent Discordant     29.5    Gamma        0.411
+##                            Percent Tied            0.0    Tau-a        0.085
+##                            Pairs                 38198    c            0.705
+## 
+## 
+##                                Partition for the Hosmer and Lemeshow Test
+##  
+##                                                  chd = 1                 chd = 0
+##                      Group       Total    Observed    Expected    Observed    Expected
+## 
+##                          1          61           0        1.72          61       59.28
+##                          2          61           2        2.65          59       58.35
+##                          3          61           5        3.46          56       57.54
+##                          4          61           6        4.22          55       56.78
+##                          5          61           7        5.21          54       55.79
+##                          6          61           6        6.10          55       54.90
+##                          7          61           5        7.50          56       53.50
+##                          8          61           9        9.19          52       51.81
+##                          9          61          12       11.86          49       49.14
+##                         10          60          19       19.08          41       40.92
+## 
+## 
+##                                 Hosmer and Lemeshow Goodness-of-Fit Test
+##  
+##                                    Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                                        5.1028        8         0.7465</code></pre>
+</div>
+</div>
+</div>
+
+<br><br>
+<center>
+<footer>
+  <img src="catfun_biostat_p8120.png" alt="stickers" style="width:50%">
+  <br>
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
