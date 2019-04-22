@@ -15,7 +15,11 @@ The notes for the topics on this page can be found in the lectures 16 and 17 fol
 
 ## R
 
+To examine goodness of fit using deviance we will use `gof_deviance()` from *catfun*, to conduct a Hosmer-Lemeshow test we will use `hoslem.test()` from *ResourceSelection*. 
+
 ### Deviance
+
+`gof_deviance()` takes two arguments: (1) a working logistic regression model and (2) a saturated working logistic regression model. 
 
 ```{r}
 library(catfun)
@@ -35,6 +39,8 @@ gof_deviance(working, saturated)
 
 ### Hosmer-Lemeshow
 
+`hoslem.test()` requires three arguments: The first argument is a vector of the observed outcomes, the second argument is a vector of the predicted outcomes, and the third is the number of quintiles for conducting the test. 
+
 ```{r}
 library(ResourceSelection)
 library(readxl)
@@ -49,6 +55,8 @@ hoslem.test(evans_model$y, fitted(evans_model), g = 10)
 ## SAS
 
 ### Deviance
+
+To obtain goodness of fit based on deviance in SAS you can specify `scale = none` in the `model` argument. 
 
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 data cad; 
@@ -71,6 +79,8 @@ run;
 ```
 
 ### Hosmer-Lemeshow
+
+To conduct a Hosmer-Lemeshow test in SAS you specify `lackfit` in the `model` argument. 
 
 ```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
 proc import datafile = 'C:/Users/niwi8/OneDrive/Documents/p8120_ta/data/evanscounty.xlsx'

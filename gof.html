@@ -373,8 +373,10 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
+<p>To examine goodness of fit using deviance we will use <code>gof_deviance()</code> from <em>catfun</em>, to conduct a Hosmer-Lemeshow test we will use <code>hoslem.test()</code> from <em>ResourceSelection</em>.</p>
 <div id="deviance" class="section level3">
 <h3>Deviance</h3>
+<p><code>gof_deviance()</code> takes two arguments: (1) a working logistic regression model and (2) a saturated working logistic regression model.</p>
 <pre class="r"><code>library(catfun)
 
 cad &lt;- tibble(
@@ -396,6 +398,7 @@ gof_deviance(working, saturated)</code></pre>
 </div>
 <div id="hosmer-lemeshow" class="section level3">
 <h3>Hosmer-Lemeshow</h3>
+<p><code>hoslem.test()</code> requires three arguments: The first argument is a vector of the observed outcomes, the second argument is a vector of the predicted outcomes, and the third is the number of quintiles for conducting the test.</p>
 <pre class="r"><code>library(ResourceSelection)
 library(readxl)
 
@@ -415,6 +418,7 @@ hoslem.test(evans_model$y, fitted(evans_model), g = 10)</code></pre>
 <h2>SAS</h2>
 <div id="deviance-1" class="section level3">
 <h3>Deviance</h3>
+<p>To obtain goodness of fit based on deviance in SAS you can specify <code>scale = none</code> in the <code>model</code> argument.</p>
 <pre class="sas"><code>data cad; 
   input gender $ agecat $ events trials; 
   cards; 
@@ -555,6 +559,7 @@ run; </code></pre>
 </div>
 <div id="hosmer-lemeshow-1" class="section level3">
 <h3>Hosmer-Lemeshow</h3>
+<p>To conduct a Hosmer-Lemeshow test in SAS you specify <code>lackfit</code> in the <code>model</code> argument.</p>
 <pre class="sas"><code>proc import datafile = &#39;C:/Users/niwi8/OneDrive/Documents/p8120_ta/data/evanscounty.xlsx&#39;
             out = evanscounty
             dbms = xlsx; 
