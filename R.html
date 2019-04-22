@@ -571,6 +571,12 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 <h3>Hypothesis tests</h3>
 <p>Use the following table to locate functions for hypothesis tests. If you are unsure of the usage of a function run <code>?&lt;insert function&gt;</code>. For many of these tests, there are multiple functions that one could use; these are the one’s we have found to work best. Lecture numbers are linked to examples.</p>
 <table>
+<colgroup>
+<col width="35%" />
+<col width="25%" />
+<col width="10%" />
+<col width="29%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Hypothesis test</th>
@@ -630,13 +636,13 @@ example_df &lt;- read_csv(&quot;../data/AZT.csv&quot;)</code></pre>
 </tr>
 <tr class="odd">
 <td>GOF &amp; Hosmer Lemeshow</td>
-<td>TBD</td>
-<td>TBD</td>
-<td align="center">16</td>
+<td><code>gof_deviance()</code> / <code>hoslem.test()</code></td>
+<td>catfun &amp; ResourceSelection</td>
+<td align="center"><a href="gof.html">16 &amp; 17</a></td>
 </tr>
 <tr class="even">
 <td>Breslow Day test</td>
-<td><code>BreslowDayTest</code></td>
+<td><code>BreslowDayTest()</code></td>
 <td>DescTools</td>
 <td align="center">19</td>
 </tr>

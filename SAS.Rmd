@@ -115,7 +115,7 @@ Use the following table to locate procedures for hypothesis tests. If you are un
 |Likelihood ratio test                            |`proc freq`         |Same as chi-squared                  | [9](lrt_2_sample.html)           |
 |Two sample test of proportions                   |`proc freq`         |`expected riskdiff(equal var = null)`| [9](lrt_2_sample.html)           |
 |Logistic regression                              |`proc logistic`     |                                     | [13, 14, & 15](logistic_regression.html)                     |
-|GOF & Hosmer Lemeshow                            |`proc logistic`     |                                     | 16                               |
+|GOF & Hosmer Lemeshow                            |`proc logistic`     |`scale = none`  / `lackfit`                                 | [16 & 17](gof.html)              |
 |Breslow Day test                                 |`proc freq`         |                                     | 19                               |
 |Cochran-Mantel-Haenzsel test                     |`proc freq`         |                                     | 20                               |
 |McNemar's test                                   |`proc freq`         |                                     | 21                               |
