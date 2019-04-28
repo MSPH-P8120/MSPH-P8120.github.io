@@ -116,7 +116,7 @@ Use the following table to locate procedures for hypothesis tests. If you are un
 |Two sample test of proportions                   |`proc freq`         |`expected riskdiff(equal var = null)`| [9](lrt_2_sample.html)           |
 |Logistic regression                              |`proc logistic`     |                                     | [13, 14, & 15](logistic_regression.html)                     |
 |GOF & Hosmer Lemeshow                            |`proc logistic`     |`scale = none`  / `lackfit`                                 | [16 & 17](gof.html)              |
-|Breslow Day test                                 |`proc freq`         | `cmh`                                    | [19](breslow_day.html)                               |
+|Breslow-Day test                                 |`proc freq`         | `cmh`                                    | [19](breslow_day.html)                               |
 |Cochran-Mantel-Haenzsel test                     |`proc freq`         |                                     | 20                               |
 |McNemar's test                                   |`proc freq`         |                                     | 21                               |
 |Conditional logistic regression                  |`proc logistic`     |                                     | 22                               |

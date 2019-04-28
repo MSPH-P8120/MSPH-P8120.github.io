@@ -138,7 +138,7 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |Two sample test for proportions                  | `prop_test()`                     | catfun        | [9](lrt_2_sample.html)                  |
 |Logistic regression                              | `glm(..., family = binomial)`     | stats         | [13, 14, & 15](logistic_regression.html)                            |
 |GOF & Hosmer Lemeshow                            | `gof_deviance()` / `hoslem.test()`| catfun & ResourceSelection | [16 & 17](gof.html)                                      |
-|Breslow Day test                                 | `BreslowDayTest()`                  | DescTools     | [19](breslow_day.html)                                      |
+|Breslow-Day test                                 | `BreslowDayTest()`                  | DescTools     | [19](breslow_day.html)                                      |
 |Cochran-Mantel-Haenszel test                     | TBD                               | TBD           | 20                                      |
 |McNemar's test                                   | `CrossTable(..., mcnemar = TRUE)` | descr         | 21                                      |
 |Conditional logistic regression                  | `clogit()`                        | survival      | 22                                      |
