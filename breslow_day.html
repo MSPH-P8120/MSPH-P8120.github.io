@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Breslow-Day Test</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133330767-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133330767-1');
+</script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="R.html">R</a>
+</li>
+<li>
+  <a href="SAS.html">SAS</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="example_data/AZT.csv">AZT</a>
+    </li>
+    <li>
+      <a href="example_data/benign.csv">Benign</a>
+    </li>
+    <li>
+      <a href="example_data/breast.csv">Breast Cancer</a>
+    </li>
+    <li>
+      <a href="example_data/car.csv">Car</a>
+    </li>
+    <li>
+      <a href="example_data/depression.csv">Depression</a>
+    </li>
+    <li>
+      <a href="example_data/gmh.csv">Germinal Matrix Hemorrhage</a>
+    </li>
+    <li>
+      <a href="example_data/lowbwt.csv">Low Birthweight</a>
+    </li>
+    <li>
+      <a href="example_data/respiredata_final.csv">Respiratory</a>
+    </li>
+    <li>
+      <a href="example_data/UMARUdata2.csv">UMARU</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;cmm2212@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/MSPH-P8120/MSPH-P8120.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Breslow-Day Test</h1>
+
+</div>
+
+
+<p>The notes for the topics on this page can be found in the lecture 19 folder on Canvas.</p>
+<div id="section" class="section level1 tabset tabset-fade">
+<h1></h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>To conduct a Brewlosw-Day test in R you can use <code>BreslowDayTest()</code> from the <em>DescTools</em> package. <code>BreslowDayTest()</code> requires a 2 x 2 x k table as its main argument; you can also specify an odds ratio for the null hypothesis (if not specified, the Mantel-Haenszal OR will be used). To create 2 x 2 x k tables from a data-set you can use <code>xtabs()</code>.</p>
+<div id="example-one" class="section level3">
+<h3>Example One</h3>
+<pre class="r"><code>library(DescTools)
+
+teeth &lt;- tibble(
+  exposure = rep(c(&quot;tetra&quot;, &quot;tetra&quot;, &quot;notetra&quot;, &quot;notetra&quot;), 2), 
+  discolor = rep(c(&quot;yes&quot;, &quot;no&quot;), 4), 
+  age = c(rep(&quot;child&quot;, 4), rep(&quot;adult&quot;, 4)), 
+  count = c(30, 25, 12, 17, 4, 6, 68, 94)
+)
+
+teeth_tabs &lt;- xtabs(count ~ exposure + discolor + age, data = teeth)
+teeth_tabs</code></pre>
+<pre><code>## , , age = adult
+## 
+##          discolor
+## exposure  no yes
+##   notetra 94  68
+##   tetra    6   4
+## 
+## , , age = child
+## 
+##          discolor
+## exposure  no yes
+##   notetra 17  12
+##   tetra   25  30</code></pre>
+<pre class="r"><code>BreslowDayTest(teeth_tabs)</code></pre>
+<pre><code>## 
+##  Breslow-Day test on Homogeneity of Odds Ratios
+## 
+## data:  teeth_tabs
+## X-squared = 0.57493, df = 1, p-value = 0.4483</code></pre>
+</div>
+<div id="example-two" class="section level3">
+<h3>Example Two</h3>
+<pre class="r"><code>cervical &lt;- tibble(
+  smoke = rep(c(&quot;yes&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;), 2), 
+  cancer = rep(c(&quot;yes&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;), 2), 
+  partners = c(rep(&quot;zeroone&quot;, 4), rep(&quot;twomore&quot;, 4)), 
+  count = c(12, 21, 25, 118, 96, 148, 92, 150)
+)
+
+cervical_tabs &lt;- xtabs(count ~ smoke + cancer + partners, data = cervical)
+cervical_tabs</code></pre>
+<pre><code>## , , partners = twomore
+## 
+##      cancer
+## smoke  no yes
+##   no  150  92
+##   yes 148  96
+## 
+## , , partners = zeroone
+## 
+##      cancer
+## smoke  no yes
+##   no  118  25
+##   yes  21  12</code></pre>
+<pre class="r"><code>BreslowDayTest(cervical_tabs)</code></pre>
+<pre><code>## 
+##  Breslow-Day test on Homogeneity of Odds Ratios
+## 
+## data:  cervical_tabs
+## X-squared = 4.2069, df = 1, p-value = 0.04026</code></pre>
+</div>
+</div>
+<div id="sas" class="section level2">
+<h2>SAS</h2>
+<p>To conduct a Breslow-Day test in SAS you use the frequency procedure with the <code>cmh</code> argument specified in the options of the table statement. The 2 x 2 x k tables are built as usual, but with the following adjustment: <code>table k*exposure*disease</code>.</p>
+<div id="example-one-1" class="section level3">
+<h3>Example One</h3>
+<pre class="sas"><code>title &#39;Teeth Discoloration Example&#39;;
+  data teeth;    
+  input exposure $ discolor $ age $ count;
+  cards;
+    tetra yes child 30 
+    tetra no child 25
+    notetra yes child 12 
+    notetra no child 17
+    tetra yes adult 4 
+    tetra no adult 6 
+    notetra yes adult 68 
+    notetra no adult 94 
+  ; 
+run;
+    
+proc freq data = teeth order = data;
+  table age*exposure*discolor / chisq relrisk cmh expected; 
+  weight count; 
+run; </code></pre>
+<pre><code>##                                       Teeth Discoloration Example
+## 
+##                                            The FREQ Procedure
+## 
+##                                     Table 1 of exposure by discolor
+##                                        Controlling for age=child
+## 
+##                                   exposure     discolor
+## 
+##                                   Frequency|
+##                                   Expected |
+##                                   Percent  |
+##                                   Row Pct  |
+##                                   Col Pct  |yes     |no      |  Total
+##                                   ---------+--------+--------+
+##                                   tetra    |     30 |     25 |     55
+##                                            |   27.5 |   27.5 |
+##                                            |  35.71 |  29.76 |  65.48
+##                                            |  54.55 |  45.45 |
+##                                            |  71.43 |  59.52 |
+##                                   ---------+--------+--------+
+##                                   notetra  |     12 |     17 |     29
+##                                            |   14.5 |   14.5 |
+##                                            |  14.29 |  20.24 |  34.52
+##                                            |  41.38 |  58.62 |
+##                                            |  28.57 |  40.48 |
+##                                   ---------+--------+--------+
+##                                   Total          42       42       84
+##                                               50.00    50.00   100.00
+## 
+## 
+##                              Statistics for Table 1 of exposure by discolor
+##                                        Controlling for age=child
+## 
+##                          Statistic                     DF       Value      Prob
+##                          ------------------------------------------------------
+##                          Chi-Square                     1      1.3166    0.2512
+##                          Likelihood Ratio Chi-Square    1      1.3216    0.2503
+##                          Continuity Adj. Chi-Square     1      0.8426    0.3586
+##                          Mantel-Haenszel Chi-Square     1      1.3009    0.2540
+##                          Phi Coefficient                       0.1252          
+##                          Contingency Coefficient               0.1242          
+##                          Cramer&#39;s V                            0.1252          
+## 
+## 
+##                                           Fisher&#39;s Exact Test
+##                                    ----------------------------------
+##                                    Cell (1,1) Frequency (F)        30
+##                                    Left-sided Pr &lt;= F          0.9160
+##                                    Right-sided Pr &gt;= F         0.1794
+##                                                                      
+##                                    Table Probability (P)       0.0954
+##                                    Two-sided Pr &lt;= P           0.3588
+## 
+## 
+##                                      Odds Ratio and Relative Risks
+##  
+##                    Statistic                        Value       95% Confidence Limits
+##                    ------------------------------------------------------------------
+##                    Odds Ratio                      1.7000        0.6844        4.2226
+##                    Relative Risk (Column 1)        1.3182        0.8028        2.1643
+##                    Relative Risk (Column 2)        0.7754        0.5089        1.1814
+## 
+##                                             Sample Size = 84
+## 
+## 
+##                                     Table 2 of exposure by discolor
+##                                        Controlling for age=adult
+## 
+##                                   exposure     discolor
+## 
+##                                   Frequency|
+##                                   Expected |
+##                                   Percent  |
+##                                   Row Pct  |
+##                                   Col Pct  |yes     |no      |  Total
+##                                   ---------+--------+--------+
+##                                   tetra    |      4 |      6 |     10
+##                                            |  4.186 |  5.814 |
+##                                            |   2.33 |   3.49 |   5.81
+##                                            |  40.00 |  60.00 |
+##                                            |   5.56 |   6.00 |
+##                                   ---------+--------+--------+
+##                                   notetra  |     68 |     94 |    162
+##                                            | 67.814 | 94.186 |
+##                                            |  39.53 |  54.65 |  94.19
+##                                            |  41.98 |  58.02 |
+##                                            |  94.44 |  94.00 |
+##                                   ---------+--------+--------+
+##                                   Total          72      100      172
+##                                               41.86    58.14   100.00
+## 
+## 
+##                              Statistics for Table 2 of exposure by discolor
+##                                        Controlling for age=adult
+## 
+##                          Statistic                     DF       Value      Prob
+##                          ------------------------------------------------------
+##                          Chi-Square                     1      0.0151    0.9022
+##                          Likelihood Ratio Chi-Square    1      0.0152    0.9020
+##                          Continuity Adj. Chi-Square     1      0.0000    1.0000
+##                          Mantel-Haenszel Chi-Square     1      0.0150    0.9025
+##                          Phi Coefficient                      -0.0094          
+##                          Contingency Coefficient               0.0094          
+##                          Cramer&#39;s V                           -0.0094          
+## 
+##                           WARNING: 25% of the cells have expected counts less 
+##                                    than 5. Chi-Square may not be a valid test.
+## 
+## 
+##                                           Fisher&#39;s Exact Test
+##                                    ----------------------------------
+##                                    Cell (1,1) Frequency (F)         4
+##                                    Left-sided Pr &lt;= F          0.5876
+##                                    Right-sided Pr &gt;= F         0.6687
+##                                                                      
+##                                    Table Probability (P)       0.2564
+##                                    Two-sided Pr &lt;= P           1.0000
+## 
+## 
+##                                      Odds Ratio and Relative Risks
+##  
+##                    Statistic                        Value       95% Confidence Limits
+##                    ------------------------------------------------------------------
+##                    Odds Ratio                      0.9216        0.2504        3.3919
+##                    Relative Risk (Column 1)        0.9529        0.4367        2.0796
+##                    Relative Risk (Column 2)        1.0340        0.6131        1.7441
+## 
+##                                            Sample Size = 172
+##  
+##                                                                                                         
+##  
+##                                       Teeth Discoloration Example
+## 
+##                                            The FREQ Procedure
+## 
+##                               Summary Statistics for exposure by discolor
+##                                           Controlling for age
+## 
+##                       Cochran-Mantel-Haenszel Statistics (Based on Table Scores)
+##  
+##                     Statistic    Alternative Hypothesis    DF       Value      Prob
+##                     ---------------------------------------------------------------
+##                         1        Nonzero Correlation        1      0.7531    0.3855
+##                         2        Row Mean Scores Differ     1      0.7531    0.3855
+##                         3        General Association        1      0.7531    0.3855
+## 
+## 
+##                                  Common Odds Ratio and Relative Risks
+##  
+##          Statistic                   Method                  Value       95% Confidence Limits
+##          -------------------------------------------------------------------------------------
+##          Odds Ratio                  Mantel-Haenszel        1.3893        0.6643        2.9056
+##                                      Logit                  1.3909        0.6597        2.9327
+## 
+##          Relative Risk (Column 1)    Mantel-Haenszel        1.1959        0.7877        1.8156
+##                                      Logit                  1.2007        0.7901        1.8248
+## 
+##          Relative Risk (Column 2)    Mantel-Haenszel        0.8606        0.6200        1.1944
+##                                      Logit                  0.8684        0.6256        1.2054
+## 
+## 
+##                                           Breslow-Day Test for
+##                                      Homogeneity of the Odds Ratios
+##                                      ------------------------------
+##                                      Chi-Square              0.5749
+##                                      DF                           1
+##                                      Pr &gt; ChiSq              0.4483
+## 
+## 
+##                                         Total Sample Size = 256</code></pre>
+</div>
+<div id="example-two-1" class="section level3">
+<h3>Example Two</h3>
+<pre class="sas"><code>title &#39;Cervical Cancer Example&#39;;
+data cervical;
+  input smoke $ cancer $ partners $ count;
+  cards;
+    yes yes zeorone 12
+    yes no zeorone 21 
+    no yes zeorone 25 
+    no no zeorone 118 
+    yes yes twomore 96 
+    yes no twomore 148 
+    no yes twomore 92 
+    no no twomore 150 
+    ; 
+run;
+    
+proc freq data = cervical order = data;
+  table partners*smoke*cancer / chisq relrisk cmh; 
+  weight count; 
+run; </code></pre>
+<pre><code>##                                         Cervical Cancer Example
+## 
+##                                            The FREQ Procedure
+## 
+##                                        Table 1 of smoke by cancer
+##                                     Controlling for partners=zeorone
+## 
+##                                   smoke     cancer
+## 
+##                                   Frequency|
+##                                   Percent  |
+##                                   Row Pct  |
+##                                   Col Pct  |yes     |no      |  Total
+##                                   ---------+--------+--------+
+##                                   yes      |     12 |     21 |     33
+##                                            |   6.82 |  11.93 |  18.75
+##                                            |  36.36 |  63.64 |
+##                                            |  32.43 |  15.11 |
+##                                   ---------+--------+--------+
+##                                   no       |     25 |    118 |    143
+##                                            |  14.20 |  67.05 |  81.25
+##                                            |  17.48 |  82.52 |
+##                                            |  67.57 |  84.89 |
+##                                   ---------+--------+--------+
+##                                   Total          37      139      176
+##                                               21.02    78.98   100.00
+## 
+## 
+##                                Statistics for Table 1 of smoke by cancer
+##                                     Controlling for partners=zeorone
+## 
+##                          Statistic                     DF       Value      Prob
+##                          ------------------------------------------------------
+##                          Chi-Square                     1      5.7571    0.0164
+##                          Likelihood Ratio Chi-Square    1      5.2087    0.0225
+##                          Continuity Adj. Chi-Square     1      4.6760    0.0306
+##                          Mantel-Haenszel Chi-Square     1      5.7244    0.0167
+##                          Phi Coefficient                       0.1809          
+##                          Contingency Coefficient               0.1780          
+##                          Cramer&#39;s V                            0.1809          
+## 
+## 
+##                                           Fisher&#39;s Exact Test
+##                                    ----------------------------------
+##                                    Cell (1,1) Frequency (F)        12
+##                                    Left-sided Pr &lt;= F          0.9941
+##                                    Right-sided Pr &gt;= F         0.0184
+##                                                                      
+##                                    Table Probability (P)       0.0126
+##                                    Two-sided Pr &lt;= P           0.0304
+## 
+## 
+##                                      Odds Ratio and Relative Risks
+##  
+##                    Statistic                        Value       95% Confidence Limits
+##                    ------------------------------------------------------------------
+##                    Odds Ratio                      2.6971        1.1758        6.1868
+##                    Relative Risk (Column 1)        2.0800        1.1705        3.6961
+##                    Relative Risk (Column 2)        0.7712        0.5895        1.0089
+## 
+##                                            Sample Size = 176
+## 
+## 
+##                                        Table 2 of smoke by cancer
+##                                     Controlling for partners=twomore
+## 
+##                                   smoke     cancer
+## 
+##                                   Frequency|
+##                                   Percent  |
+##                                   Row Pct  |
+##                                   Col Pct  |yes     |no      |  Total
+##                                   ---------+--------+--------+
+##                                   yes      |     96 |    148 |    244
+##                                            |  19.75 |  30.45 |  50.21
+##                                            |  39.34 |  60.66 |
+##                                            |  51.06 |  49.66 |
+##                                   ---------+--------+--------+
+##                                   no       |     92 |    150 |    242
+##                                            |  18.93 |  30.86 |  49.79
+##                                            |  38.02 |  61.98 |
+##                                            |  48.94 |  50.34 |
+##                                   ---------+--------+--------+
+##                                   Total         188      298      486
+##                                               38.68    61.32   100.00
+## 
+## 
+##                                Statistics for Table 2 of smoke by cancer
+##                                     Controlling for partners=twomore
+## 
+##                          Statistic                     DF       Value      Prob
+##                          ------------------------------------------------------
+##                          Chi-Square                     1      0.0903    0.7638
+##                          Likelihood Ratio Chi-Square    1      0.0903    0.7638
+##                          Continuity Adj. Chi-Square     1      0.0430    0.8357
+##                          Mantel-Haenszel Chi-Square     1      0.0901    0.7640
+##                          Phi Coefficient                       0.0136          
+##                          Contingency Coefficient               0.0136          
+##                          Cramer&#39;s V                            0.0136          
+## 
+## 
+##                                           Fisher&#39;s Exact Test
+##                                    ----------------------------------
+##                                    Cell (1,1) Frequency (F)        96
+##                                    Left-sided Pr &lt;= F          0.6530
+##                                    Right-sided Pr &gt;= F         0.4179
+##                                                                      
+##                                    Table Probability (P)       0.0709
+##                                    Two-sided Pr &lt;= P           0.7805
+## 
+## 
+##                                      Odds Ratio and Relative Risks
+##  
+##                    Statistic                        Value       95% Confidence Limits
+##                    ------------------------------------------------------------------
+##                    Odds Ratio                      1.0576        0.7341        1.5237
+##                    Relative Risk (Column 1)        1.0349        0.8273        1.2947
+##                    Relative Risk (Column 2)        0.9786        0.8497        1.1270
+## 
+##                                            Sample Size = 486
+##  
+##                                                                                                         
+##  
+##                                         Cervical Cancer Example
+## 
+##                                            The FREQ Procedure
+## 
+##                                  Summary Statistics for smoke by cancer
+##                                         Controlling for partners
+## 
+##                       Cochran-Mantel-Haenszel Statistics (Based on Table Scores)
+##  
+##                     Statistic    Alternative Hypothesis    DF       Value      Prob
+##                     ---------------------------------------------------------------
+##                         1        Nonzero Correlation        1      1.3361    0.2477
+##                         2        Row Mean Scores Differ     1      1.3361    0.2477
+##                         3        General Association        1      1.3361    0.2477
+## 
+## 
+##                                  Common Odds Ratio and Relative Risks
+##  
+##          Statistic                   Method                  Value       95% Confidence Limits
+##          -------------------------------------------------------------------------------------
+##          Odds Ratio                  Mantel-Haenszel        1.2153        0.8697        1.6985
+##                                      Logit                  1.2309        0.8812        1.7194
+## 
+##          Relative Risk (Column 1)    Mantel-Haenszel        1.1312        0.9194        1.3918
+##                                      Logit                  1.1346        0.9209        1.3979
+## 
+##          Relative Risk (Column 2)    Mantel-Haenszel        0.9315        0.8221        1.0554
+##                                      Logit                  0.9294        0.8202        1.0532
+## 
+## 
+##                                           Breslow-Day Test for
+##                                      Homogeneity of the Odds Ratios
+##                                      ------------------------------
+##                                      Chi-Square              4.2069
+##                                      DF                           1
+##                                      Pr &gt; ChiSq              0.0403
+## 
+## 
+##                                         Total Sample Size = 662</code></pre>
+</div>
+</div>
+</div>
+
+<br><br>
+<center>
+<footer>
+  <img src="catfun_biostat_p8120.png" alt="stickers" style="width:50%">
+  <br>
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+---
+title: "Breslow-Day Test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+```
+
+The notes for the topics on this page can be found in the lecture 19 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+To conduct a Brewlosw-Day test in R you can use `BreslowDayTest()` from the *DescTools* package. `BreslowDayTest()` requires a 2 x 2 x k table as its main argument; you can also specify an odds ratio for the null hypothesis (if not specified, the Mantel-Haenszal OR will be used). To create 2 x 2 x k tables from a data-set you can use `xtabs()`. 
+
+### Example One
+
+```{r}
+library(DescTools)
+
+teeth <- tibble(
+  exposure = rep(c("tetra", "tetra", "notetra", "notetra"), 2), 
+  discolor = rep(c("yes", "no"), 4), 
+  age = c(rep("child", 4), rep("adult", 4)), 
+  count = c(30, 25, 12, 17, 4, 6, 68, 94)
+)
+
+teeth_tabs <- xtabs(count ~ exposure + discolor + age, data = teeth)
+teeth_tabs
+
+BreslowDayTest(teeth_tabs)
+```
+
+### Example Two
+
+```{r}
+cervical <- tibble(
+  smoke = rep(c("yes", "yes", "no", "no"), 2), 
+  cancer = rep(c("yes", "no", "yes", "no"), 2), 
+  partners = c(rep("zeroone", 4), rep("twomore", 4)), 
+  count = c(12, 21, 25, 118, 96, 148, 92, 150)
+)
+
+cervical_tabs <- xtabs(count ~ smoke + cancer + partners, data = cervical)
+cervical_tabs
+
+BreslowDayTest(cervical_tabs)
+```
+
+## SAS
+
+To conduct a Breslow-Day test in SAS you use the frequency procedure with the `cmh` argument specified in the options of the table statement. The 2 x 2 x k tables are built as usual, but with the following adjustment: `table k*exposure*disease`. 
+
+### Example One
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title 'Teeth Discoloration Example';
+  data teeth;    
+  input exposure $ discolor $ age $ count;
+  cards;
+    tetra yes child 30 
+    tetra no child 25
+    notetra yes child 12 
+    notetra no child 17
+    tetra yes adult 4 
+    tetra no adult 6 
+    notetra yes adult 68 
+    notetra no adult 94 
+  ; 
+run;
+    
+proc freq data = teeth order = data;
+  table age*exposure*discolor / chisq relrisk cmh expected; 
+  weight count; 
+run; 
+```
+
+### Example Two
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title 'Cervical Cancer Example';
+data cervical;
+  input smoke $ cancer $ partners $ count;
+  cards;
+    yes yes zeorone 12
+    yes no zeorone 21 
+    no yes zeorone 25 
+    no no zeorone 118 
+    yes yes twomore 96 
+    yes no twomore 148 
+    no yes twomore 92 
+    no no twomore 150 
+    ; 
+run;
+    
+proc freq data = cervical order = data;
+  table partners*smoke*cancer / chisq relrisk cmh; 
+  weight count; 
+run; 
+```
+
+
+
