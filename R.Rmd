@@ -139,7 +139,7 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |Logistic regression                              | `glm(..., family = binomial)`     | stats         | [13, 14, & 15](logistic_regression.html)                            |
 |GOF & Hosmer Lemeshow                            | `gof_deviance()` / `hoslem.test()`| catfun & ResourceSelection | [16 & 17](gof.html)                                      |
 |Breslow-Day test                                 | `BreslowDayTest()`                  | DescTools     | [19](breslow_day.html)                                      |
-|Cochran-Mantel-Haenszel test                     | TBD                               | TBD           | 20                                      |
+|Cochran-Mantel-Haenszel test                     | `mantelhaen.test()`           | stats           | [20](cmh.html)                                      |
 |McNemar's test                                   | `CrossTable(..., mcnemar = TRUE)` | descr         | 21                                      |
 |Conditional logistic regression                  | `clogit()`                        | survival      | 22                                      |
 |Cochran Armitage Trend test                      | `CocrhanArmitageTest()`           | DescTools     | 23                                      |

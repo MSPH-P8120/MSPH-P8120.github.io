@@ -1,0 +1,60 @@
+---
+title: "Cochran-Mantel-Haenszel Test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+The notes for the topics on this page can be found in the lecture 20 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+To conduct a Cochran-Mantel-Haenszel test in R you can use `mantelhaen.test()` from the *stats* package. In this example, we first create our dataset and then 2 x 2 x 2 table as shown elsewhere. The 2 x 2 x 2 table is then piped into `mantelhaen.test()`. Notice that you must set `correct = FALSE` as the default is to conduct a test with a continuity correction.
+
+```{r}
+library(tidyverse)
+library(magrittr)
+
+health_policy <- tibble(
+  stress = rep(c("low", "low", "high", "high"), 2), 
+  opinion = rep(c("favorable", "unfavorable"), 4), 
+  region = c(rep("rural", 4), rep("urban", 4)), 
+  count = c(55, 135, 7, 53, 48, 12, 96, 94)
+) 
+
+health_policy %<>%
+  mutate(stress = fct_relevel(stress, c("low", "high")))
+
+xtabs(count ~ stress + opinion + region, data = health_policy) %>%
+  mantelhaen.test(correct = FALSE)
+```
+
+## SAS
+
+To conduct a Cochran-Mantel-Haenszel test in SAS you use the frequency procedure with the `cmh` argument specified in the options of the `table` statement. 
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data healthpolicy;
+  input stress $ opinion $ region $ count;
+  cards;
+    low favorable rural 55
+    low unfavorable rural 135
+    high favorable rural 7
+    high unfavorable rural 53
+    low favorable urban 48
+    low unfavorable urban 12
+    high favorable urban 96
+    high unfavorable urban 94
+    ;
+run;
+    
+proc freq data = healthpolicy order = data;
+  table region*stress*opinion / chisq relrisk cmh;
+  weight count;
+run;
+```
+
