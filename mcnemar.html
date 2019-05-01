@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>McNemar’s Test</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133330767-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133330767-1');
+</script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="R.html">R</a>
+</li>
+<li>
+  <a href="SAS.html">SAS</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="example_data/AZT.csv">AZT</a>
+    </li>
+    <li>
+      <a href="example_data/benign.csv">Benign</a>
+    </li>
+    <li>
+      <a href="example_data/breast.csv">Breast Cancer</a>
+    </li>
+    <li>
+      <a href="example_data/car.csv">Car</a>
+    </li>
+    <li>
+      <a href="example_data/depression.csv">Depression</a>
+    </li>
+    <li>
+      <a href="example_data/gmh.csv">Germinal Matrix Hemorrhage</a>
+    </li>
+    <li>
+      <a href="example_data/lowbwt.csv">Low Birthweight</a>
+    </li>
+    <li>
+      <a href="example_data/respiredata_final.csv">Respiratory</a>
+    </li>
+    <li>
+      <a href="example_data/UMARUdata2.csv">UMARU</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;cmm2212@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/MSPH-P8120/MSPH-P8120.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">McNemar’s Test</h1>
+
+</div>
+
+
+<p>The notes for the topics on this page can be found in the lecture 21 folder on Canvas.</p>
+<div id="section" class="section level1 tabset tabset-fade">
+<h1></h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>To conduct McNemar’s test in R you can use <code>mcnemar.test()</code> from the <em>stats</em> package. <code>mcnemar.test()</code> can accept either a 2 x 2 table in matrix format or you can use a dataset with individual level data without first building a 2 x 2 table. You could also use <code>CrossTable(..., mcnemar = TRUE)</code> from the <em>descr</em> package.</p>
+<pre class="r"><code>library(tidyverse)
+library(magrittr)
+
+genetic &lt;- tibble(
+  case = c(&quot;yes&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;), 
+  control = rep(c(&quot;yes&quot;, &quot;no&quot;), 2), 
+  count = c(9, 13, 3, 10)
+)
+
+genetic &lt;- genetic %&gt;% 
+  mutate(case = fct_relevel(case, &quot;yes&quot;, &quot;no&quot;), 
+         control = fct_relevel(control, &quot;yes&quot;, &quot;no&quot;))
+  
+
+gen_table &lt;- xtabs(count ~ case + control, data = genetic)
+
+mcnemar.test(gen_table, correct = FALSE)</code></pre>
+<pre><code>## 
+##  McNemar&#39;s Chi-squared test
+## 
+## data:  gen_table
+## McNemar&#39;s chi-squared = 6.25, df = 1, p-value = 0.01242</code></pre>
+<div id="matched-pairs-odds-ratio" class="section level3">
+<h3>Matched pairs odds ratio</h3>
+<p>There is currently no function for creating a matched pairs odds ratio in R. However, you could construct the odds ratio and confidence interval by “hand” as shown in the example below.</p>
+<pre class="r"><code>or &lt;- gen_table[1, 2] / gen_table[2, 1]
+
+or &lt;- tibble(
+  or = or, 
+  lower = or * exp(qnorm(0.025) * sqrt(1/gen_table[1, 2] + 1/gen_table[2, 1])), 
+  upper = or * exp(qnorm(0.025, lower.tail = FALSE) * sqrt(1/gen_table[1, 2] + 1/gen_table[2, 1]))
+)
+
+or</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##      or lower upper
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  4.33  1.23  15.2</code></pre>
+</div>
+</div>
+<div id="sas" class="section level2">
+<h2>SAS</h2>
+<p>To conduct McNemar’s test in SAS you use the frequency procedure with the <code>agree</code> argument specified in the options of the <code>table</code> statement.</p>
+<pre class="sas"><code>title &#39;McNemars Test Example: Ulcers and Genetics&#39;; 
+data genetic;
+  input case $ control $ count;
+  cards;
+  yes yes 9 
+  yes no 13
+  no yes 3
+  no no 10
+  ;
+run;
+
+proc freq data = genetic order = data;
+  table case*control / chisq agree;
+  weight count;
+run;</code></pre>
+<pre><code>##                                McNemars Test Example: Ulcers and Genetics
+## 
+##                                            The FREQ Procedure
+## 
+##                                         Table of case by control
+## 
+##                                   case      control
+## 
+##                                   Frequency|
+##                                   Percent  |
+##                                   Row Pct  |
+##                                   Col Pct  |yes     |no      |  Total
+##                                   ---------+--------+--------+
+##                                   yes      |      9 |     13 |     22
+##                                            |  25.71 |  37.14 |  62.86
+##                                            |  40.91 |  59.09 |
+##                                            |  75.00 |  56.52 |
+##                                   ---------+--------+--------+
+##                                   no       |      3 |     10 |     13
+##                                            |   8.57 |  28.57 |  37.14
+##                                            |  23.08 |  76.92 |
+##                                            |  25.00 |  43.48 |
+##                                   ---------+--------+--------+
+##                                   Total          12       23       35
+##                                               34.29    65.71   100.00
+## 
+## 
+##                                 Statistics for Table of case by control
+## 
+##                          Statistic                     DF       Value      Prob
+##                          ------------------------------------------------------
+##                          Chi-Square                     1      1.1533    0.2829
+##                          Likelihood Ratio Chi-Square    1      1.1914    0.2750
+##                          Continuity Adj. Chi-Square     1      0.4976    0.4806
+##                          Mantel-Haenszel Chi-Square     1      1.1203    0.2898
+##                          Phi Coefficient                       0.1815          
+##                          Contingency Coefficient               0.1786          
+##                          Cramer&#39;s V                            0.1815          
+## 
+##                           WARNING: 25% of the cells have expected counts less 
+##                                    than 5. Chi-Square may not be a valid test.
+## 
+## 
+##                                           Fisher&#39;s Exact Test
+##                                    ----------------------------------
+##                                    Cell (1,1) Frequency (F)         9
+##                                    Left-sided Pr &lt;= F          0.9278
+##                                    Right-sided Pr &gt;= F         0.2427
+##                                                                      
+##                                    Table Probability (P)       0.1705
+##                                    Two-sided Pr &lt;= P           0.4630
+## 
+## 
+##                                             McNemar&#39;s Test
+##                                         -----------------------
+##                                         Statistic (S)    6.2500
+##                                         DF                    1
+##                                         Pr &gt; S           0.0124
+## 
+## 
+##                                         Simple Kappa Coefficient
+##                                     --------------------------------
+##                                     Kappa                     0.1541
+##                                     ASE                       0.1381
+##                                     95% Lower Conf Limit     -0.1166
+##                                     95% Upper Conf Limit      0.4247
+## 
+##                                             Sample Size = 35</code></pre>
+<div id="matched-pairs-odds-ratio-1" class="section level3">
+<h3>Matched pairs odds ratio</h3>
+<p>SAS doesn’t have a built-in method for generating a matched pairs odds ratio and confidence interval. One possible way to calculate this is to create 2 x 2 x k table, where k is the number of matched pairs, and use the frequency procedure to caculate the Mantel-Haenszel odds ratio.</p>
+<pre class="sas"><code>title &#39;McNemars Test is Equivalent to CMH Test&#39;;
+data genetic2;
+  input strata disease $ exposure $ @@;
+  cards;
+  1 case yes 1 cont yes 2 case yes 2 cont yes 3 case yes 3 cont yes
+  4 case yes 4 cont yes 5 case yes 5 cont yes 6 case yes 6 cont yes
+  7 case yes 7 cont yes 8 case yes 8 cont yes 9 case yes 9 cont yes
+  10 case yes 10 cont no 11 case yes 11 cont no 12 case yes 12 cont no
+  13 case yes 13 cont no 14 case yes 14 cont no 15 case yes 15 cont no
+  16 case yes 16 cont no 17 case yes 17 cont no 18 case yes 18 cont no
+  19 case yes 19 cont no 20 case yes 20 cont no 21 case yes 21 cont no
+  22 case yes 22 cont no 
+  23 case no 23 cont yes 24 case no 24 cont yes 25 case no 25 cont yes
+  26 case no 26 cont no 27 case no 27 cont no 28 case no 28 cont no
+  29 case no 29 cont no 30 case no 30 cont no 31 case no 31 cont no
+  32 case no 32 cont no 33 case no 33 cont no 34 case no 34 cont no
+  35 case no 35 cont no
+;
+run;
+
+proc freq data = genetic2 order = data;
+  table strata*disease*exposure / cmh noprint;
+run;</code></pre>
+<pre><code>##                                 McNemars Test is Equivalent to CMH Test
+## 
+##                                            The FREQ Procedure
+## 
+##                                Summary Statistics for disease by exposure
+##                                          Controlling for strata
+## 
+##                       Cochran-Mantel-Haenszel Statistics (Based on Table Scores)
+##  
+##                     Statistic    Alternative Hypothesis    DF       Value      Prob
+##                     ---------------------------------------------------------------
+##                         1        Nonzero Correlation        1      6.2500    0.0124
+##                         2        Row Mean Scores Differ     1      6.2500    0.0124
+##                         3        General Association        1      6.2500    0.0124
+## 
+## 
+##                                  Common Odds Ratio and Relative Risks
+##  
+##          Statistic                   Method                  Value       95% Confidence Limits
+##          -------------------------------------------------------------------------------------
+##          Odds Ratio                  Mantel-Haenszel        4.3333        1.2349       15.2064
+##                                      Logit **               3.9482        1.2734       12.2417
+## 
+##          Relative Risk (Column 1)    Mantel-Haenszel        1.8333        1.1316        2.9702
+##                                      Logit **               1.9870        1.0555        3.7405
+## 
+##          Relative Risk (Column 2)    Mantel-Haenszel        0.5652        0.3592        0.8894
+##                                      Logit **               0.5033        0.2673        0.9474
+## 
+##                    ** These logit estimators use a correction of 0.5 in every cell  
+##                         of those tables that contain a zero. Tables with a zero 
+##                         row or a zero column are not included in computing the 
+##                         logit estimators.
+## 
+## 
+##                                           Breslow-Day Test for
+##                                      Homogeneity of the Odds Ratios
+##                                      ------------------------------
+##                                      Chi-Square             24.9800
+##                                      DF                          15
+##                                      Pr &gt; ChiSq              0.0502
+## 
+## 
+##                                          Total Sample Size = 70</code></pre>
+</div>
+</div>
+</div>
+
+<br><br>
+<center>
+<footer>
+  <img src="catfun_biostat_p8120.png" alt="stickers" style="width:50%">
+  <br>
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

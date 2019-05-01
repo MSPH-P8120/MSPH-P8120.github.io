@@ -130,17 +130,17 @@ Use the following table to locate functions for hypothesis tests. If you are uns
 |Hypothesis test                                  | R function                        | Package       | Lecture                                 |
 |-------------------------------------------------|-----------------------------------|---------------|:---------------------------------------:|
 |Confidence intervals, proportions                | `prop_test()`                     | catfun        | [3](ci_single_proportion.html)          |
-|One sample test proportions, normal approximation|`prop_test()`                      | catfun        | [4](hypothesis_single_prop.html)        |
+|One sample test proportions, normal approximation| `prop_test()`                     | catfun        | [4](hypothesis_single_prop.html)        |
 |One sample test proportions, exact               | `prop_test()`                     | catfun        | [4](hypothesis_single_prop.html)        |
 |Chi-squared                                      | `CrossTable(..., chisq = TRUE)`   | descr         | [8](chi_squared_fisher.html)            |
 |Fisher's exact                                   | `CrossTable(..., fisher = TRUE)`  | descr         | [8](chi_squared_fisher.html)            |
-|Likelihood ratio test                             | `GTest()`                         | DescTools     | [9](lrt_2_sample.html)                  |
+|Likelihood ratio test                            | `GTest()`                         | DescTools     | [9](lrt_2_sample.html)                  |
 |Two sample test for proportions                  | `prop_test()`                     | catfun        | [9](lrt_2_sample.html)                  |
 |Logistic regression                              | `glm(..., family = binomial)`     | stats         | [13, 14, & 15](logistic_regression.html)                            |
 |GOF & Hosmer Lemeshow                            | `gof_deviance()` / `hoslem.test()`| catfun & ResourceSelection | [16 & 17](gof.html)                                      |
-|Breslow-Day test                                 | `BreslowDayTest()`                  | DescTools     | [19](breslow_day.html)                                      |
-|Cochran-Mantel-Haenszel test                     | `mantelhaen.test()`           | stats           | [20](cmh.html)                                      |
-|McNemar's test                                   | `CrossTable(..., mcnemar = TRUE)` | descr         | 21                                      |
+|Breslow-Day test                                 | `BreslowDayTest()`                | DescTools     | [19](breslow_day.html)                  |
+|Cochran-Mantel-Haenszel test                     | `mantelhaen.test()`               | stats         | [20](cmh.html)                          |
+|McNemar's test                                   | `mcnemar.test()`                  | stats         | [21](mcnemar.html)                                      |
 |Conditional logistic regression                  | `clogit()`                        | survival      | 22                                      |
 |Cochran Armitage Trend test                      | `CocrhanArmitageTest()`           | DescTools     | 23                                      |
         

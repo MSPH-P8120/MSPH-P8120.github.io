@@ -1,0 +1,105 @@
+---
+title: "McNemar's Test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+The notes for the topics on this page can be found in the lecture 21 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+To conduct McNemar's test in R you can use `mcnemar.test()` from the *stats* package. `mcnemar.test()` can accept either a 2 x 2 table in matrix format or you can use a dataset with individual level data without first building a 2 x 2 table. You could also use `CrossTable(..., mcnemar = TRUE)` from the *descr* package.
+
+```{r}
+library(tidyverse)
+library(magrittr)
+
+genetic <- tibble(
+  case = c("yes", "yes", "no", "no"), 
+  control = rep(c("yes", "no"), 2), 
+  count = c(9, 13, 3, 10)
+)
+
+genetic <- genetic %>% 
+  mutate(case = fct_relevel(case, "yes", "no"), 
+         control = fct_relevel(control, "yes", "no"))
+  
+
+gen_table <- xtabs(count ~ case + control, data = genetic)
+
+mcnemar.test(gen_table, correct = FALSE)
+```
+
+### Matched pairs odds ratio
+
+There is currently no function for creating a matched pairs odds ratio in R. However, you could construct the odds ratio and confidence interval by "hand" as shown in the example below. 
+
+```{r}
+or <- gen_table[1, 2] / gen_table[2, 1]
+
+or <- tibble(
+  or = or, 
+  lower = or * exp(qnorm(0.025) * sqrt(1/gen_table[1, 2] + 1/gen_table[2, 1])), 
+  upper = or * exp(qnorm(0.025, lower.tail = FALSE) * sqrt(1/gen_table[1, 2] + 1/gen_table[2, 1]))
+)
+
+or
+```
+
+## SAS
+
+To conduct McNemar's test in SAS you use the frequency procedure with the `agree` argument specified in the options of the `table` statement.
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title 'McNemars Test Example: Ulcers and Genetics'; 
+data genetic;
+  input case $ control $ count;
+  cards;
+  yes yes 9 
+  yes no 13
+  no yes 3
+  no no 10
+  ;
+run;
+
+proc freq data = genetic order = data;
+  table case*control / chisq agree;
+  weight count;
+run;
+```
+
+### Matched pairs odds ratio
+
+SAS doesn't have a built-in method for generating a matched pairs odds ratio and confidence interval. One possible way to calculate this is to create 2 x 2 x k table, where k is the number of matched pairs, and use the frequency procedure to caculate the Mantel-Haenszel odds ratio. 
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title 'McNemars Test is Equivalent to CMH Test';
+data genetic2;
+  input strata disease $ exposure $ @@;
+  cards;
+  1 case yes 1 cont yes 2 case yes 2 cont yes 3 case yes 3 cont yes
+  4 case yes 4 cont yes 5 case yes 5 cont yes 6 case yes 6 cont yes
+  7 case yes 7 cont yes 8 case yes 8 cont yes 9 case yes 9 cont yes
+  10 case yes 10 cont no 11 case yes 11 cont no 12 case yes 12 cont no
+  13 case yes 13 cont no 14 case yes 14 cont no 15 case yes 15 cont no
+  16 case yes 16 cont no 17 case yes 17 cont no 18 case yes 18 cont no
+  19 case yes 19 cont no 20 case yes 20 cont no 21 case yes 21 cont no
+  22 case yes 22 cont no 
+  23 case no 23 cont yes 24 case no 24 cont yes 25 case no 25 cont yes
+  26 case no 26 cont no 27 case no 27 cont no 28 case no 28 cont no
+  29 case no 29 cont no 30 case no 30 cont no 31 case no 31 cont no
+  32 case no 32 cont no 33 case no 33 cont no 34 case no 34 cont no
+  35 case no 35 cont no
+;
+run;
+
+proc freq data = genetic2 order = data;
+  table strata*disease*exposure / cmh noprint;
+run;
+```
+
