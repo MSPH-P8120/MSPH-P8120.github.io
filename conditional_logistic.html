@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Conditional Logistic Regression</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133330767-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133330767-1');
+</script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="R.html">R</a>
+</li>
+<li>
+  <a href="SAS.html">SAS</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="example_data/AZT.csv">AZT</a>
+    </li>
+    <li>
+      <a href="example_data/benign.csv">Benign</a>
+    </li>
+    <li>
+      <a href="example_data/breast.csv">Breast Cancer</a>
+    </li>
+    <li>
+      <a href="example_data/car.csv">Car</a>
+    </li>
+    <li>
+      <a href="example_data/depression.csv">Depression</a>
+    </li>
+    <li>
+      <a href="example_data/gmh.csv">Germinal Matrix Hemorrhage</a>
+    </li>
+    <li>
+      <a href="example_data/lowbwt.csv">Low Birthweight</a>
+    </li>
+    <li>
+      <a href="example_data/respiredata_final.csv">Respiratory</a>
+    </li>
+    <li>
+      <a href="example_data/UMARUdata2.csv">UMARU</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;cmm2212@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/MSPH-P8120/MSPH-P8120.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Conditional Logistic Regression</h1>
+
+</div>
+
+
+<p>The notes for the topics on this page can be found in the lecture 22 folder on Canvas.</p>
+<div id="section" class="section level1 tabset tabset-fade">
+<h1></h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>To conduct conditional logistic regression in R you can use <code>clogit()</code> from the <em>survival</em> package. <code>clogit()</code> follows the same syntax as other linear models in R but includes a <code>strata()</code> argument where you specify the indicator for matching. R will also return odds ratios and 95% CIs for the model’s covariates if you save your model as an object and call <code>summary()</code>.</p>
+<pre class="r"><code>library(tibble)
+library(survival)
+
+id &lt;- function() {
+    x &lt;- vector(&quot;numeric&quot;)
+    
+    for (i in 1:17) {
+      x &lt;- append(x, rep(i, 2))
+    }
+    x
+}
+
+lbw &lt;- tibble(
+  pair_id = id(), 
+  low = c(1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
+          0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0), 
+  lwt = c(130, 110, 120, 103, 110, 107, 102, 182, 105, 105, 100, 
+          108, 130, 118, 94, 130, 138, 90, 89, 118, 190, 113, 130, 
+          124, 120, 120, 130, 150, 142, 107, 102, 215, 105, 121)
+)
+
+lbw_model &lt;- clogit(low ~ lwt + strata(pair_id), data = lbw)
+
+summary(lbw_model)</code></pre>
+<pre><code>## Call:
+## coxph(formula = Surv(rep(1, 34L), low) ~ lwt + strata(pair_id), 
+##     data = lbw, method = &quot;exact&quot;)
+## 
+##   n= 34, number of events= 17 
+## 
+##          coef exp(coef)  se(coef)      z Pr(&gt;|z|)
+## lwt -0.005283  0.994731  0.011414 -0.463    0.643
+## 
+##     exp(coef) exp(-coef) lower .95 upper .95
+## lwt    0.9947      1.005    0.9727     1.017
+## 
+## Concordance= 0.471  (se = 0.161 )
+## Likelihood ratio test= 0.22  on 1 df,   p=0.6
+## Wald test            = 0.21  on 1 df,   p=0.6
+## Score (logrank) test = 0.22  on 1 df,   p=0.6</code></pre>
+</div>
+<div id="sas" class="section level2">
+<h2>SAS</h2>
+<p>To conduct conditional logistic regression in SAS you the logistic procedure with the <code>strata</code> statement specified to indicate the matching variable.</p>
+<pre class="sas"><code>title &#39;Lowbirth Example - 1:1 matching&#39;;
+data LBW;
+ input pairid id Age Low LWT Smoke HT UI @@;
+ cards;
+1 25 16 1 130 0 0 0 1 143 16 0 110 0 0 0
+2 71 17 1 120 0 0 0 2 93 17 0 103 0 0 0
+3 50 18 1 110 1 0 0 3 89 18 0 107 1 0 1
+4 33 19 1 102 0 0 0 4 85 19 0 182 0 0 1
+5 76 20 1 105 0 0 0 5 87 20 0 105 1 0 0
+6 52 21 1 100 0 0 0 6 88 21 0 108 1 0 1
+7 67 22 1 130 1 0 0 7 92 22 0 118 0 0 0
+8 82 23 1 94 1 0 0 8 130 23 0 130 0 0 0
+9 36 24 1 138 0 0 0 9 118 24 0 90 1 0 0
+10 32 25 1 89 0 0 0 10 103 25 0 118 1 0 0
+11 77 26 1 190 1 0 0 11 95 26 0 113 1 0 0
+12 43 27 1 130 0 0 1 12 125 27 0 124 1 0 0
+13 04 28 1 120 1 0 1 13 105 28 0 120 1 0 0
+14 10 29 1 130 0 0 1 14 114 29 0 150 0 0 0
+15 65 30 1 142 1 0 0 15 99 30 0 107 0 0 1
+16 56 31 1 102 1 0 0 16 126 31 0 215 1 0 0
+17 22 32 1 105 1 0 0 17 106 32 0 121 0 0 0
+;
+run;
+
+proc logistic data = LBW descending;
+ strata pairid;
+ model low = LWT;
+run;</code></pre>
+<pre><code>##                                     Lowbirth Example - 1:1 matching
+## 
+##                                          The LOGISTIC Procedure
+##  
+##                                           Conditional Analysis
+## 
+##                                            Model Information
+## 
+##                            Data Set                      WORK.LBW            
+##                            Response Variable             Low                 
+##                            Number of Response Levels     2                   
+##                            Number of Strata              17                  
+##                            Model                         binary logit        
+##                            Optimization Technique        Newton-Raphson ridge
+## 
+## 
+##                                 Number of Observations Read          34
+##                                 Number of Observations Used          34
+## 
+## 
+##                                             Response Profile
+##  
+##                                    Ordered                      Total
+##                                      Value          Low     Frequency
+## 
+##                                          1            1            17
+##                                          2            0            17
+## 
+##                                      Probability modeled is Low=1.
+## 
+## 
+##                                              Strata Summary
+##  
+##                                             Low
+##                               Response    ------    Number of
+##                                Pattern    1    0       Strata    Frequency
+## 
+##                                      1    1    1           17           34
+## 
+##                                    Newton-Raphson Ridge Optimization
+## 
+##                                        Without Parameter Scaling
+## 
+##                              Convergence criterion (GCONV=1E-8) satisfied.          
+## 
+## 
+##                                          Model Fit Statistics
+##  
+##                                                  Without           With
+##                                 Criterion     Covariates     Covariates
+## 
+##                                 AIC               23.567         25.347
+##                                 SC                23.567         26.873
+##                                 -2 Log L          23.567         23.347
+## 
+## 
+##                                 Testing Global Null Hypothesis: BETA=0
+##  
+##                         Test                 Chi-Square       DF     Pr &gt; ChiSq
+## 
+##                         Likelihood Ratio         0.2199        1         0.6391
+##                         Score                    0.2180        1         0.6405
+##                         Wald                     0.2143        1         0.6435
+## 
+## 
+##                          Analysis of Conditional Maximum Likelihood Estimates
+##  
+##                                                  Standard          Wald
+##                   Parameter    DF    Estimate       Error    Chi-Square    Pr &gt; ChiSq
+## 
+##                   LWT           1    -0.00528      0.0114        0.2143        0.6435
+## 
+## 
+##                                           Odds Ratio Estimates
+##                                                     
+##                                             Point          95% Wald
+##                                Effect    Estimate      Confidence Limits
+## 
+##                                LWT          0.995       0.973       1.017</code></pre>
+</div>
+</div>
+
+<br><br>
+<center>
+<footer>
+  <img src="catfun_biostat_p8120.png" alt="stickers" style="width:50%">
+  <br>
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

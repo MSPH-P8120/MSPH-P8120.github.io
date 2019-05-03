@@ -1,0 +1,84 @@
+---
+title: "Conditional Logistic Regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+The notes for the topics on this page can be found in the lecture 22 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+To conduct conditional logistic regression in R you can use `clogit()` from the *survival* package. `clogit()` follows the same syntax as other linear models in R but includes a `strata()` argument where you specify the indicator for matching. R will also return odds ratios and 95% CIs for the model's covariates if you save your model as an object and call `summary()`.
+
+```{r}
+library(tibble)
+library(survival)
+
+id <- function() {
+    x <- vector("numeric")
+    
+    for (i in 1:17) {
+      x <- append(x, rep(i, 2))
+    }
+    x
+}
+
+lbw <- tibble(
+  pair_id = id(), 
+  low = c(1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
+          0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0), 
+  lwt = c(130, 110, 120, 103, 110, 107, 102, 182, 105, 105, 100, 
+          108, 130, 118, 94, 130, 138, 90, 89, 118, 190, 113, 130, 
+          124, 120, 120, 130, 150, 142, 107, 102, 215, 105, 121)
+)
+
+lbw_model <- clogit(low ~ lwt + strata(pair_id), data = lbw)
+
+summary(lbw_model)
+```
+
+## SAS
+
+To conduct conditional logistic regression in SAS you the logistic procedure with the `strata` statement specified to indicate the matching variable. 
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+title 'Lowbirth Example - 1:1 matching';
+data LBW;
+ input pairid id Age Low LWT Smoke HT UI @@;
+ cards;
+1 25 16 1 130 0 0 0 1 143 16 0 110 0 0 0
+2 71 17 1 120 0 0 0 2 93 17 0 103 0 0 0
+3 50 18 1 110 1 0 0 3 89 18 0 107 1 0 1
+4 33 19 1 102 0 0 0 4 85 19 0 182 0 0 1
+5 76 20 1 105 0 0 0 5 87 20 0 105 1 0 0
+6 52 21 1 100 0 0 0 6 88 21 0 108 1 0 1
+7 67 22 1 130 1 0 0 7 92 22 0 118 0 0 0
+8 82 23 1 94 1 0 0 8 130 23 0 130 0 0 0
+9 36 24 1 138 0 0 0 9 118 24 0 90 1 0 0
+10 32 25 1 89 0 0 0 10 103 25 0 118 1 0 0
+11 77 26 1 190 1 0 0 11 95 26 0 113 1 0 0
+12 43 27 1 130 0 0 1 12 125 27 0 124 1 0 0
+13 04 28 1 120 1 0 1 13 105 28 0 120 1 0 0
+14 10 29 1 130 0 0 1 14 114 29 0 150 0 0 0
+15 65 30 1 142 1 0 0 15 99 30 0 107 0 0 1
+16 56 31 1 102 1 0 0 16 126 31 0 215 1 0 0
+17 22 32 1 105 1 0 0 17 106 32 0 121 0 0 0
+;
+run;
+
+proc logistic data = LBW descending;
+ strata pairid;
+ model low = LWT;
+run;
+```
+
+
+
+
+
+
