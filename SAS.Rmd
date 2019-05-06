@@ -113,14 +113,14 @@ Use the following table to locate procedures for hypothesis tests. If you are un
 |Chi-squared                                      |`proc freq`         |`chisq expected`                     | [8](chi_squared_fisher.html)     |
 |Fisher's exact                                   |`proc freq`         |Same as chi-squared                  | [8](chi_squared_fisher.html)     |
 |Likelihood ratio test                            |`proc freq`         |Same as chi-squared                  | [9](lrt_2_sample.html)           |
-|Two sample test of proportions                   |`proc freq`         |`expected riskdiff(equal var = null)`| [9](lrt_2_sample.html)            |
+|Two sample test of proportions                   |`proc freq`         |`expected riskdiff(equal var = null)`| [9](lrt_2_sample.html)       |
 |Logistic regression                              |`proc logistic`     |                                     | [13, 14, & 15](logistic_regression.html) |
 |GOF & Hosmer Lemeshow                            |`proc logistic`     |`scale = none`  / `lackfit`          | [16 & 17](gof.html)              |
 |Breslow-Day test                                 |`proc freq`         | `cmh`                               | [19](breslow_day.html)           |
 |Cochran-Mantel-Haenzsel test                     |`proc freq`         | `cmh`                               | [20](cmh.html)                   |
 |McNemar's test                                   |`proc freq`         | `agree`                             | [21](mcnemar.html)               |
 |Conditional logistic regression                  |`proc logistic`     | `strata`                            | [22](conditional_logistic.html)  |
-|Cochran Armitage Trend test                      |`proc freq`         |                                     | 23                               |
+|Cochran-Armitage Trend test                      |`proc freq`         |  `trend`                            | [23](cochran_armitage.html)      |
               
 ### Measures of association
 

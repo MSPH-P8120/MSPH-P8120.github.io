@@ -1,0 +1,60 @@
+---
+title: "Cochran-Armitage Trend Test"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+The notes for the topics on this page can be found in the lecture 23 folder on Canvas. 
+
+# {.tabset .tabset-fade}
+
+## R
+
+To conduct a Cochran-Armitage Trend test in R you can use `CochranArmitageTest()` from the *DescTools* package. `CochranArmitageTest()` requires a frequency table as it's main argument. For more information and examples, run `?CochranArmitageTest`.
+
+```{r}
+library(tidyverse)
+library(DescTools)
+
+trend <- tibble(
+  insomnia = c(rep("yes", 6), rep("no", 6)), 
+  age_class = rep(seq(1:6), 2), 
+  count = c(150, 250, 264, 302, 238, 176, 384, 496, 520, 403, 205, 123)
+)
+
+trend <- trend %>% 
+  mutate(insomnia = fct_relevel(insomnia, c("yes", "no")))
+
+trend_table <- xtabs(count ~ insomnia + age_class, data = trend)
+
+CochranArmitageTest(trend_table)
+```
+
+## SAS
+
+To conduct a Cochran-Armitage Trend test in SAS you use the frequency procedure with the `trend` argument specified in the options of the `table` statement. 
+
+```{}
+proc freq data = <dataset>; 
+  table <row variable>*<column variable> / chisq trend; 
+  weight <weighting variable if summary data>; 
+run; 
+```
+
+```{r, engine = "sas", engine.path = "C:/Program Files/SASHome/SASFoundation/9.4/sas.exe"}
+data trend; 
+  input insomnia $ ageclass count @@; 
+  cards; 
+  yes 1 150 yes 2 250 yes 3 264 yes 4 302 yes 5 238 yes 6 176
+  no 1 384 no 2 496 no 3 520 no 4 403 no 5 205 no 6 123
+  ; 
+run; 
+  
+proc freq data = trend order = data; 
+  table insomnia*ageclass / chisq trend; 
+  weight count; 
+run;
+```

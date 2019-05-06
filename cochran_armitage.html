@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Cochran-Armitage Trend Test</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133330767-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-133330767-1');
+</script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="R.html">R</a>
+</li>
+<li>
+  <a href="SAS.html">SAS</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="example_data/AZT.csv">AZT</a>
+    </li>
+    <li>
+      <a href="example_data/benign.csv">Benign</a>
+    </li>
+    <li>
+      <a href="example_data/breast.csv">Breast Cancer</a>
+    </li>
+    <li>
+      <a href="example_data/car.csv">Car</a>
+    </li>
+    <li>
+      <a href="example_data/depression.csv">Depression</a>
+    </li>
+    <li>
+      <a href="example_data/gmh.csv">Germinal Matrix Hemorrhage</a>
+    </li>
+    <li>
+      <a href="example_data/lowbwt.csv">Low Birthweight</a>
+    </li>
+    <li>
+      <a href="example_data/respiredata_final.csv">Respiratory</a>
+    </li>
+    <li>
+      <a href="example_data/UMARUdata2.csv">UMARU</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="mailto:&lt;cmm2212@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/MSPH-P8120/MSPH-P8120.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Cochran-Armitage Trend Test</h1>
+
+</div>
+
+
+<p>The notes for the topics on this page can be found in the lecture 23 folder on Canvas.</p>
+<div id="section" class="section level1 tabset tabset-fade">
+<h1></h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>To conduct a Cochran-Armitage Trend test in R you can use <code>CochranArmitageTest()</code> from the <em>DescTools</em> package. <code>CochranArmitageTest()</code> requires a frequency table as it’s main argument. For more information and examples, run <code>?CochranArmitageTest</code>.</p>
+<pre class="r"><code>library(tidyverse)
+library(DescTools)
+
+trend &lt;- tibble(
+  insomnia = c(rep(&quot;yes&quot;, 6), rep(&quot;no&quot;, 6)), 
+  age_class = rep(seq(1:6), 2), 
+  count = c(150, 250, 264, 302, 238, 176, 384, 496, 520, 403, 205, 123)
+)
+
+trend &lt;- trend %&gt;% 
+  mutate(insomnia = fct_relevel(insomnia, c(&quot;yes&quot;, &quot;no&quot;)))
+
+trend_table &lt;- xtabs(count ~ insomnia + age_class, data = trend)
+
+CochranArmitageTest(trend_table)</code></pre>
+<pre><code>## 
+##  Cochran-Armitage test for trend
+## 
+## data:  trend_table
+## Z = 11.297, dim = 6, p-value &lt; 2.2e-16
+## alternative hypothesis: two.sided</code></pre>
+</div>
+<div id="sas" class="section level2">
+<h2>SAS</h2>
+<p>To conduct a Cochran-Armitage Trend test in SAS you use the frequency procedure with the <code>trend</code> argument specified in the options of the <code>table</code> statement.</p>
+<pre><code>proc freq data = &lt;dataset&gt;; 
+  table &lt;row variable&gt;*&lt;column variable&gt; / chisq trend; 
+  weight &lt;weighting variable if summary data&gt;; 
+run; </code></pre>
+<pre class="sas"><code>data trend; 
+  input insomnia $ ageclass count @@; 
+  cards; 
+  yes 1 150 yes 2 250 yes 3 264 yes 4 302 yes 5 238 yes 6 176
+  no 1 384 no 2 496 no 3 520 no 4 403 no 5 205 no 6 123
+  ; 
+run; 
+  
+proc freq data = trend order = data; 
+  table insomnia*ageclass / chisq trend; 
+  weight count; 
+run;</code></pre>
+<pre><code>##                                            The FREQ Procedure
+## 
+##                                      Table of insomnia by ageclass
+## 
+##                 insomnia     ageclass
+## 
+##                 Frequency|
+##                 Percent  |
+##                 Row Pct  |
+##                 Col Pct  |       1|       2|       3|       4|       5|       6|  Total
+##                 ---------+--------+--------+--------+--------+--------+--------+
+##                 yes      |    150 |    250 |    264 |    302 |    238 |    176 |   1380
+##                          |   4.27 |   7.12 |   7.52 |   8.60 |   6.78 |   5.01 |  39.31
+##                          |  10.87 |  18.12 |  19.13 |  21.88 |  17.25 |  12.75 |
+##                          |  28.09 |  33.51 |  33.67 |  42.84 |  53.72 |  58.86 |
+##                 ---------+--------+--------+--------+--------+--------+--------+
+##                 no       |    384 |    496 |    520 |    403 |    205 |    123 |   2131
+##                          |  10.94 |  14.13 |  14.81 |  11.48 |   5.84 |   3.50 |  60.69
+##                          |  18.02 |  23.28 |  24.40 |  18.91 |   9.62 |   5.77 |
+##                          |  71.91 |  66.49 |  66.33 |  57.16 |  46.28 |  41.14 |
+##                 ---------+--------+--------+--------+--------+--------+--------+
+##                 Total         534      746      784      705      443      299     3511
+##                             15.21    21.25    22.33    20.08    12.62     8.52   100.00
+## 
+## 
+##                               Statistics for Table of insomnia by ageclass
+## 
+##                          Statistic                     DF       Value      Prob
+##                          ------------------------------------------------------
+##                          Chi-Square                     5    139.3097    &lt;.0001
+##                          Likelihood Ratio Chi-Square    5    138.4440    &lt;.0001
+##                          Mantel-Haenszel Chi-Square     1    127.5934    &lt;.0001
+##                          Phi Coefficient                       0.1992          
+##                          Contingency Coefficient               0.1954          
+##                          Cramer&#39;s V                            0.1992          
+## 
+## 
+##                                       Cochran-Armitage Trend Test
+##                                       ---------------------------
+##                                       Statistic (Z)       11.2973
+##                                       One-sided Pr &gt;  Z    &lt;.0001
+##                                       Two-sided Pr &gt; |Z|   &lt;.0001
+## 
+##                                            Sample Size = 3511</code></pre>
+</div>
+</div>
+
+<br><br>
+<center>
+<footer>
+  <img src="catfun_biostat_p8120.png" alt="stickers" style="width:50%">
+  <br>
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
