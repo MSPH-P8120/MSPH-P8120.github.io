@@ -373,6 +373,7 @@ $(document).ready(function () {
 <h1></h1>
 <div id="r" class="section level2">
 <h2>R</h2>
+<p>To conduct a likelihood ratio test on a 2 x 2 table in R you can use <code>GTest()</code> from the <em>DescTools</em> package. To conduct a 2-sample test of proportions you can use <code>prop_test()</code> from the <em>catfun</em> package. For both functions you can provide a frequency table as the main argument as seen in the examples below.</p>
 <pre class="r"><code>vietnam &lt;- tibble(
   service = c(rep(&quot;yes&quot;, 2), rep(&quot;no&quot;, 2)), 
   sleep = c(rep(c(&quot;yes&quot;, &quot;no&quot;), 2)), 
@@ -404,13 +405,13 @@ xtabs(count ~ service + sleep, data = vietnam) %&gt;%
 <pre><code>## Observed proportions: 
 ## * 0.5195
 ## * 0.4131
-## 
+## ---------------------------------------- 
 ## Confidence interval method: wald 
 ## Confidence intervals: 
 ##   Lower bound Upper bound
 ## 1   0.4658578   0.5731813
 ## 2   0.3877595   0.4384474
-## ---------------------------------------------------------------------
+## ---------------------------------------- 
 ## 2 sample test for equality of proportions 
 ## Chi-squared: 12.49136 
 ## p-value: 0.00041</code></pre>
@@ -418,10 +419,7 @@ xtabs(count ~ service + sleep, data = vietnam) %&gt;%
 </div>
 <div id="sas" class="section level2">
 <h2>SAS</h2>
-<pre><code>proc freq data = &lt;dataset&gt;; 
-  table &lt;row variable&gt;*&lt;column variable&gt; / chisq expected; 
-  weight &lt;weighting variable if summary data&gt;; 
-run; </code></pre>
+<p>To conduct a likelihood ratio test for a frequency table and a two-sample test of proportions in SAS you use the frequency procedure. To indicate that you want SAS to return a likelihood ratio test you specify the <code>chisq</code> argument in the options of the <code>table</code> statement. To indicate you want SAS to return a two-sample test of proportions you can specify <code>riskdiff(equal var = null)</code> in the options of the <code>table</code> statement.</p>
 <div id="likelihood-ratio-test-1" class="section level3">
 <h3>Likelihood ratio test</h3>
 <pre class="sas"><code>data vietnam; 
@@ -433,15 +431,12 @@ run; </code></pre>
   no no 851
   ; 
 run; 
-  
-title &#39;Chi-squared test example&#39;; 
+
 proc freq data = vietnam order = data; 
   table service*sleep / relrisk chisq expected; 
   weight count; 
 run; </code></pre>
-<pre><code>##                                         Chi-squared test example
-## 
-##                                            The FREQ Procedure
+<pre><code>##                                            The FREQ Procedure
 ## 
 ##                                        Table of service by sleep
 ## 
